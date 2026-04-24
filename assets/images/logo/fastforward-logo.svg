@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <defs>
+    <!-- Brand gradient: blue → orange -->
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0066FF"/>
+      <stop offset="100%" stop-color="#FF6B00"/>
+    </linearGradient>
+
+    <!-- Speed glow gradient -->
+    <linearGradient id="speedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0066FF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FF6B00" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Drop shadow filter -->
+    <filter id="softShadow" x="-10%" y="-20%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0066FF" flood-opacity="0.25"/>
+    </filter>
+
+    <!-- Glow filter for icon -->
+    <filter id="iconGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- ================================================ -->
+  <!-- LIGHT VERSION (default)                          -->
+  <!-- ================================================ -->
+  <g id="version-light">
+    <!-- Icon group -->
+    <g transform="translate(4, 10)" filter="url(#iconGlow)">
+      <!-- Background pill shape -->
+      <rect x="0" y="0" width="60" height="60" rx="14" fill="url(#brandGrad)"/>
+
+      <!-- Double fast-forward arrow -->
+      <!-- Arrow 1 -->
+      <polygon points="20,16 20,44 38,30" fill="#FFFFFF"/>
+      <!-- Arrow 2 -->
+      <polygon points="32,16 32,44 50,30" fill="#FFFFFF"/>
+
+      <!-- Speed accent line left -->
+      <line x1="8" y1="30" x2="14" y2="30" stroke="#FF6B00" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Spark dot top-right -->
+      <circle cx="52" cy="14" r="3" fill="#FFD700"/>
+    </g>
+
+    <!-- Wordmark: Fast -->
+    <text x="76" y="46"
+      font-family="'Inter', 'Montserrat', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+      font-size="28"
+      font-weight="800"
+      fill="#0066FF"
+      letter-spacing="-0.5">Fast</text>
+
+    <!-- Wordmark: Forward -->
+    <text x="76"
+      font-family="'Inter', 'Montserrat', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+      font-size="28"
+      font-weight="300"
+      fill="#1A1A2E"
+      letter-spacing="-0.5">
+      <tspan x="76" dy="0">Forward</tspan>
+    </text>
+
+    <!-- Decorative underline gradient bar -->
+    <rect x="76" y="55" width="60" height="3" rx="1.5" fill="url(#brandGrad)"/>
+
+    <!-- Tagline -->
+    <text x="76" y="68"
+      font-family="'Inter', Arial, sans-serif"
+      font-size="8.5"
+      font-weight="400"
+      fill="#8892A4"
+      letter-spacing="1.5">TIKTOK E-COMMERCE GROWTH PARTNER</text>
+  </g>
+
+  <!-- ================================================ -->
+  <!-- DARK VERSION (use with dark backgrounds)         -->
+  <!-- ================================================ -->
+  <g id="version-dark" display="none">
+    <!-- Icon group -->
+    <g transform="translate(4, 10)" filter="url(#iconGlow)">
+      <!-- Background pill shape -->
+      <rect x="0" y="0" width="60" height="60" rx="14" fill="url(#brandGrad)"/>
+
+      <!-- Double fast-forward arrow -->
+      <polygon points="20,16 20,44 38,30" fill="#FFFFFF"/>
+      <polygon points="32,16 32,44 50,30" fill="#FFFFFF"/>
+
+      <!-- Speed accent line left -->
+      <line x1="8" y1="30" x2="14" y2="30" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Spark dot -->
+      <circle cx="52" cy="14" r="3" fill="#FFD700"/>
+    </g>
+
+    <!-- Wordmark: Fast -->
+    <text x="76" y="46"
+      font-family="'Inter', 'Montserrat', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+      font-size="28"
+      font-weight="800"
+      fill="#FFFFFF"
+      letter-spacing="-0.5">Fast</text>
+
+    <!-- Wordmark: Forward -->
+    <text x="76"
+      font-family="'Inter', 'Montserrat', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif"
+      font-size="28"
+      font-weight="300"
+      fill="#A0AABB"
+      letter-spacing="-0.5">
+      <tspan x="76" dy="0">Forward</tspan>
+    </text>
+
+    <!-- Gradient underline bar -->
+    <rect x="76" y="55" width="60" height="3" rx="1.5" fill="url(#brandGrad)"/>
+
+    <!-- Tagline -->
+    <text x="76" y="68"
+      font-family="'Inter', Arial, sans-serif"
+      font-size="8.5"
+      font-weight="400"
+      fill="#6B7280"
+      letter-spacing="1.5">TIKTOK E-COMMERCE GROWTH PARTNER</text>
+  </g>
+</svg>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>业务服务 — 向前海外 FastForward</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* 业务页专用 */
+    .service-detail {
+      padding: 80px 0;
+      position: relative;
+    }
+    .service-detail:nth-child(odd) { background: var(--white); }
+    .service-detail:nth-child(even) { background: var(--light-bg); }
+
+    .service-detail-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+    }
+    .service-detail.reverse .service-detail-grid { direction: rtl; }
+    .service-detail.reverse .service-detail-grid > * { direction: ltr; }
+
+    .service-icon-large {
+      width: 72px; height: 72px; border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin-bottom: 24px;
+    }
+    .service-detail h2 { font-size: clamp(24px,3vw,36px); font-weight:900; margin-bottom:16px; line-height:1.2; }
+    .service-detail .lead { font-size:17px; color:var(--text-muted); line-height:1.7; margin-bottom:28px; }
+    .service-features { display:flex; flex-direction:column; gap:12px; }
+    .feature-item { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--text-dark); line-height:1.6; }
+    .feature-item .check {
+      width:20px; height:20px; border-radius:50%; background:var(--grad-main);
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; color:var(--white); flex-shrink:0; margin-top:2px;
+    }
+
+    .service-visual {
+      border-radius: var(--radius-lg); overflow:hidden;
+      background: linear-gradient(135deg, #0A0F1E, #1A2236);
+      aspect-ratio: 5/4;
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+    }
+    .service-visual-inner {
+      display:flex; flex-direction:column; align-items:center; gap:16px;
+      color:rgba(255,255,255,0.2); text-align:center; padding:32px;
+    }
+    .service-visual-inner span { font-size:64px; }
+    .service-visual-inner p { font-size:13px; line-height:1.5; }
+
+    /* 流程图 */
+    .process-flow {
+      display: flex; align-items: center; gap: 0;
+      overflow-x: auto; padding: 8px 0;
+    }
+    .process-step {
+      flex: 1; min-width: 140px; text-align: center; position: relative;
+    }
+    .process-step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -12px; top: 28px;
+      font-size: 20px; color: rgba(0,102,255,0.4);
+      z-index: 1;
+    }
+    .process-circle {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--grad-main); display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin: 0 auto 14px; box-shadow: var(--shadow-blue);
+    }
+    .process-step h4 { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .process-step p  { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.4; }
+
+    @media (max-width:768px) {
+      .service-detail-grid { grid-template-columns: 1fr; gap: 36px; }
+      .service-detail.reverse .service-detail-grid { direction: ltr; }
+      .process-step { min-width: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="nav scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="../assets/images/logo/fastforward-logo-icon.svg" alt="FastForward Icon" />
+      <div class="nav-logo-text"><span class="en">FastForward</span><span class="cn">向前海外 · 数字营销</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">首页</a><a href="about.html">关于我们</a>
+      <a href="services.html" class="active">业务服务</a>
+      <!-- <a href="cases.html">案例展示（已隐藏）</a> --><a href="creative.html">内容创意</a>
+      <!-- <a href="pricing.html">报价方案（已隐藏）</a> --><a href="index.html#home-contact">联系我们</a>
+    </div>
+    <a href="index.html#home-contact" class="btn btn-primary nav-cta">免费咨询</a>
+    <button class="nav-hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<nav class="nav-mobile">
+  <a href="index.html">首页</a><a href="about.html">关于我们</a><a href="services.html">业务服务</a>
+  <!-- <a href="cases.html">案例展示（已隐藏）</a> --><a href="creative.html">内容创意</a><!-- <a href="pricing.html">报价方案（已隐藏）</a> -->
+  <a href="index.html#home-contact">联系我们</a>
+</nav>
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">首页</a><span>/</span><span>业务服务</span></div>
+    <h1>TikTok 全链路增长服务</h1>
+    <p>从市场判断到店铺运营，6 大核心业务模块，协同驱动品牌增长</p>
+  </div>
+</section>
+
+<!-- 服务总览流程 -->
+<section class="section-pad" style="background:var(--dark-bg);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <span class="section-tag" style="color:var(--orange);background:rgba(255,107,0,0.1);border-color:rgba(255,107,0,0.2);">Full-Chain Growth</span>
+      <h2 class="section-title fade-up" style="color:var(--white);">品牌 TikTok 增长<span class="grad-text">全链路</span></h2>
+      <p class="section-subtitle fade-up" style="color:rgba(255,255,255,0.5);margin:0 auto;" data-delay="100">六个环节相互协同，缺一不可</p>
+    </div>
+    <div class="process-flow fade-up" data-delay="150">
+      <div class="process-step">
+        <div class="process-circle">📊</div>
+        <h4>市场判断</h4>
+        <p>选品·竞品·定价</p>
+      </div>
+      <div class="process-step">
+        <div class="process-circle">🎬</div>
+        <h4>内容制作</h4>
+        <p>原创视频量产</p>
+      </div>
+      <div class="process-step">
+        <div class="process-circle">📱</div>
+        <h4>账号运营</h4>
+        <p>矩阵·日历·互动</p>
+      </div>
+      <div class="process-step">
+        <div class="process-circle">🤝</div>
+        <h4>达人分发</h4>
+        <p>KOL·KOC·佣金</p>
+      </div>
+      <div class="process-step">
+        <div class="process-circle">📈</div>
+        <h4>广告放量</h4>
+        <p>LSA·VSA·PSA</p>
+      </div>
+      <div class="process-step">
+        <div class="process-circle">🛒</div>
+        <h4>店铺承接</h4>
+        <p>转化·复购·GMV</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务01：店铺运营 -->
+<div class="service-detail">
+  <div class="container">
+    <div class="service-detail-grid">
+      <div class="fade-left">
+        <div class="service-icon-large icon-blue">🛍️</div>
+        <span class="section-tag">01 / Store Operations</span>
+        <h2>店铺运营</h2>
+        <p class="lead">TikTok Shop 端到端专业代运营，从 Listing 优化到 GMV 报告，确保店铺持续高效运转。</p>
+        <div class="service-features">
+          <div class="feature-item"><span class="check">✓</span><span>关键词梳理与 Listing 优化，提升搜索曝光与点击转化率</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>货盘管理与价格策略，在竞争中保持最优定价结构</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>销售数据跟踪与 GMV 周报/月报，可视化增长趋势</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>库存预警与备货建议，避免断货导致的流量损失</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>店铺 Banner 与评价管理，打造品牌信任度</span></div>
+        </div>
+      </div>
+      <div class="service-visual fade-right">
+        <div class="service-visual-inner"><span>🛍️</span><p>店铺运营数据看板截图<br /><small>（后续替换为真实素材）</small></p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 服务02：短视频内容制作（反向） -->
+<div class="service-detail reverse">
+  <div class="container">
+    <div class="service-detail-grid">
+      <div class="fade-right">
+        <div class="service-icon-large icon-orange">🎬</div>
+        <span class="section-tag">02 / Video Production</span>
+        <h2>短视频内容制作</h2>
+        <p class="lead">AI 视频工业化生产能力，日产百条原创测品素材，围绕产品卖点、用户痛点、本土化表达精心制作。</p>
+        <div class="service-features">
+          <div class="feature-item"><span class="check">✓</span><span>原创 AI 视频工业化生产，日产 30-200 条不等</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>脚本 · 拍摄 · 剪辑 · 配音全链路服务</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>A/B 测试框架，快速验证爆款内容公式</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>本土化创意策略，贴合目标市场用户习惯</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>爆款视频二次剪辑放大，最大化单条内容价值</span></div>
+        </div>
+      </div>
+      <div class="service-visual fade-left">
+        <div class="service-visual-inner"><span>🎬</span><p>视频生产流水线展示<br /><small>（后续替换为真实素材）</small></p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 服务03：账号运营 -->
+<div class="service-detail">
+  <div class="container">
+    <div class="service-detail-grid">
+      <div class="fade-left">
+        <div class="service-icon-large icon-purple">📱</div>
+        <span class="section-tag">03 / Account Management</span>
+        <h2>账号运营</h2>
+        <p class="lead">从品牌账号冷启动到多矩阵策略布局，帮助品牌在 TikTok 建立有影响力的内容阵地。</p>
+        <div class="service-features">
+          <div class="feature-item"><span class="check">✓</span><span>品牌官方账号 0 粉冷启动，快速建立初始信任度</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>多账号矩阵策略布局，覆盖不同用户层级</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>内容日历规划与发布执行，保持账号持续活跃</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>社区互动管理，提升用户粘性与品牌认知</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>账号数据分析与调优，持续提升内容表现</span></div>
+        </div>
+      </div>
+      <div class="service-visual fade-right">
+        <div class="service-visual-inner"><span>📱</span><p>账号矩阵管理界面<br /><small>（后续替换为真实素材）</small></p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 服务04：达人建联（反向） -->
+<div class="service-detail reverse">
+  <div class="container">
+    <div class="service-detail-grid">
+      <div class="fade-right">
+        <div class="service-icon-large icon-teal">🤝</div>
+        <span class="section-tag">04 / Influencer Marketing</span>
+        <h2>达人建联与分发</h2>
+        <p class="lead">1000+ 固定合作达人资源，覆盖 6 个海外市场，KOL/KOC 精准匹配，多种合作模式灵活选择。</p>
+        <div class="service-features">
+          <div class="feature-item"><span class="check">✓</span><span>1000+ 固定合作达人数据库，精准匹配品牌调性</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>KOL/KOC 双层覆盖策略，平衡声量与转化效率</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>专业 Brief 制作与创意沟通，确保内容质量</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>佣金带货 + 坑位费多合作模式，降低品牌风险</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>达人效果追踪与复投决策，数据驱动资源分配</span></div>
+        </div>
+      </div>
+      <div class="service-visual fade-left">
+        <div class="service-visual-inner"><span>🤝</span><p>达人资源库与效果追踪<br /><small>（后续替换为真实素材）</small></p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 服务05：广告投放 -->
+<div class="service-detail">
+  <div class="container">
+    <div class="service-detail-grid">
+      <div class="fade-left">
+        <div class="service-icon-large icon-red">📈</div>
+        <span class="section-tag">05 / Paid Advertising</span>
+        <h2>广告投放</h2>
+        <p class="lead">LSA/VSA/PSA 全广告形式覆盖，素材 A/B 测试迭代管线，实时 ROAS 监控与持续优化。</p>
+        <div class="service-features">
+          <div class="feature-item"><span class="check">✓</span><span>LSA（直播间广告）/ VSA（视频广告）/ PSA（商品卡广告）全形式</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>自然流验证先行，再进行广告放量，降低投放风险</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>素材 A/B 测试迭代管线，持续找到高效素材组合</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>实时 ROAS 监控与优化，确保每分钱花在刀刃上</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>广告投放周报与复盘，持续优化投放策略</span></div>
+        </div>
+      </div>
+      <div class="service-visual fade-right">
+        <img src="../assets/images/投流.png" alt="广告投放" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 服务06：直播运营（反向） -->
+<div class="service-detail reverse">
+  <div class="container">
+    <div class="service-detail-grid">
+      <div class="fade-right">
+        <div class="service-icon-large icon-green">🎙️</div>
+        <span class="section-tag">06 / Live Commerce</span>
+        <h2>直播运营</h2>
+        <p class="lead">直播间搭建、主播培训到直播营销推广全流程覆盖，持续提升转化率与客单价。</p>
+        <div class="service-features">
+          <div class="feature-item"><span class="check">✓</span><span>直播间场景搭建与视觉设计，打造专业品牌形象</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>主播招募与培训，贴合本土市场话术与节奏</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>直播前 · 中 · 后三阶段营销推广协同</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>实时弹幕互动管理，提升观看时长与转化</span></div>
+          <div class="feature-item"><span class="check">✓</span><span>直播数据复盘，持续优化转化率与客单价</span></div>
+        </div>
+      </div>
+      <div class="service-visual fade-left">
+        <img src="../assets/images/直播运营.png" alt="直播运营" style="width:100%;height:100%;object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>找到适合你品牌的增长路径</h2>
+    <p>告诉我们你的品牌现状，我们为你定制最优的服务组合。</p>
+    <a href="index.html#home-contact" class="cta-btn-white">免费咨询 →</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-wrap">
+          <img src="../assets/images/logo/fastforward-logo-icon.svg" alt="FastForward" />
+          <div class="brand-name">FastForward <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.4);">向前海外</span></div>
+        </div>
+        <p>帮助品牌从零跑通 TikTok Shop，将原创内容、达人分发、广告投放、店铺运营整合为一套协同增长系统。</p>
+        <div class="social-links"><a class="social-link" href="#">🎵</a><a class="social-link" href="#">📷</a><a class="social-link" href="#">💼</a><a class="social-link" href="#">💬</a></div>
+      </div>
+      <div class="footer-col"><h4>服务</h4><ul><li><a href="services.html">店铺运营</a></li><li><a href="services.html">短视频制作</a></li><li><a href="services.html">账号运营</a></li><li><a href="services.html">达人建联</a></li><li><a href="services.html">广告投放</a></li><li><a href="services.html">直播运营</a></li></ul></div>
+      <div class="footer-col"><h4>公司</h4><ul><li><a href="about.html">关于我们</a></li><li><!-- <a href="cases.html">成功案例（已隐藏）</a> --></li><li><a href="creative.html">内容创意</a></li><li><!-- <a href="pricing.html">报价方案（已隐藏）</a> --></li><li></li><li><a href="index.html#home-contact">联系我们</a></li></ul></div>
+      <div class="footer-col"><h4>联系我们</h4><div class="footer-contact"><div class="footer-contact-item"><span class="icon">✉️</span><span>regina.shen@power-engine.com.cn</span></div><div class="footer-contact-item"><span class="icon">🌍</span><span>覆盖美国、巴西、墨西哥、日本、新加坡、菲律宾</span></div><div class="footer-contact-item"><span class="icon">⏰</span><span>周一至周五 9:00 – 18:00</span></div></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 向前海外 FastForward. All rights reserved.</span><span>TikTok 电商一站式增长伙伴</span></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

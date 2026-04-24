@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>向前海外 FastForward — TikTok 电商一站式增长伙伴</title>
+  <meta name="description" content="帮助品牌从零跑通 TikTok Shop，将原创内容、达人分发、广告投放、店铺运营整合为一套协同增长系统。覆盖美国、巴西、墨西哥等 6 个海外市场。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* ---- 首页专用样式 ---- */
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      background: var(--grad-dark);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(60px);
+    }
+    .hero-orb-blue {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,102,255,0.22) 0%, transparent 70%);
+      top: -150px; left: -100px;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    .hero-orb-orange {
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(255,107,0,0.18) 0%, transparent 70%);
+      bottom: -100px; right: -80px;
+      animation: orbFloat 10s ease-in-out infinite reverse;
+    }
+    .hero-orb-purple {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(123,47,190,0.12) 0%, transparent 70%);
+      top: 40%; left: 60%;
+      animation: orbFloat 12s ease-in-out infinite;
+    }
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,102,255,0.12);
+      border: 1px solid rgba(0,102,255,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 820px; }
+    .hero-title {
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      font-family: 'Montserrat', 'Noto Sans SC', sans-serif;
+    }
+    .hero-title .accent { background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-light);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .hero-sub .sep { margin: 0 8px; opacity: 0.4; }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+    .hero-scroll {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.3);
+      font-size: 12px; letter-spacing: 1px;
+    }
+    .hero-scroll-arrow {
+      width: 32px; height: 32px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      animation: bounceDown 2s ease-in-out infinite;
+      color: rgba(255,255,255,0.5);
+    }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+
+    /* 能力条 */
+    .capability-strip {
+      background: var(--dark-bg2);
+      padding: 64px 0;
+    }
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .cap-item {
+      background: var(--dark-bg2);
+      padding: 36px 28px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .cap-item:hover { background: var(--dark-card); }
+    .cap-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .cap-num {
+      font-size: clamp(26px, 3vw, 36px);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .cap-name { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .cap-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+    /* 服务矩阵 */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      padding: 28px;
+      border-radius: var(--radius-md);
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      display: flex; gap: 16px; align-items: flex-start;
+      transition: var(--transition);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,102,255,0.1);
+      border-color: rgba(0,102,255,0.2);
+    }
+    .service-card-text {}
+    .service-card-text h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); }
+    .service-card-text p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* 视频区 - 并排双框循环播放 */
+    .video-section { background: var(--dark-bg); }
+
+    .video-showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .video-showcase-box {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #0A0F1E;
+      position: relative;
+    }
+    .video-showcase-box.portrait {
+      aspect-ratio: 9/16;
+      max-height: 520px;
+    }
+    .video-showcase-box.landscape {
+      aspect-ratio: 16/9;
+    }
+
+    /* 框内视频层叠 + 循环切换 */
+    .vsb-video-stack {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .vsb-video-stack video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+    .vsb-video-stack video.active {
+      opacity: 1;
+    }
+
+    /* 标签覆盖层 */
+    .vsb-tags {
+      position: absolute; bottom: 12px; left: 12px; right: 12px;
+      display: flex; gap: 6px; flex-wrap: wrap;
+      pointer-events: none; z-index: 5;
+    }
+    .vsb-tag {
+      font-size: 11px; font-weight: 600; color: #fff;
+      padding: 3px 10px; border-radius: 100px;
+      backdrop-filter: blur(8px); line-height: 1.4;
+    }
+
+    /* Hover 信息层 */
+    .vsb-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 14px; z-index: 6;
+      opacity: 0; transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .video-showcase-box:hover .vsb-overlay { opacity: 1; }
+    .vsb-overlay h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .vsb-overlay p { font-size: 11px; color: rgba(255,255,255,0.6); }
+
+    /* 框标题栏 */
+    .vsb-header {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 10px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
+      z-index: 7; pointer-events: none;
+    }
+    .vsb-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+    }
+    .vsb-indicator {
+      display: flex; gap: 4px;
+    }
+    .vsb-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transition: background 0.3s ease;
+    }
+    .vsb-dot.active { background: var(--orange); }
+
+    /* 案例卡片 */
+    .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .case-card {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.07);
+      transition: var(--transition);
+      background: var(--white);
+    }
+    .case-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.12); }
+    .case-cover {
+      height: 180px;
+      background: linear-gradient(135deg, #0A0F1E 0%, #1A2236 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .case-cover-num {
+      font-size: 100px; font-weight: 900;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .case-flag { font-size: 40px; position: relative; z-index: 1; }
+    .case-body { padding: 24px; }
+    .case-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .case-platform {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      background: rgba(0,102,255,0.08); color: var(--blue);
+      border-radius: 100px; padding: 3px 10px;
+    }
+    .case-category {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      background: rgba(255,107,0,0.08); color: var(--orange);
+      border-radius: 100px; padding: 3px 10px;
+    }
+    .case-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+    .case-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+    .case-stat {}
+    .case-stat-num { font-size: 22px; font-weight: 900; line-height: 1; }
+    .case-stat-num.blue { color: var(--blue); }
+    .case-stat-num.orange { color: var(--orange); }
+    .case-stat-num.green { color: var(--green); }
+    .case-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* 合作伙伴区 → 达人伙伴滚动 */
+    .partners-section { background: var(--dark-bg); padding: 72px 0; }
+
+    .influencer-marquee {
+      overflow: hidden;
+      padding: 20px 0;
+      mask-image: linear-gradient(to right, transparent 2%, black 5%, black 95%, transparent 98%);
+      -webkit-mask-image: linear-gradient(to right, transparent 2%, black 5%, black 95%, transparent 98%);
+    }
+    .influencer-track {
+      display: flex; gap: 40px;
+      animation: infScroll 30s linear infinite;
+      width: max-content;
+    }
+    .influencer-track:hover { animation-play-state: paused; }
+
+    @keyframes infScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .inf-card {
+      flex-shrink: 0;
+      width: 240px;
+      text-align: center;
+      padding: 20px 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s ease;
+    }
+    .inf-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(0,102,255,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    .inf-avatar {
+      width: 108px; height: 108px; border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 10px;
+      border: 2px solid rgba(0,102,255,0.3);
+      display: block;
+      background: #1a2236;
+    }
+    .inf-name {
+      font-size: 12px; font-weight: 700; color: #fff;
+      margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .inf-stats {
+      display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+    }
+    .inf-stat-badge {
+      font-size: 10px; font-weight: 600; padding: 2px 7px;
+      border-radius: 100px; line-height: 1.4;
+    }
+    .inf-stat-tt { background: rgba(251,146,60,0.85); color: #fff; }
+    .inf-stat-ig { background: rgba(168,85,247,0.85); color: #fff; }
+
+    /* 首页联系我们区 - 快捷联系卡片 */
+    .home-contact-cards { background: var(--light-bg); padding: 64px 0; }
+    
+    /* 合作品牌走马灯 - Logo 图片 */
+    .partner-logo-item img {
+      max-height: 100px;
+      max-width: 200px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .home-contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .home-contact-card {
+      padding: 36px 28px;
+      text-align: center;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0,0,0,0.07);
+      background: var(--white);
+      transition: all 0.3s ease;
+    }
+    .home-contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,102,255,0.12);
+      border-color: rgba(0,102,255,0.2);
+    }
+    .home-contact-card .hc-icon {
+      font-size: 42px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .home-contact-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .home-contact-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .home-contact-card a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+      transition: color 0.2s ease;
+    }
+    .home-contact-card a:hover { color: #0052cc; }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .capability-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .cases-grid { grid-template-columns: 1fr; }
+      .video-showcase-grid { grid-template-columns: 1fr; gap: 20px; }
+      .video-showcase-box.portrait { max-height: 440px; }
+      .home-contact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .capability-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .video-showcase-box.portrait { max-height: 360px; }
+      .home-contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     导航栏
+     ============================================================ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="../assets/images/logo/fastforward-logo-icon.svg" alt="FastForward Icon" />
+      <div class="nav-logo-text">
+        <span class="en">FastForward</span>
+        <span class="cn">向前海外 · 数字营销</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="about.html">关于我们</a>
+      <a href="services.html">业务服务</a>
+      <!-- <a href="cases.html">案例展示（已隐藏）</a> -->
+      <a href="creative.html">内容创意</a>
+      <!-- <a href="pricing.html">报价方案（已隐藏）</a> -->
+      
+      <a href="#home-contact">联系我们</a>
+    </div>
+    <a href="#home-contact" class="btn btn-primary nav-cta">免费咨询</a>
+    <button class="nav-hamburger" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<nav class="nav-mobile">
+  <a href="index.html">首页</a>
+  <a href="about.html">关于我们</a>
+  <a href="services.html">业务服务</a>
+  <!-- <a href="cases.html">案例展示（已隐藏）</a> -->
+  <a href="creative.html">内容创意</a>
+  <!-- <a href="pricing.html">报价方案（已隐藏）</a> -->
+  
+  <a href="#home-contact">联系我们</a>
+  <a href="#home-contact" class="btn btn-primary" style="margin-top:12px;text-align:center;justify-content:center;">免费咨询 →</a>
+</nav>
+
+
+<!-- ============================================================
+     Block 1：Hero Banner
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-orb hero-orb-blue"></div>
+  <div class="hero-orb hero-orb-orange"></div>
+  <div class="hero-orb hero-orb-purple"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      TikTok Shop 官方合作服务商
+    </div>
+    <h1 class="hero-title fade-up">
+      帮助品牌<br />
+      <span class="accent">赢得</span>海外内容电商
+    </h1>
+    <p class="hero-sub fade-up" data-delay="150">
+      TikTok 电商一站式增长伙伴
+      <span class="sep">|</span>
+      达人营销 · 广告投放 · 店铺代运营
+      <span class="sep">|</span>
+      覆盖 6 大海外市场
+    </p>
+    <div class="hero-btns fade-up" data-delay="250">
+      <!-- <a href="cases.html" class="btn btn-outline">查看案例 →（已隐藏）</a> -->
+      <a href="#home-contact" class="btn btn-primary">获取报价</a>
+    </div>
+    <div class="hero-scroll fade-up" data-delay="400">
+      <span>向下探索</span>
+      <div class="hero-scroll-arrow">↓</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Block 2：四大核心能力条
+     ============================================================ -->
+<section class="capability-strip">
+  <div class="container">
+    <div class="capability-grid">
+      <div class="cap-item fade-up" data-delay="0">
+        <span class="cap-icon">🎬</span>
+        <div class="cap-num grad-text">
+          <span data-countup data-target="200" data-suffix="+">200+</span>
+        </div>
+        <div class="cap-name">原创内容能力</div>
+        <div class="cap-desc">日产可转化素材，不混剪不搬运</div>
+      </div>
+      <div class="cap-item fade-up" data-delay="100">
+        <span class="cap-icon">🌟</span>
+        <div class="cap-num grad-text">
+          <span data-countup data-target="10000" data-suffix="+">10000+</span>
+        </div>
+        <div class="cap-name">达人资源网络</div>
+        <div class="cap-desc">固定合作达人，覆盖 6 个海外市场</div>
+      </div>
+      <div class="cap-item fade-up" data-delay="200">
+        <span class="cap-icon">📊</span>
+        <div class="cap-num grad-text">
+          <span data-countup data-target="6" data-suffix=" 市场">6 市场</span>
+        </div>
+        <div class="cap-name">广告投放能力</div>
+        <div class="cap-desc">LSA/VSA/PSA 全形式，实时 ROAS 优化</div>
+      </div>
+      <div class="cap-item fade-up" data-delay="300">
+        <span class="cap-icon">🛒</span>
+        <div class="cap-num grad-text">
+          端到端
+        </div>
+        <div class="cap-name">店铺运营能力</div>
+        <div class="cap-desc">TikTok Shop 专业代运营服务</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Block 3：六大服务矩阵
+     ============================================================ -->
+<section class="section-pad" style="background: var(--white);">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 56px;">
+      <span class="section-tag fade-up">Services</span>
+      <h2 class="section-title fade-up" data-delay="100">TikTok 全链路增长服务矩阵</h2>
+      <p class="section-subtitle fade-up" style="margin: 0 auto;" data-delay="200">
+        从市场判断到店铺运营，我们提供一套完整的协同增长系统，不只做执行，更帮助品牌构建真正跑起来的 TikTok 生意。
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up" data-delay="0">
+        <div class="icon-box icon-blue">🛍️</div>
+        <div class="service-card-text">
+          <h3>店铺运营</h3>
+          <p>关键词梳理、Listing 优化、货盘管理、价格策略，持续跟踪 GMV 数据</p>
+        </div>
+      </div>
+      <div class="service-card fade-up" data-delay="80">
+        <div class="icon-box icon-orange">🎬</div>
+        <div class="service-card-text">
+          <h3>短视频内容制作</h3>
+          <p>AI 视频工业化生产，日产百条测品素材，脚本·拍摄·剪辑全包</p>
+        </div>
+      </div>
+      <div class="service-card fade-up" data-delay="160">
+        <div class="icon-box icon-purple">📱</div>
+        <div class="service-card-text">
+          <h3>账号运营</h3>
+          <p>品牌官方账号冷启动，多账号矩阵策略布局，内容日历与社区互动管理</p>
+        </div>
+      </div>
+      <div class="service-card fade-up" data-delay="0">
+        <div class="icon-box icon-teal">🤝</div>
+        <div class="service-card-text">
+          <h3>达人建联与分发</h3>
+          <p>1000+ 固定合作达人，KOL/KOC 精准匹配，佣金带货 + 坑位费多模式</p>
+        </div>
+      </div>
+      <div class="service-card fade-up" data-delay="80">
+        <div class="icon-box icon-red">📈</div>
+        <div class="service-card-text">
+          <h3>广告投放</h3>
+          <p>LSA/VSA/PSA 全广告形式，素材 AB 测试迭代管线，实时 ROAS 监控优化</p>
+        </div>
+      </div>
+      <div class="service-card fade-up" data-delay="160">
+        <div class="icon-box icon-green">🎙️</div>
+        <div class="service-card-text">
+          <h3>直播运营</h3>
+          <p>直播间搭建与主播培训，直播前中后营销推广，转化率与客单价持续优化</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 48px;">
+      <a href="services.html" class="btn btn-blue fade-up">查看全部服务详情 →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Block 4：内容创意视频墙
+     ============================================================ -->
+<section class="video-section section-pad">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <span class="section-tag" style="color: var(--orange); background: rgba(255,107,0,0.1); border-color: rgba(255,107,0,0.2);">Creative Hub</span>
+        <h2 class="section-title" style="color: var(--white);">我们的<span class="grad-text">创作实力</span></h2>
+        <p class="section-subtitle" style="color: var(--text-light); white-space: nowrap;">
+          原创不搬运，每条视频都是围绕产品卖点与本土化表达精心制作的内容资产
+        </p>
+      </div>
+      <a href="creative.html" style="color: var(--orange); font-weight: 600; font-size: 14px; white-space:nowrap;">查看更多作品 →</a>
+    </div>
+
+    <!-- 并排双展示框：9:16 竖屏 + 16:9 横屏 -->
+    <div class="video-showcase-grid fade-up" data-delay="0">
+
+      <!-- 左框：9:16 竖屏 TikTok 原生格式 -->
+      <div class="video-showcase-box portrait" data-vsb-interval="5000">
+        <div class="vsb-header">
+          <span class="vsb-label">📱 9:16 竖屏 · TikTok 原生</span>
+          <span class="vsb-indicator">
+            <span class="vsb-dot active"></span>
+            <span class="vsb-dot"></span>
+            <span class="vsb-dot"></span>
+            <span class="vsb-dot"></span>
+            <span class="vsb-dot"></span>
+            <span class="vsb-dot"></span>
+            <span class="vsb-dot"></span>
+          </span>
+        </div>
+        <div class="vsb-video-stack">
+          <video src="../assets/videos/20260415-181926.mp4" autoplay muted loop playsinline class="active"
+                 data-tags='[{"t":"🇯🇵 日本市场","c":"rgba(0,102,255,0.85)"},{"t":"功能性饮料 · 高转化","c":"rgba(251,146,60,0.85)"}]'
+                 data-title="产品功效演示" data-desc="🇯🇵 日本 · 功能性饮料 高转化素材"></video>
+          <video src="../assets/videos/20260422-121242.mp4" muted loop playsinline
+                 data-tags='[{"t":"🇯🇵 日本市场","c":"rgba(0,102,255,0.85)"},{"t":"轻奢个护 · 明星主理人","c":"rgba(236,72,153,0.85)"}]'
+                 data-title="产品使用演示" data-desc="🇯🇵 日本 · 轻奢级个护 明星主理人"></video>
+          <video src="../assets/videos/0000.mp4" muted loop playsinline
+                 data-tags='[{"t":"🇧🇷 巴西市场","c":"rgba(0,102,255,0.85)"},{"t":"零成本达人 · 高转化","c":"rgba(34,197,94,0.85)"}]'
+                 data-title="达人种草" data-desc="🇧🇷 巴西 · 高转化素材 零成本达人"></video>
+          <video src="../assets/videos/媒体2.mp4" muted loop playsinline
+                 data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"韩国爆款 · 高转化","c":"rgba(251,146,60,0.85)"}]'
+                 data-title="种草 Vlog" data-desc="🇺🇸 美国 · 韩国爆款 高转化素材"></video>
+          <video src="../assets/videos/媒体1.mp4" muted loop playsinline
+                 data-tags='[{"t":"🇧🇷 巴西市场","c":"rgba(0,102,255,0.85)"},{"t":"爆款框架 · 投流优秀","c":"rgba(168,85,247,0.85)"}]'
+                 data-title="口播带货" data-desc="🇧🇷 巴西 · 爆款框架 投流表现优秀"></video>
+          <video src="../assets/videos/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" muted loop playsinline
+                 data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"女性保健品 · 全AI创作","c":"rgba(34,197,94,0.85)"}]'
+                 data-title="促销机制" data-desc="🇺🇸 美国 · 女性保健品 全AI创作"></video>
+          <video src="../assets/videos/Download (13).mp4" muted loop playsinline
+                 data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"爆品单品 · 日销3k","c":"rgba(251,146,60,0.85)"}]'
+                 data-title="产品实拍展示" data-desc="🇺🇸 美国 · 爆品单品 日销量3k"></video>
+        </div>
+        <div class="vsb-tags" id="portrait-tags">
+          <span class="vsb-tag" style="background:rgba(0,102,255,0.85);">🇯🇵 日本市场</span>
+          <span class="vsb-tag" style="background:rgba(251,146,60,0.85);">功能性饮料 · 高转化</span>
+        </div>
+        <div class="vsb-overlay" id="portrait-overlay">
+          <h4>产品功效演示</h4><p>🇯🇵 日本 · 功能性饮料 高转化素材</p>
+        </div>
+      </div>
+
+      <!-- 右框：16:9 横屏 广告 & 店铺素材 -->
+      <div class="video-showcase-box landscape" data-vsb-interval="6000">
+        <div class="vsb-header">
+          <span class="vsb-label">🖥️ 16:9 横屏 · 广告 & 店铺素材</span>
+          <span class="vsb-indicator">
+            <span class="vsb-dot active"></span>
+            <span class="vsb-dot"></span>
+            <span class="vsb-dot"></span>
+          </span>
+        </div>
+        <div class="vsb-video-stack">
+          <video src="../assets/videos/20260406-215200.mp4" autoplay muted loop playsinline class="active"
+                 data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"原创MV · 产品卖点歌词","c":"rgba(168,85,247,0.85)"}]'
+                 data-title="品牌种草广告" data-desc="🇺🇸 美国 · 原创MV 产品卖点歌词"></video>
+          <video src="../assets/videos/10.24-宅男逆袭.mp4" muted loop playsinline
+                 data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"原创AI短剧 · 自然流爆款","c":"rgba(34,197,94,0.85)"}]'
+                 data-title="短剧种草带货 · 宅男逆袭" data-desc="🇺🇸 美国 · 原创AI短剧 自然流爆款"></video>
+          <video src="../assets/videos/10.23-监狱.mp4" muted loop playsinline
+                 data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"原创AI短剧 · 自然流爆款","c":"rgba(251,146,60,0.85)"}]'
+                 data-title="短剧种草带货 · 监狱篇" data-desc="🇺🇸 美国 · 原创AI短剧 自然流爆款"></video>
+        </div>
+        <div class="vsb-tags" id="landscape-tags">
+          <span class="vsb-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span>
+          <span class="vsb-tag" style="background:rgba(168,85,247,0.85);">原创 MV · 产品卖点歌词</span>
+        </div>
+        <div class="vsb-overlay" id="landscape-overlay">
+          <h4>品牌种草广告</h4><p>🇺🇸 美国 · 原创MV 产品卖点歌词</p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- 视频数据小条 -->
+    <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border-radius: 16px; overflow:hidden; margin-top: 48px;">
+      <div style="padding:24px; text-align:center; background:#111827;">
+        <div style="font-size:26px;font-weight:900;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+          <span data-countup data-target="200" data-suffix="+">200+</span>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px;">日产原创视频</div>
+      </div>
+      <div style="padding:24px; text-align:center; background:#111827;">
+        <div style="font-size:26px;font-weight:900;color:#4ade80;">
+          <span data-countup data-target="30" data-suffix="%">30%</span>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px;">平均爆款率</div>
+      </div>
+      <div style="padding:24px; text-align:center; background:#111827;">
+        <div style="font-size:26px;font-weight:900;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+          <span data-countup data-target="10" data-suffix="%">10%</span>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px;">视频出单转化率</div>
+      </div>
+      <div style="padding:24px; text-align:center; background:#111827;">
+        <div style="font-size:26px;font-weight:900;color:#fb923c;">AI 工业化</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px;">视频生产能力</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ~~ Block 5：精选案例预览（已隐藏） ~~
+<section class="section-pad" style="background: var(--light-bg);">
+  ... 成功案例模块内容已隐藏 ...
+</section> -->
+
+
+<!-- ============================================================
+     Block 6：合作达人伙伴滚动
+     ============================================================ -->
+<section class="partners-section">
+  <div class="container" style="margin-bottom:36px; text-align:center;">
+    <span class="section-tag" style="color:var(--orange);background:rgba(255,107,0,0.1);border-color:rgba(255,107,0,0.2);">Influencer Network</span>
+    <h2 class="section-title fade-up" style="color:var(--white);">合作<span class="grad-text">达人伙伴</span></h2>
+    <p style="font-size:18px;color:rgba(255,255,255,0.45);margin-top:8px;">
+      战略合作伙伴 <strong style="color:#fff;">20+</strong> &nbsp;·&nbsp; 红人储备 <strong style="color:#fff;">1.5w+</strong> &nbsp;·&nbsp; 合作媒体 <strong style="color:#fff;">70+</strong>
+    </p>
+  </div>
+  <div class="influencer-marquee">
+    <div class="influencer-track">
+
+      <!-- 第1组：16位达人（来自 PPT P14） -->
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Gianna Harner.png" alt="Gianna" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#667eea,#764ba2)';this.alt='G'"/>
+        <div class="inf-name">Gianna Harner</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 10.6M</span><span class="inf-stat-badge inf-stat-ig">IG 480K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Garik Davtyan.png" alt="Garik" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#f093fb,#f5576c)';this.alt='G'"/>
+        <div class="inf-name">Garik Davtyan</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 9.8M</span><span class="inf-stat-badge inf-stat-ig">IG 1.1M</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Britney Rodriguez.png" alt="Britney" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#4facfe,#00f2fe)';this.alt='B'"/>
+        <div class="inf-name">Britney Rodriguez</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 8.7M</span><span class="inf-stat-badge inf-stat-ig">IG 2M</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Gage.png" alt="Gage" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#43e97b,#38f9d7)';this.alt='G'"/>
+        <div class="inf-name">Gage</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 8.1M</span><span class="inf-stat-badge inf-stat-ig">IG 39.1K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Abel Carden.png" alt="Abel" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#fa709a,#fee140)';this.alt='A'"/>
+        <div class="inf-name">Abel Carden</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 3.5M</span><span class="inf-stat-badge inf-stat-ig">IG 30K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Brooklynn.png" alt="Brooklyn" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#a18cd1,#fbc2eb)';this.alt='B'"/>
+        <div class="inf-name">Brooklyn</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 2.6M</span><span class="inf-stat-badge inf-stat-ig">IG 14.1K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Jessica Macrina.png" alt="Jessica" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#fccb90,#d57eeb)';this.alt='J'"/>
+        <div class="inf-name">Jessica Macrina</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 2.2M</span><span class="inf-stat-badge inf-stat-ig">IG 70.4K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Ottavia De Vivo.png" alt="Ottavia" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#e0c3fc,#8ec5fc)';this.alt='O'"/>
+        <div class="inf-name">Ottavia De Vivo</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 2.1M</span><span class="inf-stat-badge inf-stat-ig">IG 61K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Mariana Morais.png" alt="Mariana" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#f5576c,#ff6b6b)';this.alt='M'"/>
+        <div class="inf-name">Mariana Moraes</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.8M</span><span class="inf-stat-badge inf-stat-ig">IG 1M</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Albert.png" alt="Albert" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#89f7fe,#66a6ff)';this.alt='A'"/>
+        <div class="inf-name">Albert</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.7M</span><span class="inf-stat-badge inf-stat-ig">IG 35.8K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Brogan Morris.png" alt="Brogan" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#f093fb,#f5576c)';this.alt='B'"/>
+        <div class="inf-name">Brogan Morris</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.4M</span><span class="inf-stat-badge inf-stat-ig">IG 44.8K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Joseph Abell.png" alt="Joseph" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#5ee7df,#b490ca)';this.alt='J'"/>
+        <div class="inf-name">Joseph Abell</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.1M</span><span class="inf-stat-badge inf-stat-ig">IG 63.1K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Jeremy Pugh.png" alt="Jeremy" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#ffecd2,#fcb69f)';this.alt='J'"/>
+        <div class="inf-name">Jeremy Pugh</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.1M</span><span class="inf-stat-badge inf-stat-ig">IG 23.3K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Maryn Milne.png" alt="Maryn" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#a1c4fd,#c2e9fb)';this.alt='M'"/>
+        <div class="inf-name">Maryn Milne</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.1M</span><span class="inf-stat-badge inf-stat-ig">IG 529K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Cloe Greco.png" alt="Cloe" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#fbc2eb,#a6c1ee)';this.alt='C'"/>
+        <div class="inf-name">Cloe Greco</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 93.4K</span><span class="inf-stat-badge inf-stat-ig">IG 1.1M</span></div>
+      </div>
+
+      <!-- 第2组：无缝循环副本 -->
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Gianna Harner.png" alt="Gianna" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#667eea,#764ba2)'"/>
+        <div class="inf-name">Gianna Harner</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 10.6M</span><span class="inf-stat-badge inf-stat-ig">IG 480K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Garik Davtyan.png" alt="Garik" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#f093fb,#f5576c)'"/>
+        <div class="inf-name">Garik Davtyan</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 9.8M</span><span class="inf-stat-badge inf-stat-ig">IG 1.1M</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Britney Rodriguez.png" alt="Britney" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#4facfe,#00f2fe)'"/>
+        <div class="inf-name">Britney Rodriguez</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 8.7M</span><span class="inf-stat-badge inf-stat-ig">IG 2M</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Gage.png" alt="Gage" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#43e97b,#38f9d7)'"/>
+        <div class="inf-name">Gage</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 8.1M</span><span class="inf-stat-badge inf-stat-ig">IG 39.1K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Abel Carden.png" alt="Abel" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#fa709a,#fee140)'"/>
+        <div class="inf-name">Abel Carden</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 3.5M</span><span class="inf-stat-badge inf-stat-ig">IG 30K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Brooklynn.png" alt="Brooklyn" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#a18cd1,#fbc2eb)'"/>
+        <div class="inf-name">Brooklyn</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 2.6M</span><span class="inf-stat-badge inf-stat-ig">IG 14.1K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Jessica Macrina.png" alt="Jessica" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#fccb90,#d57eeb)'"/>
+        <div class="inf-name">Jessica Macrina</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 2.2M</span><span class="inf-stat-badge inf-stat-ig">IG 70.4K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Ottavia De Vivo.png" alt="Ottavia" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#e0c3fc,#8ec5fc)'"/>
+        <div class="inf-name">Ottavia De Vivo</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 2.1M</span><span class="inf-stat-badge inf-stat-ig">IG 61K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Mariana Morais.png" alt="Mariana" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#f5576c,#ff6b6b)'"/>
+        <div class="inf-name">Mariana Moraes</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.8M</span><span class="inf-stat-badge inf-stat-ig">IG 1M</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Albert.png" alt="Albert" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#89f7fe,#66a6ff)'"/>
+        <div class="inf-name">Albert</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.7M</span><span class="inf-stat-badge inf-stat-ig">IG 35.8K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Brogan Morris.png" alt="Brogan" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#f093fb,#f5576c)'"/>
+        <div class="inf-name">Brogan Morris</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.4M</span><span class="inf-stat-badge inf-stat-ig">IG 44.8K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Joseph Abell.png" alt="Joseph" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#5ee7df,#b490ca)'"/>
+        <div class="inf-name">Joseph Abell</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.1M</span><span class="inf-stat-badge inf-stat-ig">IG 63.1K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Jeremy Pugh.png" alt="Jeremy" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#ffecd2,#fcb69f)'"/>
+        <div class="inf-name">Jeremy Pugh</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.1M</span><span class="inf-stat-badge inf-stat-ig">IG 23.3K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Maryn Milne.png" alt="Maryn" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#a1c4fd,#c2e9fb)'"/>
+        <div class="inf-name">Maryn Milne</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 1.1M</span><span class="inf-stat-badge inf-stat-ig">IG 529K</span></div>
+      </div>
+      <div class="inf-card">
+        <img src="../assets/images/influencers/Cloe Greco.png" alt="Cloe" class="inf-avatar" onerror="this.style.background='linear-gradient(135deg,#fbc2eb,#a6c1ee)'"/>
+        <div class="inf-name">Cloe Greco</div>
+        <div class="inf-stats"><span class="inf-stat-badge inf-stat-tt">TT 93.4K</span><span class="inf-stat-badge inf-stat-ig">IG 1.1M</span></div>
+      </div>
+
+    </div>
+  </div>
+  <p style="text-align:center;font-size:12px;color:rgba(255,255,255,0.25);margin-top:20px;">
+    悬停暂停 · 部分战略合作伙伴展示（头像待替换为真实图片）
+  </p>
+</section>
+
+
+<!-- ============================================================
+     Block 7：五大差异化优势
+     ============================================================ -->
+<section class="section-pad" style="background: var(--dark-bg);">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 56px;">
+      <span class="section-tag" style="color:var(--orange);background:rgba(255,107,0,0.1);border-color:rgba(255,107,0,0.2);">Why Us</span>
+      <h2 class="section-title fade-up" style="color:var(--white);">为什么选择<span class="grad-text">向前海外</span></h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(5,1fr); gap: 20px;">
+      <div class="card-dark" style="padding:28px 20px; border-radius:16px; text-align:center;" class="fade-up">
+        <div style="font-size:36px;margin-bottom:16px;">🎯</div>
+        <h3 style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;">原创内容为核心</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">不混剪不搬运，每条都是可复用的内容资产</p>
+      </div>
+      <div class="card-dark" style="padding:28px 20px; border-radius:16px; text-align:center;">
+        <div style="font-size:36px;margin-bottom:16px;">🤖</div>
+        <h3 style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;">AI 视频工业化</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">日产百条原创视频，快速测品 AB 测试</p>
+      </div>
+      <div class="card-dark" style="padding:28px 20px; border-radius:16px; text-align:center;">
+        <div style="font-size:36px;margin-bottom:16px;">🚀</div>
+        <h3 style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;">真实 0-1 起盘</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">自己跑过从 0 到 10 的完整增长路径</p>
+      </div>
+      <div class="card-dark" style="padding:28px 20px; border-radius:16px; text-align:center;">
+        <div style="font-size:36px;margin-bottom:16px;">🔗</div>
+        <h3 style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;">全链路协同</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">内容+达人+广告+直播+店铺整合驱动</p>
+      </div>
+      <div class="card-dark" style="padding:28px 20px; border-radius:16px; text-align:center;">
+        <div style="font-size:36px;margin-bottom:16px;">🌐</div>
+        <h3 style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;">双语项目管理</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">海归双语 PM 团队，跨市场协同</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Block 7.5：合作品牌走马灯（来自 partners.html）
+     ============================================================ -->
+<section style="background:var(--white);padding:56px 0;overflow:hidden;">
+  <div class="container" style="text-align:center;margin-bottom:28px;">
+    <span class="section-tag">Trusted by 50+ Brands Globally</span>
+    <h2 class="section-title fade-up" style="color:var(--text-dark);">品牌<span class="grad-text">合作伙伴</span></h2>
+    <div style="height:48px;"></div>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="partner-logo-item"><img src="brands/b1.png" alt="Aura Pura" /></div>
+      <div class="partner-logo-item"><img src="brands/b2.png" alt="Brand B" /></div>
+      <div class="partner-logo-item"><img src="brands/b3.png" alt="Saji One" /></div>
+      <div class="partner-logo-item"><img src="brands/b4.png" alt="Solaraé" /></div>
+      <div class="partner-logo-item"><img src="brands/b5.jpg" alt="Newllme" /></div>
+      <!-- 复制一组 -->
+      <div class="partner-logo-item"><img src="brands/b1.png" alt="Aura Pura" /></div>
+      <div class="partner-logo-item"><img src="brands/b2.png" alt="Brand B" /></div>
+      <div class="partner-logo-item"><img src="brands/b3.png" alt="Saji One" /></div>
+      <div class="partner-logo-item"><img src="brands/b4.png" alt="Solaraé" /></div>
+      <div class="partner-logo-item"><img src="brands/b5.jpg" alt="Newllme" /></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Block 8：CTA 行动召唤
+     ============================================================ -->
+<section class="cta-section">
+  <div class="container">
+    <h2>准备好打造下一个爆款了吗？</h2>
+    <p>我们交付的是业务结果，不只是代运营服务。</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Block 9：快捷联系我们
+     ============================================================ -->
+<section class="home-contact-cards" id="home-contact">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 44px;">
+      <span class="section-tag">Get In Touch</span>
+      <h2 class="section-title fade-up" data-delay="0">多种方式<span class="grad-text">随时联系</span></h2>
+      <p class="section-subtitle fade-up" style="margin: 0 auto;" data-delay="100">选择最适合你的方式与我们取得联系，我们会在第一时间回复</p>
+    </div>
+    <div class="home-contact-grid">
+      <div class="home-contact-card fade-up" data-delay="0">
+        <span class="hc-icon">✉️</span>
+        <h3>发送邮件</h3>
+        <p>有问题或想了解更多？发邮件给我们，24 小时内回复</p>
+        <a href="mailto:regina.shen@power-engine.com.cn">regina.shen@power-engine.com.cn</a>
+      </div>
+      <div class="home-contact-card fade-up" data-delay="100">
+        <span class="hc-icon">💬</span>
+        <h3>微信咨询</h3>
+        <p>扫码添加微信，直接与项目团队实时沟通</p>
+        <a href="#">添加微信 →</a>
+      </div>
+      <div class="home-contact-card fade-up" data-delay="200">
+        <span class="hc-icon">📅</span>
+        <h3>预约视频会议</h3>
+        <p>预约 30 分钟免费咨询通话，深入了解你的需求</p>
+        <a href="mailto:regina.shen@power-engine.com.cn?subject=预约免费咨询">立即预约 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- 品牌列 -->
+      <div class="footer-brand">
+        <div class="logo-wrap">
+          <img src="../assets/images/logo/fastforward-logo-icon.svg" alt="FastForward" />
+          <div class="brand-name">FastForward <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.4);">向前海外</span></div>
+        </div>
+        <p>帮助品牌从零跑通 TikTok Shop，将原创内容、达人分发、广告投放、店铺运营整合为一套协同增长系统。</p>
+        <div class="social-links">
+          <a class="social-link" href="#" title="TikTok">🎵</a>
+          <a class="social-link" href="#" title="Instagram">📷</a>
+          <a class="social-link" href="#" title="LinkedIn">💼</a>
+          <a class="social-link" href="#" title="WeChat">💬</a>
+        </div>
+      </div>
+      <!-- 服务列 -->
+      <div class="footer-col">
+        <h4>服务</h4>
+        <ul>
+          <li><a href="services.html">店铺运营</a></li>
+          <li><a href="services.html">短视频制作</a></li>
+          <li><a href="services.html">账号运营</a></li>
+          <li><a href="services.html">达人建联</a></li>
+          <li><a href="services.html">广告投放</a></li>
+          <li><a href="services.html">直播运营</a></li>
+        </ul>
+      </div>
+      <!-- 公司列 -->
+      <div class="footer-col">
+        <h4>公司</h4>
+        <ul>
+          <li><a href="about.html">关于我们</a></li>
+          <li><!-- <a href="cases.html">成功案例（已隐藏）</a> --></li>
+          <li><a href="creative.html">内容创意</a></li>
+          <li><!-- <a href="pricing.html">报价方案（已隐藏）</a> --></li>
+          <li></li>
+          <li><a href="#home-contact">联系我们</a></li>
+        </ul>
+      </div>
+      <!-- 联系列 -->
+      <div class="footer-col">
+        <h4>联系我们</h4>
+        <div class="footer-contact">
+          <div class="footer-contact-item">
+            <span class="icon">✉️</span>
+            <span>regina.shen@power-engine.com.cn</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">🌍</span>
+            <span>覆盖美国、巴西、墨西哥、日本、新加坡、菲律宾</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="icon">⏰</span>
+            <span>周一至周五 9:00 – 18:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 向前海外 FastForward. All rights reserved.</span>
+      <span>TikTok 电商一站式增长伙伴</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+// ---- 展示框视频循环轮播 ----
+document.querySelectorAll('.video-showcase-box').forEach(function(box) {
+  var stack = box.querySelector('.vsb-video-stack');
+  var videos = stack ? stack.querySelectorAll('video') : [];
+  if (videos.length < 2) return;
+
+  var interval = parseInt(box.getAttribute('data-vsb-interval')) || 5000;
+  var tagsEl = box.querySelector('.vsb-tags');
+  var overlayEl = box.querySelector('.vsb-overlay');
+  var dots = box.querySelectorAll('.vsb-dot');
+  var current = 0;
+  var timer;
+
+  function showVideo(idx) {
+    // 切换 video active 状态
+    videos[current].classList.remove('active');
+    videos[current].pause();
+    current = idx;
+    if (current >= videos.length) current = 0;
+
+    var v = videos[current];
+    v.classList.add('active');
+    v.currentTime = 0;
+    v.play().catch(function(){});
+
+    // 更新标签
+    if (tagsEl && v.dataset.tags) {
+      var tagList = JSON.parse(v.dataset.tags);
+      tagsEl.innerHTML = tagList.map(function(tg){
+        return '<span class="vsb-tag" style="background:' + tg.c + ';">' + tg.t + '</span>';
+      }).join('');
+    }
+
+    // 更新 hover overlay
+    if (overlayEl && v.dataset.title) {
+      overlayEl.innerHTML = '<h4>' + v.dataset.title + '</h4><p>' + (v.dataset.desc || '') + '</p>';
+    }
+
+    // 更新圆点指示器
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+  }
+
+  function nextVideo() {
+    showVideo(current + 1);
+  }
+
+  function startLoop() {
+    clearInterval(timer);
+    timer = setInterval(nextVideo, interval);
+  }
+
+  // 监听当前视频播放结束，提前切下一个
+  videos.forEach(function(v) {
+    v.addEventListener('ended', nextVideo);
+  });
+
+  // hover 暂停
+  box.addEventListener('mouseenter', function() { clearInterval(timer); });
+  box.addEventListener('mouseleave', function() { startLoop(); });
+
+  // 启动循环
+  startLoop();
+});
+</script>
+</body>
+</html>

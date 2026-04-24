@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>报价方案 — 向前海外 FastForward</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* 报价页专用 */
+    .pricing-section { background: var(--light-bg); }
+
+    /* 渠道合作说明表格 */
+    .channel-info-table {
+      width: 100%; border-collapse: collapse; margin-top: 48px;
+      border-radius: var(--radius-md); overflow: hidden;
+    }
+    .channel-info-table th {
+      padding: 14px 20px; background: rgba(0,102,255,0.06);
+      font-size: 13px; font-weight: 700; color: var(--blue);
+      text-align: left; border-bottom: 2px solid rgba(0,102,255,0.12);
+    }
+    .channel-info-table td {
+      padding: 14px 20px; font-size: 13px; color: var(--text-dark);
+      border-bottom: 1px solid rgba(0,0,0,0.06); background: var(--white);
+    }
+    .channel-info-table tr:last-child td { border-bottom: none; }
+    .channel-info-table td:first-child { font-weight: 600; color: var(--text-muted); width: 140px; }
+
+    .pricing-toggle {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center; margin-bottom: 48px;
+    }
+    .toggle-label { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+    .toggle-label.active { color: var(--text-dark); }
+
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+    .pricing-card.featured {
+      border-color: var(--blue);
+      box-shadow: 0 8px 40px rgba(0,102,255,0.15);
+      transform: scale(1.04);
+    }
+    .pricing-card.featured:hover { transform: scale(1.04) translateY(-6px); }
+
+    .pricing-header {
+      padding: 32px 32px 24px;
+      position: relative;
+    }
+    .pricing-header.dark { background: var(--grad-dark); }
+    .pricing-header.blue { background: linear-gradient(135deg, #0044CC, #0066FF); }
+    .pricing-header.light { background: var(--white); border-bottom: 1px solid rgba(0,0,0,0.06); }
+
+    .pricing-badge {
+      position: absolute; top: -1px; right: 24px;
+      background: var(--orange);
+      color: var(--white); font-size: 11px; font-weight: 700;
+      padding: 6px 14px; border-radius: 0 0 8px 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-plan { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .pricing-plan.light-text { color: rgba(255,255,255,0.6); }
+    .pricing-plan.dark-text  { color: var(--text-muted); }
+
+    .pricing-name { font-size: 24px; font-weight: 900; margin-bottom: 12px; }
+    .pricing-name.light-text { color: var(--white); }
+    .pricing-name.dark-text  { color: var(--text-dark); }
+
+    .pricing-price {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 48px; font-weight: 900; line-height: 1; margin-bottom: 4px;
+    }
+    .pricing-price.light-text { color: var(--white); }
+    .pricing-price.orange-text { color: var(--white); }
+    .pricing-price.dark-text  { color: var(--text-dark); }
+
+    .pricing-unit { font-size: 13px; opacity: 0.6; margin-bottom: 16px; }
+    .pricing-unit.light { color: rgba(255,255,255,0.6); }
+    .pricing-unit.dark  { color: var(--text-muted); }
+
+    .pricing-desc { font-size: 13px; line-height: 1.6; }
+    .pricing-desc.light { color: rgba(255,255,255,0.7); }
+    .pricing-desc.dark  { color: var(--text-muted); }
+
+    .pricing-body { padding: 28px 32px 32px; }
+    .pricing-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .pf-item { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text-dark); line-height: 1.5; }
+    .pf-item .pf-check { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+    .pf-check.blue   { background: rgba(0,102,255,0.1); color: var(--blue); }
+    .pf-check.orange { background: rgba(255,107,0,0.1); color: var(--orange); }
+    .pf-check.white  { background: rgba(0,102,255,0.08); color: var(--blue); }
+    .pf-item.dimmed  { color: var(--text-muted); }
+    .pf-item.dimmed .pf-check { background: rgba(0,0,0,0.04); color: rgba(0,0,0,0.2); }
+
+    .pricing-cta {
+      display: block; text-align: center; padding: 14px;
+      border-radius: 100px; font-size: 15px; font-weight: 700;
+      transition: var(--transition); cursor: pointer;
+    }
+    .pricing-cta.primary { background: var(--blue); color: var(--white); box-shadow: var(--shadow-blue); }
+    .pricing-cta.primary:hover { background: #0052cc; transform: translateY(-2px); }
+    .pricing-cta.secondary { border: 2px solid rgba(0,0,0,0.12); color: var(--text-dark); }
+    .pricing-cta.secondary:hover { border-color: var(--blue); color: var(--blue); }
+    .pricing-cta.orange { background: var(--orange); color: var(--white); box-shadow: 0 4px 20px rgba(255,107,0,0.3); }
+    .pricing-cta.orange:hover { background: #e55f00; transform: translateY(-2px); }
+
+    .pricing-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+    .pricing-divider hr { flex: 1; border: none; border-top: 1px solid rgba(0,0,0,0.07); }
+    .pricing-divider span { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+    /* 比较表 */
+    .compare-section { background: var(--white); }
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table th {
+      padding: 16px 20px; text-align: center; font-size: 13px; font-weight: 700;
+      background: var(--light-bg); color: var(--text-dark);
+    }
+    .compare-table th:first-child { text-align: left; }
+    .compare-table th.featured { background: rgba(0,102,255,0.06); color: var(--blue); }
+    .compare-table td {
+      padding: 14px 20px; border-bottom: 1px solid rgba(0,0,0,0.06);
+      font-size: 13px; text-align: center; color: var(--text-muted);
+    }
+    .compare-table td:first-child { text-align: left; color: var(--text-dark); font-weight: 500; }
+    .compare-table td.featured { background: rgba(0,102,255,0.02); }
+    .compare-table .check { color: var(--green); font-size: 16px; }
+    .compare-table .cross { color: #e5e7eb; font-size: 16px; }
+    .compare-table .cat-row td { background: var(--light-bg); font-weight: 700; color: var(--text-dark); font-size: 12px; letter-spacing: 0.5px; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      border: 1px solid rgba(0,0,0,0.08); border-radius: var(--radius-md);
+      overflow: hidden; transition: var(--transition);
+    }
+    .faq-item:hover { border-color: rgba(0,102,255,0.2); }
+    .faq-q {
+      padding: 20px 24px; font-size: 15px; font-weight: 600;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      background: var(--white); color: var(--text-dark);
+    }
+    .faq-q .arrow { font-size: 12px; transition: var(--transition); color: var(--text-muted); }
+    .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+    .faq-a {
+      padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+      font-size: 14px; color: var(--text-muted); line-height: 1.7;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 24px 20px; }
+
+    @media (max-width:1024px) { .pricing-grid { grid-template-columns: 1fr; } .pricing-card.featured { transform: none; } }
+    @media (max-width:768px) { .compare-table { display: none; } }
+  </style>
+</head>
+<body>
+
+<nav class="nav scrolled">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="../assets/images/logo/fastforward-logo-icon.svg" alt="FastForward Icon" />
+      <div class="nav-logo-text"><span class="en">FastForward</span><span class="cn">向前海外 · 数字营销</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">首页</a><a href="about.html">关于我们</a><a href="services.html">业务服务</a>
+      <!-- <a href="cases.html">案例展示（已隐藏）</a> --><a href="creative.html">内容创意</a>
+      <a href="pricing.html" class="active">报价方案</a>
+      <a href="index.html#home-contact">联系我们</a>
+    </div>
+    <a href="index.html#home-contact" class="btn btn-primary nav-cta">免费咨询</a>
+    <button class="nav-hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<nav class="nav-mobile">
+  <a href="index.html">首页</a><a href="about.html">关于我们</a><a href="services.html">业务服务</a>
+  <!-- <a href="cases.html">案例展示（已隐藏）</a> --><a href="creative.html">内容创意</a><a href="pricing.html">报价方案</a>
+  <a href="index.html#home-contact">联系我们</a>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">首页</a><span>/</span><span>报价方案</span></div>
+    <h1>渠道合作伙伴报价体系</h1>
+    <p>以月度采购量分档定价，客户自主定价、商务利润透明可预期</p>
+  </div>
+</section>
+
+<!-- 定价卡片 -->
+<section class="pricing-section section-pad">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <span class="section-tag">Channel Pricing</span>
+      <h2 class="section-title fade-up">渠道合作伙伴素材分档体系</h2>
+      <p class="section-subtitle fade-up" style="margin:0 auto;" data-delay="100">以月度采购量为分档依据，商务自主定价，参考零售价 ¥300–¥400/条</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- 入门渠道 -->
+      <div class="pricing-card fade-up" data-delay="0">
+        <div class="pricing-header light">
+          <div class="pricing-plan dark-text">Starter Channel</div>
+          <div class="pricing-name dark-text">入门渠道</div>
+          <div class="pricing-price dark-text" style="font-size:52px;">¥300</div>
+          <div class="pricing-unit dark">/ 条 · 结算底价</div>
+          <div class="pricing-desc dark">月采购量 ≥ 100 条，适合刚起步或正在拓客阶段的渠道商务</div>
+        </div>
+        <div class="pricing-body">
+          <div class="pricing-features">
+            <div class="pf-item"><span class="pf-check white">✓</span><span>参考零售价 <strong>¥400/条</strong></span></div>
+            <div class="pf-item"><span class="pf-check white">✓</span><span>商务利润 <strong>¥100/条</strong></span></div>
+            <div class="pf-item"><span class="pf-check white">✓</span><span>最低起订 100 条/月</span></div>
+            <div class="pf-item"><span class="pf-check white">✓</span><span>低于 100 条按此档结算</span></div>
+            <div class="pf-item"><span class="pf-check white">✓</span><span>过往案例共享（脱敏版）</span></div>
+            <div class="pf-item"><span class="pf-check white">✓</span><span>标准版素材库授权</span></div>
+            <div class="pf-item dimmed"><span class="pf-check white">—</span><span>广告代投分成（另计）</span></div>
+          </div>
+          <div class="pricing-divider"><hr /><span>结算规则</span><hr /></div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.7;">
+            客户付款后 5 日内结算 · 商务自主定价 · 客户归属我司
+          </div>
+          <a href="index.html#home-contact" class="pricing-cta secondary">咨询入门渠道 →</a>
+        </div>
+      </div>
+
+      <!-- 标准渠道（推荐） -->
+      <div class="pricing-card featured fade-up" data-delay="100">
+        <div class="pricing-header blue">
+          <div class="pricing-badge">最受欢迎</div>
+          <div class="pricing-plan light-text">Standard Channel</div>
+          <div class="pricing-name light-text">标准渠道</div>
+          <div class="pricing-price light-text" style="font-size:52px;">¥250</div>
+          <div class="pricing-unit light">/ 条 · 结算底价</div>
+          <div class="pricing-desc light">月采购量 ≥ 300 条，适合已积累一定客户资源、稳定出货的商务伙伴</div>
+        </div>
+        <div class="pricing-body">
+          <div class="pricing-features">
+            <div class="pf-item"><span class="pf-check blue">✓</span><span>参考零售价 <strong>¥300/条</strong></span></div>
+            <div class="pf-item"><span class="pf-check blue">✓</span><span>商务利润 <strong>¥50/条</strong></span></div>
+            <div class="pf-item"><span class="pf-check blue">✓</span><span>月采购量 ≥ 300 条享此价</span></div>
+            <div class="pf-item"><span class="pf-check blue">✓</span><span>过往案例共享（脱敏版）</span></div>
+            <div class="pf-item"><span class="pf-check blue">✓</span><span>标准版素材库授权</span></div>
+            <div class="pf-item"><span class="pf-check blue">✓</span><span><strong>广告代投分成 10%</strong></span></div>
+            <div class="pf-item"><span class="pf-check blue">✓</span><span><strong>TK 店铺代运营分成 10%</strong></span></div>
+          </div>
+          <div class="pricing-divider"><hr /><span style="color:var(--blue);">额外收益</span><hr /></div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.7;">
+            广告代投 & 店铺代运营收入额外享 10% 分成 · 客户付款后 5 日结算
+          </div>
+          <a href="index.html#home-contact" class="pricing-cta primary">立即咨询标准渠道 →</a>
+        </div>
+      </div>
+
+      <!-- 核心渠道 -->
+      <div class="pricing-card fade-up" data-delay="200">
+        <div class="pricing-header dark">
+          <div class="pricing-plan light-text">Core Channel</div>
+          <div class="pricing-name light-text">核心渠道</div>
+          <div class="pricing-price light-text" style="font-size:52px;">¥245</div>
+          <div class="pricing-unit light">/ 条 · 结算底价</div>
+          <div class="pricing-desc light">月采购量 ≥ 600 条，适合具备规模化拓客能力的核心商务伙伴</div>
+        </div>
+        <div class="pricing-body">
+          <div class="pricing-features">
+            <div class="pf-item"><span class="pf-check orange">✓</span><span>参考零售价 <strong>¥300/条</strong></span></div>
+            <div class="pf-item"><span class="pf-check orange">✓</span><span>商务利润 <strong>¥55/条</strong></span></div>
+            <div class="pf-item"><span class="pf-check orange">✓</span><span>月采购量 ≥ 600 条享此价</span></div>
+            <div class="pf-item"><span class="pf-check orange">✓</span><span>过往案例共享（脱敏版）</span></div>
+            <div class="pf-item"><span class="pf-check orange">✓</span><span>标准版素材库授权</span></div>
+            <div class="pf-item"><span class="pf-check orange">✓</span><span><strong>广告代投分成 10%</strong></span></div>
+            <div class="pf-item"><span class="pf-check orange">✓</span><span><strong>TK 店铺代运营分成 10%</strong></span></div>
+          </div>
+          <div class="pricing-divider"><hr /><span>专属权益</span><hr /></div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.7;">
+            最优底价 · 全额分成政策 · 客户付款后 5 日结算
+          </div>
+          <a href="index.html#home-contact" class="pricing-cta orange">联系成为核心渠道 →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 合作模式说明 -->
+    <table class="channel-info-table fade-up">
+      <thead>
+        <tr>
+          <th>合作要素</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>结算方式</td>
+          <td>客户付款后，我方于 <strong>5 日内</strong>与渠道商务伙伴完成结算</td>
+        </tr>
+        <tr>
+          <td>客户归属</td>
+          <td>客户归属我司；商务负责客户开发和关系维护</td>
+        </tr>
+        <tr>
+          <td>服务提供</td>
+          <td>我们提供全部内容制作、代运营、投流执行服务；商务专注商务拓展</td>
+        </tr>
+        <tr>
+          <td>额外分成</td>
+          <td>渠道伙伴开发的客户若涉及广告代投或 TikTok 店铺代运营，该业务收入的 <strong>10%</strong> 作为商务分成</td>
+        </tr>
+        <tr>
+          <td>定价权</td>
+          <td>商务自主定价；参考零售价 ¥300–¥400/条，实际定价权归商务方</td>
+        </tr>
+        <tr>
+          <td>最低起订</td>
+          <td>入门渠道 100 条/月起；低于 100 条按入门渠道标准结算</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-pad" style="background:var(--white);">
+  <div class="container" style="max-width:760px;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <span class="section-tag">FAQ</span>
+      <h2 class="section-title fade-up">常见问题</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>渠道分档如何计算？月中加量能否升档？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          分档以「当月实际采购量」为准。月中加量如果累计突破下一档门槛（如从 250 条追加到 310 条），该月整体自动按高档结算，已付差价可在次月账单中抵扣。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>广告代投和店铺代运营的 10% 分成怎么计算？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          分成基数 = 我司实际向客户收取的服务费（不含广告充值预算），渠道商务获得其中 10%。例如客户月付代运营服务费 ¥10,000，商务可获 ¥1,000 分成，与素材结算款合并打款，同样遵循 5 日结算周期。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>我自己开发的客户，后续关系维护由谁负责？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          客户归属我司，但商务伙伴全程参与关系维护和续约跟进。我们提供专属对接微信群、定期数据报告，确保商务伙伴随时能回答客户问题，不会"拿了客户就断联"。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>案例素材库可以拿去对外展示吗？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          可以。我们提供脱敏版过往案例（品牌名称隐去，数据保留），授权商务方在提案和客户演示中使用。标准版素材库同步开放，涵盖不同类目、不同市场的代表性内容帧。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>月采购量不稳定，会被降档或取消合作吗？</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="faq-a">
+          不会。我们没有强制保量要求，低于本档门槛的月份按入门渠道价（¥300/条）结算，下个月量起来后自动恢复原档。我们希望建立长期合作关系，而不是靠门槛设限。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>想成为我们的渠道合作伙伴？</h2>
+    <p>加我微信了解合作详情，10 分钟内明确你的分档和起订方案。</p>
+    <a href="index.html#home-contact" class="cta-btn-white">立即联系洽谈 →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-wrap"><img src="../assets/images/logo/fastforward-logo-icon.svg" alt="FastForward" /><div class="brand-name">FastForward <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.4);">向前海外</span></div></div>
+        <p>帮助品牌从零跑通 TikTok Shop，将原创内容、达人分发、广告投放、店铺运营整合为一套协同增长系统。</p>
+        <div class="social-links"><a class="social-link" href="#">🎵</a><a class="social-link" href="#">📷</a><a class="social-link" href="#">💼</a><a class="social-link" href="#">💬</a></div>
+      </div>
+      <div class="footer-col"><h4>服务</h4><ul><li><a href="services.html">店铺运营</a></li><li><a href="services.html">短视频制作</a></li><li><a href="services.html">账号运营</a></li><li><a href="services.html">达人建联</a></li><li><a href="services.html">广告投放</a></li><li><a href="services.html">直播运营</a></li></ul></div>
+      <div class="footer-col"><h4>公司</h4><ul><li><a href="about.html">关于我们</a></li><li><!-- <a href="cases.html">成功案例（已隐藏）</a> --></li><li><a href="creative.html">内容创意</a></li><li><a href="pricing.html">报价方案</a></li><li></li><li><a href="index.html#home-contact">联系我们</a></li></ul></div>
+      <div class="footer-col"><h4>联系我们</h4><div class="footer-contact"><div class="footer-contact-item"><span class="icon">✉️</span><span>regina.shen@power-engine.com.cn</span></div></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 向前海外 FastForward. All rights reserved.</span></div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+  // FAQ 手风琴
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
