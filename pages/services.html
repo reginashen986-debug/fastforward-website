@@ -159,6 +159,77 @@
       white-space: nowrap;
       box-shadow: 0 4px 20px rgba(0,102,255,0.4);
     }
+
+    /* ===== 动态数据仪表盘 - 店铺运营 ===== */
+    .store-dashboard {
+      flex-direction: column !important;
+      gap: 14px;
+      padding: 20px 18px !important;
+    }
+    .sd-metrics {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width:100%;
+    }
+    .sd-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .sd-label {
+      font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 4px;
+      font-weight:500; letter-spacing:0.5px; text-transform:uppercase;
+    }
+    .sd-value {
+      font-size: 20px; font-weight:800; color:#fff; line-height:1.2;
+      font-family:'Inter','Montserrat',sans-serif;
+    }
+    .sd-pct { color: #00d4ff !important; }
+    .sd-trend {
+      font-size: 11px; margin-top:2px; font-weight:600;
+    }
+    .sd-trend.up { color:#22c55e; }
+    .sd-chart-wrap {
+      width:100%; flex:1; min-height:80px; position:relative;
+    }
+    .sd-chart {
+      width:100%; height:90px; display:block;
+    }
+    .sd-area {
+      opacity: 0;
+      animation: sdFadeIn 1s ease forwards 0.6s;
+    }
+    .sd-line {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: sdDrawLine 2s ease forwards 0.8s;
+    }
+    @keyframes sdDrawLine { to { stroke-dashoffset: 0; } }
+    @keyframes sdFadeIn { to { opacity: 1; } }
+    .sd-x-axis {
+      display:flex; justify-content:space-between;
+      margin-top:4px; padding: 0 2px;
+    }
+    .sd-x-axis span {
+      font-size:9px; color:rgba(255,255,255,0.25);
+    }
+    .sd-markets {
+      display:flex; justify-content:center; gap:8px;
+    }
+    .sd-market-tag {
+      display:inline-flex; align-items:center; gap:4px;
+      background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08);
+      border-radius:100px; padding:4px 10px; font-size:11px;
+      color:rgba(255,255,255,0.55); font-weight:500;
+    }
+    .sd-market-tag .flag { font-size:13px; }
+
+    @media (max-width:768px) {
+      .sd-metrics { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .sd-value { font-size: 16px; }
+      .sd-label { font-size: 10px; }
+      .store-dashboard { padding: 16px 12px !important; }
+    }
   </style>
 </head>
 <body>
@@ -255,8 +326,53 @@
           <div class="feature-item"><span class="check">✓</span><span>店铺 Banner 与评价管理，打造品牌信任度</span></div>
         </div>
       </div>
-      <div class="service-visual fade-right">
-        <div class="service-visual-inner"><span>🛍️</span><p>店铺运营数据看板截图<br /><small>（后续替换为真实素材）</small></p></div>
+      <div class="service-visual fade-right store-dashboard">
+        <!-- 顶部指标行 -->
+        <div class="sd-metrics">
+          <div class="sd-card">
+            <div class="sd-label">总 GMV</div>
+            <div class="sd-value" data-target="2847650">¥0</div>
+            <div class="sd-trend up">↑ 23.5%</div>
+          </div>
+          <div class="sd-card">
+            <div class="sd-label">订单量</div>
+            <div class="sd-value" data-target="18642">0</div>
+            <div class="sd-trend up">↑ 18.2%</div>
+          </div>
+          <div class="sd-card">
+            <div class="sd-label">转化率</div>
+            <div class="sd-value sd-pct">4.8%</div>
+            <div class="sd-trend up">↑ 0.6%</div>
+          </div>
+        </div>
+        <!-- 图表区 -->
+        <div class="sd-chart-wrap">
+          <svg class="sd-chart" viewBox="0 0 400 120" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0066FF" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#0066FF" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="chartLine" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0066FF"/>
+                <stop offset="100%" stop-color="#FF6B00"/>
+              </linearGradient>
+            </defs>
+            <path class="sd-area" fill="url(#chartGrad)"/>
+            <path class="sd-line" fill="none" stroke="url(#chartLine)" stroke-width="2.5" stroke-linecap="round"/>
+            <g class="sd-dots"></g>
+          </svg>
+          <div class="sd-x-axis">
+            <span>1月</span><span>2月</span><span>3月</span><span>4月</span><span>5月</span><span>6月</span>
+          </div>
+        </div>
+        <!-- 底部市场标签 -->
+        <div class="sd-markets">
+          <span class="sd-market-tag"><span class="flag">🇺🇸</span> 美国</span>
+          <span class="sd-market-tag"><span class="flag">🇧🇷</span> 巴西</span>
+          <span class="sd-market-tag"><span class="flag">🇯🇵</span> 日本</span>
+          <span class="sd-market-tag"><span class="flag">🇲🇽</span> 墨西哥</span>
+        </div>
       </div>
     </div>
   </div>
@@ -451,5 +567,78 @@
   </div>
 </footer>
 <script src="assets/js/main.js"></script>
+<script>
+/* ===== 店铺运营仪表盘动画 ===== */
+(function(){
+  // 1. 数字滚动动画
+  function animateNumbers() {
+    document.querySelectorAll('.sd-value[data-target]').forEach(el => {
+      const target = +el.dataset.target;
+      const prefix = target > 10000 ? '¥' : '';
+      const duration = 2000;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        // easeOutExpo
+        const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        const current = Math.floor(eased * target);
+        el.textContent = prefix + current.toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  // 2. 绘制图表曲线
+  function drawChart() {
+    const svg = document.querySelector('.sd-chart');
+    if (!svg) return;
+    // 模拟GMV数据点 (6个月)
+    const data = [35, 48, 42, 65, 78, 95];
+    const W = 400, H = 120, padL = 0, padT = 5, padB = 15;
+    const maxVal = Math.max(...data) * 1.15;
+    const pts = data.map((v,i) => ({
+      x: (i / (data.length-1)) * W,
+      y: padT + (H - padT - padB) * (1 - v/maxVal)
+    }));
+
+    // 面积 path
+    let areaD = `M ${pts[0].x},${H - padB}`;
+    pts.forEach(p => areaD += ` L ${p.x},${p.y}`);
+    areaD += ` L ${pts[pts.length-1].x},${H-padB} Z`;
+    svg.querySelector('.sd-area').setAttribute('d', areaD);
+
+    // 线条 path
+    let lineD = `M ${pts[0].x},${pts[0].y}`;
+    for(let i=1;i<pts.length;i++) lineD += ` L ${pts[i].x},${pts[i].y}`;
+    svg.querySelector('.sd-line').setAttribute('d', lineD);
+
+    // 数据点
+    const dotsG = svg.querySelector('.sd-dots');
+    dotsG.innerHTML = '';
+    pts.forEach((p,i) => {
+      const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx', p.x); circle.setAttribute('cy', p.y);
+      circle.setAttribute('r', '3.5'); circle.setAttribute('fill', '#fff';
+      circle.setAttribute('opacity', '0');
+      circle.style.animation = `sdFadeIn 0.4s ease forwards ${1.2 + i*0.15}s`;
+      dotsG.appendChild(circle);
+    });
+  }
+
+  // IntersectionObserver 触发
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateNumbers(); drawChart(); obs.disconnect();
+        }
+      });
+    }, {threshold:0.25});
+    const dash = document.querySelector('.store-dashboard');
+    if(dash) obs.observe(dash);
+  }
+})();
+</script>
 </body>
 </html>
