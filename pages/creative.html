@@ -92,18 +92,22 @@
       line-height: 1.4;
     }
 
-    @keyframes scroll-marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    /* 无缝滚动容器 */
+    .vs-marquee-wrap {
+      overflow: hidden;
+      position: relative;
+      mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
     }
     .video-scroll-track.auto-scroll {
-      animation: scroll-marquee 18s linear infinite;
+      display: flex;
+      width: max-content;
+      will-change: transform;
       overflow-x: visible;
-      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
-    .video-scroll-track.auto-scroll:hover {
-      animation-play-state: paused;
+    /* 黑屏兜底：视频未加载时显示背景色而非黑色 */
+    .vs-card video {
+      background: #111827;
     }
 
     /* 内容方法论 */
@@ -218,106 +222,78 @@
     <!-- 9:16 竖屏视频行 -->
     <div class="video-scroll-row fade-up" data-delay="0">
       <div class="video-scroll-row-label">📱 9:16 竖屏 · TikTok 原生格式</div>
-      <div class="video-scroll-track auto-scroll">
-        <div class="vs-card vs-portrait">
-          <video src="../assets/videos/20260415-181926.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇯🇵 日本市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">功能性饮料 · 高转化</span>
+      <div class="vs-marquee-wrap">
+        <div class="video-scroll-track auto-scroll" id="track-portrait">
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/20260415-181926.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">功能性饮料 · 高转化</span></div>
           </div>
-          <div class="vs-overlay"><h4>产品功效演示</h4><p>🇯🇵 日本 · 功能性饮料 高转化素材</p></div>
-        </div>
-        <div class="vs-card vs-portrait">
-          <video src="../assets/videos/20260422-121242.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(168,85,247,0.85);">🇯🇵 日本市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">轻奢个护 · 明星主理人</span>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/20260422-121242.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(168,85,247,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">轻奢个护 · 明星主理人</span></div>
           </div>
-          <div class="vs-overlay"><h4>产品使用演示</h4><p>🇯🇵 日本 · 轻奢个护 明星主理人</p></div>
-        </div>
-        <div class="vs-card vs-portrait">
-          <video src="../assets/videos/0000.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">零成本达人 · 高转化</span>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/0000.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">零成本达人 · 高转化</span></div>
           </div>
-          <div class="vs-overlay"><h4>达人种草</h4><p>🇧🇷 巴西 · 零成本达人 高转化素材</p></div>
-        </div>
-        <div class="vs-card vs-portrait">
-          <video src="../assets/videos/媒体2.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">韩国爆款 · 高转化</span>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/媒体2.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">韩国爆款 · 高转化</span></div>
           </div>
-          <div class="vs-overlay"><h4>种草 Vlog</h4><p>🇺🇸 美国 · 韩国爆款 高转化素材</p></div>
-        </div>
-        <div class="vs-card vs-portrait">
-          <video src="../assets/videos/媒体1.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">爆款框架 · 投流优秀</span>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/媒体1.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">爆款框架 · 投流优秀</span></div>
           </div>
-          <div class="vs-overlay"><h4>口播带货</h4><p>🇧🇷 巴西 · 爆款框架 投流优秀</p></div>
-        </div>
-        <div class="vs-card vs-portrait">
-          <video src="../assets/videos/20251202_lyra...mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(236,72,153,0.85);">🇺🇸 美国市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">女性保健品 · 全AI创作</span>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(236,72,153,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">女性保健品 · 全AI创作</span></div>
           </div>
-          <div class="vs-overlay"><h4>促销机制</h4><p>🇺🇸 美国 · 女性保健品 全AI创作</p></div>
-        </div>
-        <div class="vs-card vs-portrait">
-          <video src="../assets/videos/Download (13).mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span>
-            <span class="vs-tag" style="background:rgba(34,197,94,0.85);">爆品单品 · 日销3k</span>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/Download (13).mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">爆品单品 · 日销3k</span></div>
           </div>
-          <div class="vs-overlay"><h4>产品实拍展示</h4><p>🇺🇸 美国 · 爆品单品 日销3k</p></div>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/0331-徐婷-1.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(168,85,247,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">口播种草 · 高完播</span></div>
+          </div>
+          <div class="vs-card vs-portrait">
+            <video src="../assets/videos/20251127_lyra8679_7577255411405884703_collagen looseskin skincare beautytips sagging.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(236,72,153,0.85);">胶原蛋白 · 护肤功效</span></div>
+          </div>
         </div>
-        <!-- 复制一份实现无缝循环 -->
-        <div class="vs-card vs-portrait"><video src="../assets/videos/20260415-181926.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">功能性饮料 · 高转化</span></div><div class="vs-overlay"><h4>产品功效演示</h4><p>🇯🇵 日本 · 功能性饮料 高转化素材</p></div></div>
-        <div class="vs-card vs-portrait"><video src="../assets/videos/20260422-121242.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(168,85,247,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">轻奢个护 · 明星主理人</span></div><div class="vs-overlay"><h4>产品使用演示</h4><p>🇯🇵 日本 · 轻奢个护 明星主理人</p></div></div>
-        <div class="vs-card vs-portrait"><video src="../assets/videos/0000.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">零成本达人 · 高转化</span></div><div class="vs-overlay"><h4>达人种草</h4><p>🇧🇷 巴西 · 零成本达人 高转化素材</p></div></div>
-        <div class="vs-card vs-portrait"><video src="../assets/videos/媒体2.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">韩国爆款 · 高转化</span></div><div class="vs-overlay"><h4>种草 Vlog</h4><p>🇺🇸 美国 · 韩国爆款 高转化素材</p></div></div>
-        <div class="vs-card vs-portrait"><video src="../assets/videos/媒体1.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">爆款框架 · 投流优秀</span></div><div class="vs-overlay"><h4>口播带货</h4><p>🇧🇷 巴西 · 爆款框架 投流优秀</p></div></div>
-        <div class="vs-card vs-portrait"><video src="../assets/videos/20251202_lyra...mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(236,72,153,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">女性保健品 · 全AI创作</span></div><div class="vs-overlay"><h4>促销机制</h4><p>🇺🇸 美国 · 女性保健品 全AI创作</p></div></div>
-        <div class="vs-card vs-portrait"><video src="../assets/videos/Download (13).mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">爆品单品 · 日销3k</span></div><div class="vs-overlay"><h4>产品实拍展示</h4><p>🇺🇸 美国 · 爆品单品 日销3k</p></div></div>
       </div>
     </div>
 
     <!-- 16:9 横屏视频行 -->
     <div class="video-scroll-row fade-up" data-delay="100">
       <div class="video-scroll-row-label">🖥️ 16:9 横屏 · 广告 & 店铺素材</div>
-      <div class="video-scroll-track auto-scroll">
-        <div class="vs-card vs-landscape">
-          <video src="../assets/videos/20260406-215200.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span>
-            <span class="vs-tag" style="background:rgba(34,197,94,0.85);">原创 MV · 产品卖点歌词</span>
+      <div class="vs-marquee-wrap">
+        <div class="video-scroll-track auto-scroll" id="track-landscape">
+          <div class="vs-card vs-landscape">
+            <video src="../assets/videos/20260406-215200.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">原创 MV · 产品卖点歌词</span></div>
           </div>
-          <div class="vs-overlay"><h4>品牌种草广告</h4><p>🇺🇸 美国 · 原创 MV 产品卖点歌词</p></div>
-        </div>
-        <div class="vs-card vs-landscape">
-          <video src="../assets/videos/10.24-宅男逆袭.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span>
+          <div class="vs-card vs-landscape">
+            <video src="../assets/videos/10.24-宅男逆袭.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span></div>
           </div>
-          <div class="vs-overlay"><h4>短剧种草带货</h4><p>🇺🇸 美国 · 原创AI短剧 自然流爆款</p></div>
-        </div>
-        <div class="vs-card vs-landscape">
-          <video src="../assets/videos/10.23-监狱.mp4" autoplay muted loop playsinline></video>
-          <div class="vs-tags">
-            <span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span>
-            <span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span>
+          <div class="vs-card vs-landscape">
+            <video src="../assets/videos/10.23-监狱.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span></div>
           </div>
-          <div class="vs-overlay"><h4>短剧种草带货</h4><p>🇺🇸 美国 · 原创AI短剧 自然流爆款</p></div>
+          <div class="vs-card vs-landscape">
+            <video src="../assets/videos/Download (31).mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(168,85,247,0.85);">达人种草 · 转化素材</span></div>
+          </div>
+          <div class="vs-card vs-landscape">
+            <video src="../assets/videos/Download (36).mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(236,72,153,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">产品实拍 · 店铺素材</span></div>
+          </div>
+          <div class="vs-card vs-landscape">
+            <video src="../assets/videos/视频3.mp4" autoplay muted loop playsinline preload="auto"></video>
+            <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">品牌广告 · 高点击</span></div>
+          </div>
         </div>
-        <!-- 复制实现无缝循环 -->
-        <div class="vs-card vs-landscape"><video src="../assets/videos/20260406-215200.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">原创 MV · 产品卖点歌词</span></div><div class="vs-overlay"><h4>品牌种草广告</h4><p>🇺🇸 美国 · 原创 MV 产品卖点歌词</p></div></div>
-        <div class="vs-card vs-landscape"><video src="../assets/videos/10.24-宅男逆袭.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span></div><div class="vs-overlay"><h4>短剧种草带货</h4><p>🇺🇸 美国 · 原创AI短剧 自然流爆款</p></div></div>
-        <div class="vs-card vs-landscape"><video src="../assets/videos/10.23-监狱.mp4" autoplay muted loop playsinline></video><div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span></div><div class="vs-overlay"><h4>短剧种草带货</h4><p>🇺🇸 美国 · 原创AI短剧 自然流爆款</p></div></div>
       </div>
     </div>
 
@@ -397,5 +373,75 @@
   </div>
 </footer>
 <script src="../assets/js/main.js"></script>
+<script>
+// ===== 无缝视频走马灯 =====
+(function() {
+  // 速度：像素/秒
+  var SPEED_PORTRAIT  = 80;
+  var SPEED_LANDSCAPE = 60;
+
+  function initMarquee(trackId, speed) {
+    var track = document.getElementById(trackId);
+    if (!track) return;
+
+    // 克隆所有子节点，追加到末尾，实现无缝
+    var origChildren = Array.from(track.children);
+    origChildren.forEach(function(child) {
+      var clone = child.cloneNode(true);
+      // 克隆出的 video 也要播放
+      var vids = clone.querySelectorAll('video');
+      vids.forEach(function(v) {
+        v.muted = true;
+        v.autoplay = true;
+        v.loop = true;
+        v.playsInline = true;
+        v.play().catch(function(){});
+      });
+      track.appendChild(clone);
+    });
+
+    var offset = 0;
+    var paused = false;
+    var lastTime = null;
+    // 原始内容宽度（一半）
+    var halfWidth = 0;
+
+    // 等 DOM 渲染完再取宽度
+    requestAnimationFrame(function() {
+      halfWidth = track.scrollWidth / 2;
+
+      function tick(ts) {
+        if (!lastTime) lastTime = ts;
+        var dt = (ts - lastTime) / 1000; // 秒
+        lastTime = ts;
+
+        if (!paused) {
+          offset += speed * dt;
+          if (offset >= halfWidth) offset -= halfWidth;
+          track.style.transform = 'translateX(-' + offset + 'px)';
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+
+    // hover 暂停
+    track.parentElement.addEventListener('mouseenter', function() { paused = true; });
+    track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
+  }
+
+  // 页面加载后初始化
+  window.addEventListener('load', function() {
+    initMarquee('track-portrait',  SPEED_PORTRAIT);
+    initMarquee('track-landscape', SPEED_LANDSCAPE);
+
+    // 确保所有视频都在播放（兜底）
+    document.querySelectorAll('.vs-card video').forEach(function(v) {
+      v.muted = true;
+      v.play().catch(function(){});
+    });
+  });
+})();
+</script>
 </body>
 </html>
