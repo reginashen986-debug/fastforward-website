@@ -1170,16 +1170,18 @@
     });
 
     // 大数值KPI（data-target 直接在 .ad-kpi-value 上）
-    document.querySelectorAll('.ad-kpi-value[data-target]:not([data-prefix])').forEach(el => {
+    document.querySelectorAll('.ad-kpi-value[data-target]').forEach(el => {
       // 如果有内部的 [data-target] 子元素则跳过，由上面处理
       if(el.querySelector('[data-target]')) return;
       const raw = parseFloat(el.dataset.target);
+      const prefix = el.dataset.prefix||'';
+      const suffix = el.dataset.suffix||'';
       const duration = 2200, start = performance.now();
       function tick(now) {
         const p = Math.min((now-start)/duration, 1);
         const e = 1-Math.pow(2,-10*p);
         let val = Math.floor(e*raw).toLocaleString();
-        el.textContent = val;
+        el.textContent = prefix + val + suffix;
         if(p<1) requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
