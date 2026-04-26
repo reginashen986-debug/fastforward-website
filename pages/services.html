@@ -949,6 +949,15 @@
 <script>
 /* ===== 店铺运营仪表盘动画 ===== */
 (function(){
+  let triggered = false;
+
+  function runAll() {
+    if (triggered) return;
+    triggered = true;
+    animateNumbers();
+    drawChart();
+  }
+
   // 1. 数字滚动动画
   function animateNumbers() {
     document.querySelectorAll('.sd-value[data-target]').forEach(el => {
@@ -1010,17 +1019,31 @@
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          animateNumbers(); drawChart(); obs.disconnect();
+          runAll(); obs.disconnect();
         }
       });
-    }, {threshold:0.25});
+    }, { threshold: 0.1 });
     const dash = document.querySelector('.store-dashboard');
     if(dash) obs.observe(dash);
+
+    // 兜底：1秒后如果还没触发，强制执行
+    setTimeout(() => { if (!triggered) runAll(); }, 1000);
+  } else {
+    // 不支持 IntersectionObserver，直接执行
+    setTimeout(runAll, 200);
   }
 })();
 
 /* ===== 视频生产流水线 JS ===== */
 (function(){
+  let vpTriggered = false;
+  function runVP() {
+    if (vpTriggered) return;
+    vpTriggered = true;
+    animateVP();
+    typewriter();
+  }
+
   const tasks = [
     '正在生成：美国市场 · 功能性饮料脚本 #047',
     '正在生成：巴西市场 · 护肤品开箱视频 #048',
@@ -1065,18 +1088,26 @@
   if ('IntersectionObserver' in window) {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateVP(); typewriter(); obs.disconnect();
-        }
+        if (entry.isIntersecting) { runVP(); obs.disconnect(); }
       });
-    }, {threshold: 0.25});
+    }, { threshold: 0.1 });
     const vp = document.querySelector('.vp-pipeline');
     if (vp) obs.observe(vp);
+    setTimeout(() => { if (!vpTriggered) runVP(); }, 1000);
+  } else {
+    setTimeout(runVP, 200);
   }
 })();
 
 /* ===== 账号运营 - 矩阵数字动画 ===== */
 (function(){
+  let amTriggered = false;
+  function runAm() {
+    if (amTriggered) return;
+    amTriggered = true;
+    animateAmNumbers();
+  }
+
   function animateAmNumbers() {
     document.querySelectorAll('.am-stat-n[data-target]').forEach(el => {
       const raw = el.dataset.target;
@@ -1096,17 +1127,27 @@
   }
   if ('IntersectionObserver' in window) {
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { animateAmNumbers(); obs.disconnect(); }});
-    }, {threshold:0.25});
+      entries.forEach(entry => { if (entry.isIntersecting) { runAm(); obs.disconnect(); }});
+    }, {threshold:0.1});
     const am = document.querySelector('.account-matrix');
     if(am) obs.observe(am);
+    setTimeout(() => { if (!amTriggered) runAm(); }, 1000);
+  } else {
+    setTimeout(runAm, 200);
   }
 })();
 
 /* ===== 广告投放 - ROAS仪表盘动画 ===== */
 (function(){
+  let adTriggered = false;
+  function runAd() {
+    if (adTriggered) return;
+    adTriggered = true;
+    animateAdKpi();
+  }
+
   function animateAdKpi() {
-    // KPI 数字滚动
+    // KPI 数字滚动 - 子元素 [data-target]
     document.querySelectorAll('.ad-kpi-value [data-target]').forEach(el => {
       const raw = parseFloat(el.dataset.target);
       const decimals = parseInt(el.dataset.decimals)||0;
@@ -1123,9 +1164,20 @@
       requestAnimationFrame(tick);
     });
 
-    // 大数值KPI（直接在ad-kpi-value上）
+    // 大数值KPI（data-target 直接在 .ad-kpi-value 上）
     document.querySelectorAll('.ad-kpi-value[data-target]:not([data-prefix])').forEach(el => {
-      if(el.querySelector('[data-target]')) return; // skip inner targets
+      // 如果有内部的 [data-target] 子元素则跳过，由上面处理
+      if(el.querySelector('[data-target]')) return;
+      const raw = parseFloat(el.dataset.target);
+      const duration = 2200, start = performance.now();
+      function tick(now) {
+        const p = Math.min((now-start)/duration, 1);
+        const e = 1-Math.pow(2,-10*p);
+        let val = Math.floor(e*raw).toLocaleString();
+        el.textContent = val;
+        if(p<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
     });
 
     // 绘制双线图
@@ -1176,14 +1228,28 @@
 
   if('IntersectionObserver' in window) {
     const obs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){animateAdKpi();obs.disconnect();}});
-    },{threshold:0.2});
+      entries.forEach(e=>{if(e.isIntersecting){runAd();obs.disconnect();}});
+    },{threshold:0.1});
     const ad=document.querySelector('.ad-dashboard');if(ad)obs.observe(ad);
+    setTimeout(() => { if (!adTriggered) runAd(); }, 1000);
+  } else {
+    setTimeout(runAd, 200);
   }
 })();
 
 /* ===== 直播运营 - 直播间动态效果 ===== */
 (function(){
+  let liveTriggered = false;
+  function runLive() {
+    if (liveTriggered) return;
+    liveTriggered = true;
+    spawnDanmaku(document.getElementById('danmakuContainer'));
+    animateViewerCount();
+    animateLiveGmv();
+    animateOrders();
+    animateLiveMetrics();
+  }
+
   const danmakuList=[
     {u:'Sarah_M',m:'这个价格太划算了！'},
     {u:'Mike_Tech',m:'主播讲解很专业 👍'},
@@ -1276,16 +1342,15 @@
     const obs=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
-          spawnDanmaku(document.getElementById('danmakuContainer'));
-          animateViewerCount();
-          animateLiveGmv();
-          animateOrders();
-          animateLiveMetrics();
+          runLive();
           obs.disconnect();
         }
       });
-    },{threshold:0.2});
+    },{threshold:0.1});
     const ls=document.querySelector('.live-studio');if(ls)obs.observe(ls);
+    setTimeout(() => { if (!liveTriggered) runLive(); }, 1000);
+  } else {
+    setTimeout(runLive, 200);
   }
 })();
 </script>
