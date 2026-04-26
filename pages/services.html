@@ -388,12 +388,12 @@
         <div class="sd-metrics">
           <div class="sd-card">
             <div class="sd-label">总 GMV</div>
-            <div class="sd-value" data-target="2847650">¥0</div>
+            <div class="sd-value" data-target="2847650" data-prefix="$">$0</div>
             <div class="sd-trend up">↑ 23.5%</div>
           </div>
           <div class="sd-card">
             <div class="sd-label">订单量</div>
-            <div class="sd-value" data-target="18642">0</div>
+            <div class="sd-value" data-target="18642" data-prefix="">0</div>
             <div class="sd-trend up">↑ 18.2%</div>
           </div>
           <div class="sd-card">
@@ -681,7 +681,7 @@
   function animateNumbers() {
     document.querySelectorAll('.sd-value[data-target]').forEach(el => {
       const target = +el.dataset.target;
-      const prefix = target > 10000 ? '¥' : '';
+      const prefix = el.dataset.prefix || (target > 10000 ? '¥' : '');
       const duration = 2000;
       const start = performance.now();
       function tick(now) {
