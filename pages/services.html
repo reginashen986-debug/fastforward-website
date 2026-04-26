@@ -1200,7 +1200,7 @@
 
     const areaS=svg.querySelector('.ad-area-spend'), lineS=svg.querySelector('.ad-line-spend');
     const areaR=svg.querySelector('.ad-area-rev'), lineR=svg.querySelector('.ad-line-rev');
-    if(areaS){areaS.setAttribute('d',makeArea(spendData));areaS.style.opacity=0;areaS.style.animation:'sdFadeIn 0.8s ease forwards 0.3s';}
+    if(areaS){areaS.setAttribute('d',makeArea(spendData));areaS.style.opacity=0;areaS.style.animation='sdFadeIn 0.8s ease forwards 0.3s';}
     if(lineS){lineS.setAttribute('d',makePath(spendData));lineS.style.strokeDasharray=lineS.getTotalLength();lineS.style.strokeDashoffset=lineS.getTotalLength();lineS.style.animation='sdDrawLine 1.5s ease forwards 0.5s';}
     if(areaR){areaR.setAttribute('d',makeArea(revData));areaR.style.opacity=0;areaR.style.animation='sdFadeIn 0.8s ease forwards 0.6s';}
     if(lineR){lineR.setAttribute('d',makePath(revData));lineR.style.strokeDasharray=lineR.getTotalLength();lineR.style.strokeDashoffset=lineR.getTotalLength();lineR.style.animation='sdDrawLine 1.5s ease forwards 0.8s';}
