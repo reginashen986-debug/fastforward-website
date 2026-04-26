@@ -230,6 +230,63 @@
       .sd-label { font-size: 10px; }
       .store-dashboard { padding: 16px 12px !important; }
     }
+
+    /* ===== 视频生产流水线 ===== */
+    .vp-pipeline {
+      flex-direction: column !important;
+      gap: 12px;
+      padding: 20px 18px !important;
+      justify-content: flex-start !important;
+    }
+    .vp-header {
+      display:flex; align-items:center; gap:6px;
+      background:rgba(255,255,255,0.05); border-radius:8px;
+      padding:8px 12px;
+    }
+    .vp-dot { width:10px; height:10px; border-radius:50%; }
+    .vp-dot.red    { background:#ff5f57; }
+    .vp-dot.yellow { background:#febc2e; }
+    .vp-dot.green  { background:#28c840; }
+    .vp-title { font-size:11px; color:rgba(255,255,255,0.35); margin-left:6px; font-weight:500; letter-spacing:0.5px; }
+
+    .vp-current {
+      background:rgba(0,102,255,0.1); border:1px solid rgba(0,102,255,0.25);
+      border-radius:10px; padding:10px 14px;
+    }
+    .vp-current-label { font-size:10px; color:rgba(0,178,255,0.7); font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+    .vp-typing {
+      font-size:13px; color:#fff; font-family:'Inter',monospace; min-height:18px;
+    }
+    .vp-typing::after { content:'|'; animation: blink 0.8s step-end infinite; color:#0066FF; }
+    @keyframes blink { 50%{ opacity:0; } }
+
+    .vp-stages { display:flex; flex-direction:column; gap:10px; width:100%; }
+    .vp-stage {
+      display:flex; align-items:center; gap:10px;
+    }
+    .vp-stage-icon { font-size:18px; width:28px; text-align:center; flex-shrink:0; }
+    .vp-stage-info { flex:1; }
+    .vp-stage-name { font-size:12px; color:rgba(255,255,255,0.6); margin-bottom:4px; font-weight:500; }
+    .vp-bar-wrap { background:rgba(255,255,255,0.08); border-radius:100px; height:5px; overflow:hidden; }
+    .vp-bar {
+      height:100%; width:0%; border-radius:100px;
+      background: linear-gradient(90deg, #0066FF, #FF6B00);
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .vp-stage-num { font-size:11px; color:rgba(255,255,255,0.4); font-weight:600; width:28px; text-align:right; flex-shrink:0; }
+    .vp-stage-num.done { color:#22c55e; font-size:14px; }
+
+    .vp-stats {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:2px;
+    }
+    .vp-stat { text-align:center; background:rgba(255,255,255,0.05); border-radius:10px; padding:10px 6px; }
+    .vp-stat-n { font-size:22px; font-weight:800; color:#fff; font-family:'Inter',sans-serif; }
+    .vp-stat-n.green { color:#22c55e; font-size:18px; }
+    .vp-stat-l { font-size:10px; color:rgba(255,255,255,0.35); margin-top:2px; }
+
+    @media (max-width:768px) {
+      .vp-stat-n { font-size:18px; }
+    }
   </style>
 </head>
 <body>
@@ -395,8 +452,58 @@
           <div class="feature-item"><span class="check">✓</span><span>爆款视频二次剪辑放大，最大化单条内容价值</span></div>
         </div>
       </div>
-      <div class="service-visual fade-left">
-        <div class="service-visual-inner"><span>🎬</span><p>视频生产流水线展示<br /><small>（后续替换为真实素材）</small></p></div>
+      <div class="service-visual fade-left vp-pipeline">
+        <!-- 顶部标题 -->
+        <div class="vp-header">
+          <span class="vp-dot red"></span><span class="vp-dot yellow"></span><span class="vp-dot green"></span>
+          <span class="vp-title">视频生产系统 · 实时进度</span>
+        </div>
+        <!-- 当前生产任务（打字动效） -->
+        <div class="vp-current">
+          <div class="vp-current-label">当前任务</div>
+          <div class="vp-typing" id="vpTyping"></div>
+        </div>
+        <!-- 四阶段流程 -->
+        <div class="vp-stages">
+          <div class="vp-stage" data-stage="0">
+            <div class="vp-stage-icon">✍️</div>
+            <div class="vp-stage-info">
+              <div class="vp-stage-name">脚本创作</div>
+              <div class="vp-bar-wrap"><div class="vp-bar" data-pct="92"></div></div>
+            </div>
+            <div class="vp-stage-num">92%</div>
+          </div>
+          <div class="vp-stage" data-stage="1">
+            <div class="vp-stage-icon">🎞️</div>
+            <div class="vp-stage-info">
+              <div class="vp-stage-name">AI 视频生成</div>
+              <div class="vp-bar-wrap"><div class="vp-bar" data-pct="74"></div></div>
+            </div>
+            <div class="vp-stage-num">74%</div>
+          </div>
+          <div class="vp-stage" data-stage="2">
+            <div class="vp-stage-icon">✂️</div>
+            <div class="vp-stage-info">
+              <div class="vp-stage-name">剪辑 & 配音</div>
+              <div class="vp-bar-wrap"><div class="vp-bar" data-pct="58"></div></div>
+            </div>
+            <div class="vp-stage-num">58%</div>
+          </div>
+          <div class="vp-stage" data-stage="3">
+            <div class="vp-stage-icon">🚀</div>
+            <div class="vp-stage-info">
+              <div class="vp-stage-name">发布上线</div>
+              <div class="vp-bar-wrap"><div class="vp-bar" data-pct="100"></div></div>
+            </div>
+            <div class="vp-stage-num done">✓</div>
+          </div>
+        </div>
+        <!-- 底部今日统计 -->
+        <div class="vp-stats">
+          <div class="vp-stat"><div class="vp-stat-n" data-target="47">0</div><div class="vp-stat-l">今日已产出</div></div>
+          <div class="vp-stat"><div class="vp-stat-n" data-target="200">0</div><div class="vp-stat-l">日均峰值</div></div>
+          <div class="vp-stat"><div class="vp-stat-n green">98%</div><div class="vp-stat-l">通过率</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -619,7 +726,7 @@
     pts.forEach((p,i) => {
       const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
       circle.setAttribute('cx', p.x); circle.setAttribute('cy', p.y);
-      circle.setAttribute('r', '3.5'); circle.setAttribute('fill', '#fff';
+      circle.setAttribute('r', '3.5'); circle.setAttribute('fill', '#fff');
       circle.setAttribute('opacity', '0');
       circle.style.animation = `sdFadeIn 0.4s ease forwards ${1.2 + i*0.15}s`;
       dotsG.appendChild(circle);
@@ -637,6 +744,62 @@
     }, {threshold:0.25});
     const dash = document.querySelector('.store-dashboard');
     if(dash) obs.observe(dash);
+  }
+})();
+
+/* ===== 视频生产流水线 JS ===== */
+(function(){
+  const tasks = [
+    '正在生成：美国市场 · 功能性饮料脚本 #047',
+    '正在生成：巴西市场 · 护肤品开箱视频 #048',
+    '正在生成：日本市场 · 零食测评口播 #049',
+    '正在生成：墨西哥 · 家居好物种草 #050',
+  ];
+  let taskIdx = 0, charIdx = 0, typing = true;
+  const el = document.getElementById('vpTyping');
+
+  function typewriter() {
+    if (!el) return;
+    const cur = tasks[taskIdx];
+    if (typing) {
+      el.textContent = cur.slice(0, charIdx++);
+      if (charIdx > cur.length) { typing = false; setTimeout(typewriter, 1800); return; }
+      setTimeout(typewriter, 45);
+    } else {
+      el.textContent = cur.slice(0, charIdx--);
+      if (charIdx < 0) { typing = true; taskIdx = (taskIdx+1) % tasks.length; charIdx = 0; setTimeout(typewriter, 300); return; }
+      setTimeout(typewriter, 18);
+    }
+  }
+
+  function animateVP() {
+    document.querySelectorAll('.vp-bar').forEach(b => {
+      b.style.width = b.dataset.pct + '%';
+    });
+    document.querySelectorAll('.vp-stat-n[data-target]').forEach(el => {
+      const target = +el.dataset.target;
+      const dur = 1800, start = performance.now();
+      function tick(now) {
+        const p = Math.min((now-start)/dur, 1);
+        const e = 1 - Math.pow(2, -10*p);
+        el.textContent = Math.floor(e*target);
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateVP(); typewriter(); obs.disconnect();
+        }
+      });
+    }, {threshold: 0.25});
+    const vp = document.querySelector('.vp-pipeline');
+    if (vp) obs.observe(vp);
   }
 })();
 </script>
