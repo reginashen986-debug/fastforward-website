@@ -287,6 +287,96 @@
     @media (max-width:768px) {
       .vp-stat-n { font-size:18px; }
     }
+
+    /* ===== 账号运营 - 矩阵管理动态界面 ===== */
+    .account-matrix { flex-direction:column!important; gap:14px; padding:20px 18px!important; justify-content:flex-start!important; }
+    .am-header { display:flex; align-items:center; justify-content:space-between; width:100%; }
+    .am-title { font-size:12px; color:rgba(255,255,255,0.5); font-weight:600; letter-spacing:0.8px; text-transform:uppercase; }
+    .am-status-dot { display:inline-flex; align-items:center; gap:5px; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); border-radius:100px; padding:4px 10px; font-size:10px; color:#22c55e; font-weight:600; }
+    .am-status-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:#22c55e; animation:pulseDot 2s ease-in-out infinite; }
+    @keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
+    .am-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; width:100%; }
+    .am-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:14px 10px; text-align:center; position:relative; overflow:hidden; transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s; animation:amFloat 4s ease-in-out infinite; }
+    .am-card:nth-child(2){animation-delay:-1.3s;} .am-card:nth-child(3){animation-delay:-2.6s;} .am-card:nth-child(4){animation-delay:-0.7s;} .am-card:nth-child(5){animation-delay:-2s;} .am-card:nth-child(6){animation-delay:-3.3s;}
+    @keyframes amFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);} }
+    .am-card:hover{transform:translateY(-6px) scale(1.02);border-color:rgba(0,102,255,0.35);box-shadow:0 8px 30px rgba(0,102,255,0.15);}
+    .am-avatar-wrap{width:44px;height:44px;border-radius:12px;margin:0 auto 8px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .am-avatar-wrap.am-grad-1{background:linear-gradient(135deg,#0066FF,#00d4ff);} .am-avatar-wrap.am-grad-2{background:linear-gradient(135deg,#f97316,#ff6b00);} .am-avatar-wrap.am-grad-3{background:linear-gradient(135deg,#a855f7,#ec4899);} .am-avatar-wrap.am-grad-4{background:linear-gradient(135deg,#22c55e,#84cc16);} .am-avatar-wrap.am-grad-5{background:linear-gradient(135deg,#06b6d4,#3b82f6);} .am-avatar-wrap.am-grad-6{background:linear-gradient(135deg,#ef4444,#f97316);}
+    .am-badge-live{position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:#ef4444;border:2px solid #1A2236;animation:pulseDot 1.5s ease-in-out infinite;}
+    .am-name{font-size:11px;color:#fff;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .am-category{font-size:9px;color:rgba(255,255,255,0.35);margin-bottom:6px;}
+    .am-stats-row{display:flex;justify-content:center;gap:10px;}
+    .am-stat-mini{text-align:center;} .am-stat-n{font-size:13px;font-weight:800;color:#fff;font-family:'Inter',sans-serif;line-height:1.2;} .am-stat-l{font-size:8px;color:rgba(255,255,255,0.3);}
+    .am-bottom-bar{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:4px;background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;}
+    .am-today-post{font-size:11px;color:rgba(255,255,255,0.45);font-weight:500;}
+    .am-today-post strong{color:#00d4ff;font-weight:800;}
+    .am-market-tags{display:flex;gap:4px;} .am-mtag{font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(255,107,0,0.15);color:rgba(255,177,0,0.8);font-weight:600;}
+
+    /* ===== 广告投放 - 动态ROAS仪表盘 ===== */
+    .ad-dashboard{flex-direction:column!important;gap:12px;padding:18px!important;justify-content:flex-start!important;position:relative;overflow:hidden;}
+    .ad-dashboard::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(0,102,255,0.08),transparent 70%);pointer-events:none;}
+    .ad-top-row{display:flex;align-items:center;justify-content:space-between;width:100%;z-index:1;}
+    .ad-tabs{display:flex;gap:4px;background:rgba(255,255,255,0.05);border-radius:8px;padding:3px;}
+    .ad-tab{font-size:10px;padding:4px 10px;border-radius:6px;cursor:pointer;color:rgba(255,255,255,0.35);font-weight:600;transition:all 0.25s;white-space:nowrap;}
+    .ad-tab.active{background:linear-gradient(135deg,#0066FF,#0055dd);color:#fff;box-shadow:0 2px 12px rgba(0,102,255,0.3);}
+    .ad-date-range{font-size:10px;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04);padding:4px 10px;border-radius:6px;font-weight:500;}
+    .ad-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;z-index:1;}
+    .ad-kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 8px;text-align:center;position:relative;overflow:hidden;}
+    .ad-kpi::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--kpi-color,#0066FF),transparent);opacity:0.5;}
+    .ad-kpi-label{font-size:9px;color:rgba(255,255,255,0.35);margin-bottom:4px;letter-spacing:0.5px;text-transform:uppercase;font-weight:600;}
+    .ad-kpi-value{font-size:18px;font-weight:900;color:#fff;line-height:1.2;font-family:'Inter','Montserrat',sans-serif;}
+    .ad-kpi-value.blue{color:#00d4ff;}.ad-kpi-value.green{color:#22c55e;}.ad-kpi-value.orange{color:#ff9f43;}
+    .ad-kpi-change{font-size:10px;margin-top:3px;font-weight:700;}.ad-kpi-change.up{color:#22c55e;}.ad-kpi-change.down{color:#ef4444;}
+    .ad-chart-area{width:100%;z-index:1;position:relative;}.ad-dual-chart{width:100%;height:110px;display:block;}
+    .ad-chart-legend{display:flex;justify-content:center;gap:16px;margin-top:6px;}.ad-legend-item{display:flex;align-items:center;gap:4px;font-size:9px;color:rgba(255,255,255,0.4);}
+    .ad-legend-dot{width:8px;height:3px;border-radius:2px;}.ad-legend-dot.spend{background:#0066FF;}.ad-legend-dot.revenue{background:#FF6B00;}
+    .ad-bar-section{width:100%;z-index:1;}.ad-bar-label{font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:6px;font-weight:600;}
+    .ad-bars{display:flex;align-items:flex-end;gap:6px;height:60px;}.ad-bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+    .ad-bar-fill{width:100%;border-radius:4px 4px 2px 2px;min-height:4px;transition:height 1s cubic-bezier(0.16,1,0.3,1);}
+    .ad-bar-fill.b-spend{background:linear-gradient(to top,#0066FF,#3388ff);} .ad-bar-fill.b-revenue{background:linear-gradient(to top,#FF6B00,#ffaa33);}
+    .ad-bar-val{font-size:8px;color:rgba(255,255,255,0.5);font-weight:700;}.ad-bar-day{font-size:8px;color:rgba(255,255,255,0.25);}
+
+    /* ===== 直播运营 - 直播间动态展示 ===== */
+    .live-studio{flex-direction:column!important;gap:0;padding:0!important;overflow:hidden;position:relative;}
+    .live-main{position:relative;width:100%;aspect-ratio:16/9;background:linear-gradient(145deg,#0d1117,#161b22);overflow:hidden;}
+    .live-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 70% 30%,rgba(255,107,0,0.08),transparent 50%),radial-gradient(circle at 30% 70%,rgba(0,102,255,0.06),transparent 50%),linear-gradient(160deg,#0d1117 0%,#1a1f2e 50%,#0d1117 100%);}
+    .live-product-showcase{display:flex;align-items:center;gap:20px;animation:liveScenePulse 4s ease-in-out infinite;}
+    @keyframes liveScenePulse{0%,100%{transform:scale(1);} 50%{transform:scale(1.03);}}
+    .live-product-img{width:90px;height:120px;border-radius:14px;background:linear-gradient(145deg,#2a3040,#1a2030);display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 8px 40px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.06);animation:productFloat 3s ease-in-out infinite;}
+    @keyframes productFloat{0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-8px) rotate(2deg);}}
+    .live-overlay{position:absolute;inset:0;pointer-events:none;}
+    .live-top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(to bottom,rgba(0,0,0,0.6),transparent);}
+    .live-brand-tag{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);border-radius:6px;padding:5px 10px;}
+    .live-brand-icon{width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#0066FF,#FF6B00);}
+    .live-brand-text{font-size:10px;color:#fff;font-weight:700;} .live-brand-sub{font-size:8px;color:rgba(255,255,255,0.4);}
+    .live-viewers{display:flex;align-items:center;gap:4px;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);border-radius:6px;padding:4px 8px;}
+    .live-eye-icon{font-size:11px;}.live-view-count{font-size:11px;color:#fff;font-weight:800;font-family:'Inter',sans-serif;}
+    .live-danmaku{position:absolute;left:10px;bottom:60px;width:55%;height:100px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;pointer-events:none;}
+    .danmaku-item{display:inline-flex;align-items:center;gap:4px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);border-radius:8px;padding:4px 10px;font-size:10px;color:#fff;white-space:nowrap;animation:danmakuSlideIn 0.4s ease-out,danmakuFadeOut 3s ease-in 2s forwards;max-width:85%;}
+    .dm-user{font-weight:700;color:#ffd93d;font-size:9px;}.dm-msg{color:rgba(255,255,255,0.85);font-size:10px;}
+    @keyframes danmakuSlideIn{from{opacity:0;transform:translateX(-20px);}to{opacity:1;transform:translateX(0);}}@keyframes danmakuFadeOut{to{opacity:0;transform:translateY(-10px);}}
+    .live-data-bar{display:flex;align-items:center;padding:8px 14px;background:rgba(0,0,0,0.65);backdrop-filter:blur(12px);gap:12px;}
+    .live-data-item{text-align:center;}.live-data-val{font-size:14px;font-weight:900;color:#fff;font-family:'Inter',sans-serif;line-height:1.2;}
+    .live-data-val.highlight{color:#ff6b00;}.live-data-val.green{color:#22c55e;}
+    .live-data-label{font-size:8px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.5px;}
+    .live-data-divider{width:1px;height:28px;background:rgba(255,255,255,0.1);}
+    .live-products-strip{display:flex;gap:8px;padding:10px 14px;background:rgba(0,0,0,0.4);overflow-x:auto;scrollbar-width:none;}
+    .live-products-strip::-webkit-scrollbar{display:none;}
+    .live-prod-item{flex-shrink:0;width:52px;text-align:center;animation:prodBounce 2s ease-in-out infinite;}.live-prod-item:nth-child(odd){animation-delay:-1s;}
+    @keyframes prodBounce{0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);}}
+    .live-prod-thumb{width:48px;height:48px;border-radius:10px;background:linear-gradient(145deg,#252d3d,#1a2030);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:3px;border:1.5px solid rgba(255,107,0,0.3);transition:border-color 0.3s;}
+    .live-prod-item:hover .live-prod-thumb{border-color:#FF6B00;}.live-prod-price{font-size:9px;color:#ff6b00;font-weight:800;}.live-prod-sold{font-size:7px;color:rgba(255,255,255,0.3);}
+    .live-side-panel{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px;background:rgba(255,255,255,0.02);}
+    .live-metric{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px;text-align:center;}
+    .live-metric-val{font-size:18px;font-weight:900;color:#fff;font-family:'Inter',sans-serif;}
+    .live-metric-val.orange{color:#FF6B00;}.live-metric-val.cyan{color:#00d4ff;}.live-metric-val.green{color:#22c55e;}
+    .live-metric-label{font-size:9px;color:rgba(255,255,255,0.35);margin-top:2px;}
+
+    @media(max-width:768px){
+      .am-grid{grid-template-columns:repeat(3,1fr);gap:8px;} .am-card{padding:10px 6px;} .am-avatar-wrap{width:36px;height:36px;font-size:16px;border-radius:10px;} .am-stat-n{font-size:11px;}
+      .ad-kpi-grid{grid-template-columns:repeat(2,1fr);} .ad-kpi-value{font-size:15px;} .ad-tab{font-size:9px;padding:3px 8px;}
+      .live-side-panel{grid-template-columns:repeat(2,1fr);padding:10px 12px;} .live-metric-val{font-size:15px;}
+    }
   </style>
 </head>
 <body>
@@ -526,8 +616,84 @@
           <div class="feature-item"><span class="check">✓</span><span>账号数据分析与调优，持续提升内容表现</span></div>
         </div>
       </div>
-      <div class="service-visual fade-right">
-        <div class="service-visual-inner"><span>📱</span><p>账号矩阵管理界面<br /><small>（后续替换为真实素材）</small></p></div>
+      <div class="service-visual fade-right account-matrix">
+        <!-- 头部状态栏 -->
+        <div class="am-header">
+          <span class="am-title">Account Matrix</span>
+          <span class="am-status-dot">6 Accounts Active</span>
+        </div>
+        <!-- 账号卡片矩阵 -->
+        <div class="am-grid">
+          <!-- 账号1: 品牌主号 -->
+          <div class="am-card">
+            <div class="am-avatar-wrap am-grad-1">🏷️<span class="am-badge-live"></span></div>
+            <div class="am-name">Brand Official</div>
+            <div class="am-category">品牌主账号</div>
+            <div class="am-stats-row">
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="128.5K">0</div><div class="am-stat-l">粉丝</div></div>
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="4.8">0</div><div class="am-stat-l">互动%</div></div>
+            </div>
+          </div>
+          <!-- 账号2: 产品测评 -->
+          <div class="am-card">
+            <div class="am-avatar-wrap am-grad-2">⭐</div>
+            <div class="am-name">Product Review</div>
+            <div class="am-category">产品测评</div>
+            <div class="am-stats-row">
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="86.2K">0</div><div class="am-stat-l">粉丝</div></div>
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="7.3">0</div><div class="am-stat-l">互动%</div></div>
+            </div>
+          </div>
+          <!-- 账号3: 幕后故事 -->
+          <div class="am-card">
+            <div class="am-avatar-wrap am-grad-3">🎬</div>
+            <div class="am-name">Behind Scenes</div>
+            <div class="am-category">幕后内容</div>
+            <div class="am-stats-row">
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="52.1K">0</div><div class="am-stat-l">粉丝</div></div>
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="9.1">0</div><div class="am-stat-l">互动%</div></div>
+            </div>
+          </div>
+          <!-- 账号4: UGC 翻牌 -->
+          <div class="am-card">
+            <div class="am-avatar-wrap am-grad-4">💬</div>
+            <div class="am-name">UGC Reactions</div>
+            <div class="am-category">用户翻牌</div>
+            <div class="am-stats-row">
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="41.8K">0</div><div class="am-stat-l">粉丝</div></div>
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="11.2">0</div><div class="am-stat-l">互动%</div></div>
+            </div>
+          </div>
+          <!-- 账号5: 教程干货 -->
+          <div class="am-card">
+            <div class="am-avatar-wrap am-grad-5">📚</div>
+            <div class="am-name">Tips & Tutorials</div>
+            <div class="am-category">教程干货</div>
+            <div class="am-stats-row">
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="35.6K">0</div><div class="am-stat-l">粉丝</div></div>
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="6.5">0</div><div class="am-stat-l">互动%</div></div>
+            </div>
+          </div>
+          <!-- 账号6: 本土生活 -->
+          <div class="am-card">
+            <div class="am-avatar-wrap am-grad-6">🌎</div>
+            <div class="am-name">Local Life</div>
+            <div class="am-category">本土生活</div>
+            <div class="am-stats-row">
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="28.9K">0</div><div class="am-stat-l">粉丝</div></div>
+              <div class="am-stat-mini"><div class="am-stat-n" data-target="8.7">0</div><div class="am-stat-l">互动%</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- 底部信息栏 -->
+        <div class="am-bottom-bar">
+          <span class="am-today-post">今日已发布 <strong>12</strong> 条内容</span>
+          <div class="am-market-tags">
+            <span class="am-mtag">🇺🇸 US</span>
+            <span class="am-mtag">🇧🇷 BR</span>
+            <span class="am-mtag">🇯🇵 JP</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -614,8 +780,63 @@
           <div class="feature-item"><span class="check">✓</span><span>广告投放周报与复盘，持续优化投放策略</span></div>
         </div>
       </div>
-      <div class="service-visual fade-right">
-        <img src="assets/images/投流.png" alt="广告投放" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);" />
+      <div class="service-visual fade-right ad-dashboard">
+        <!-- 顶部标签栏 -->
+        <div class="ad-top-row">
+          <div class="ad-tabs">
+            <span class="ad-tab active">ROAS</span>
+            <span class="ad-tab">CTR</span>
+            <span class="ad-tab">CPA</span>
+          </div>
+          <span class="ad-date-range">📅 Mar 30 – Sep 26</span>
+        </div>
+        <!-- KPI 指标卡片 -->
+        <div class="ad-kpi-grid">
+          <div class="ad-kpi" style="--kpi-color:#00d4ff">
+            <div class="ad-kpi-label">总花费 Cost</div>
+            <div class="ad-kpi-value blue" data-target="3599927" data-prefix="$" data-suffix="">$0</div>
+            <div class="ad-kpi-change up">vs last 6 months ↓8%</div>
+          </div>
+          <div class="ad-kpi" style="--kpi-color:#22c55e">
+            <div class="ad-kpi-label">订单量 Orders</div>
+            <div class="ad-kpi-value green" data-target="302884">0</div>
+            <div class="ad-kpi-change up">vs last 6 months ↑18%</div>
+          </div>
+          <div class="ad-kpi" style="--kpi-color:#ff9f43">
+            <div class="ad-kpi-label">CPA 成本</div>
+            <div class="ad-kpi-value orange">$<span data-target="11.89">0</span></div>
+            <div class="ad-kpi-change down">vs last 6 months ↓12%</div>
+          </div>
+          <div class="ad-kpi" style="--kpi-color:#a855f7">
+            <div class="ad-kpi-label">ROAS 投产比</div>
+            <div class="ad-kpi-value"><span data-target="2.81" data-decimals="2">0</span>x</div>
+            <div class="ad-kpi-change up">目标 ≥ 2.5x ✓</div>
+          </div>
+        </div>
+        <!-- 双线图表 -->
+        <div class="ad-chart-area">
+          <svg class="ad-dual-chart" viewBox="0 0 400 110" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="adGradSpend" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0066FF" stop-opacity="0.25"/><stop offset="100%" stop-color="#0066FF" stop-opacity="0"/></linearGradient>
+              <linearGradient id="adGradRev" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF6B00" stop-opacity="0.25"/><stop offset="100%" stop-color="#FF6B00" stop-opacity="0"/></linearGradient>
+            </defs>
+            <!-- 花费面积 -->
+            <path class="ad-area-spend" fill="url(#adGradSpend)"/>
+            <path class="ad-line-spend" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round"/>
+            <!-- 收入面积 -->
+            <path class="ad-area-rev" fill="url(#adGradRev)"/>
+            <path class="ad-line-rev" fill="none" stroke="#FF6B00" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="ad-chart-legend">
+            <div class="ad-legend-item"><span class="ad-legend-dot spend"></span>广告花费 Spend</div>
+            <div class="ad-legend-item"><span class="ad-legend-dot revenue"></span>GMV 收入 Revenue</div>
+          </div>
+        </div>
+        <!-- 柱状图 - 周数据 -->
+        <div class="ad-bar-section">
+          <div class="ad-bar-label">近6周投放对比 (花费 vs GMV)</div>
+          <div class="ad-bars" id="adBars"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -638,8 +859,59 @@
           <div class="feature-item"><span class="check">✓</span><span>直播数据复盘，持续优化转化率与客单价</span></div>
         </div>
       </div>
-      <div class="service-visual fade-left">
-        <img src="assets/images/直播运营.png" alt="直播运营" style="width:100%;height:100%;object-fit:cover;" />
+      <div class="service-visual fade-left live-studio">
+        <!-- 主直播画面 -->
+        <div class="live-main">
+          <!-- 场景背景 -->
+          <div class="live-scene">
+            <div class="live-product-showcase">
+              <div class="live-product-img">🧴</div>
+              <div class="live-product-img">✨</div>
+            </div>
+          </div>
+          <!-- 覆盖层 -->
+          <div class="live-overlay">
+            <!-- 顶部品牌栏 -->
+            <div class="live-top-bar">
+              <div class="live-brand-tag">
+                <div class="live-brand-icon"></div>
+                <div><div class="live-brand-text">FastForward Brand</div><div class="live-brand-sub">TikTok Live</div></div>
+              </div>
+              <div class="live-viewers">
+                <span class="live-eye-icon">👁️</span>
+                <span class="live-view-count" id="liveViewCount">5,813</span>
+              </div>
+            </div>
+            <!-- 弹幕区域 -->
+            <div class="live-danmaku" id="danmakuContainer"></div>
+            <!-- 底部数据栏 -->
+            <div class="live-data-bar">
+              <div class="live-data-item"><div class="live-data-val highlight">$<span id="liveGmv">5813.05</span></div><div class="live-data-label">Live GMV</div></div>
+              <div class="live-data-divider"></div>
+              <div class="live-data-item"><div class="live-data-val green"><span id="liveOrders">211</span></div><div class="live-data-label">订单</div></div>
+              <div class="live-data-divider"></div>
+              <div class="live-data-item"><div class="live-data-val"><span id="liveConv">7.8%</span></div><div class="live-data-label">转化率</div></div>
+              <div class="live-data-divider"></div>
+              <div class="live-data-item"><div class="live-data-val green"><span id="liveWatch">27</span>min</div><div class="live-data-label">均看时长</div></div>
+            </div>
+            <!-- 商品条 -->
+            <div class="live-products-strip">
+              <div class="live-prod-item"><div class="live-prod-thumb">🧴</div><div class="live-prod-price">$24.99</div><div class="live-prod-sold">已售 36</div></div>
+              <div class="live-prod-item"><div class="live-prod-thumb">💊</div><div class="live-prod-price">$19.99</div><div class="live-prod-sold">已售 52</div></div>
+              <div class="live-prod-item"><div class="live-prod-thumb">🌿</div><div class="live-prod-price">$29.99</div><div class="live-prod-sold">已售 18</div></div>
+              <div class="live-prod-item"><div class="live-prod-thumb">💫</div><div class="live-prod-price">$34.99</div><div class="live-prod-sold">已售 41</div></div>
+              <div class="live-prod-item"><div class="live-prod-thumb">⚡</div><div class="live-prod-price">$14.99</div><div class="live-prod-sold">已售 89</div></div>
+              <div class="live-prod-item"><div class="live-prod-thumb">🎁</div><div class="live-prod-price">$39.99</div><div class="live-prod-sold">已售 12</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- 底部数据面板 -->
+        <div class="live-side-panel">
+          <div class="live-metric"><div class="live-metric-val orange" data-target="11.2K" data-prefix="">0</div><div class="live-metric-label">观看人次</div></div>
+          <div class="live-metric"><div class="live-metric-val cyan" data-target="4.6" data-decimals="1">0</div><div class="live-metric-label">人均停留(min)</div></div>
+          <div class="live-metric"><div class="live-metric-val orange" data-target="892" data-prefix="">0</div><div class="live-metric-label">互动次数</div></div>
+          <div class="live-metric"><div class="live-metric-val green" data-target="27.3" data-decimals="1" data-prefix="$">$0</div><div class="live-metric-label">场均GMV</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -800,6 +1072,220 @@
     }, {threshold: 0.25});
     const vp = document.querySelector('.vp-pipeline');
     if (vp) obs.observe(vp);
+  }
+})();
+
+/* ===== 账号运营 - 矩阵数字动画 ===== */
+(function(){
+  function animateAmNumbers() {
+    document.querySelectorAll('.am-stat-n[data-target]').forEach(el => {
+      const raw = el.dataset.target;
+      const isFloat = raw.includes('.');
+      const target = parseFloat(raw);
+      const duration = 1800;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        const current = eased * target;
+        el.textContent = isFloat ? current.toFixed(1) + (target >= 1000 ? 'K' : '') : (current >= 1000 ? (current/1000).toFixed(1) + 'K' : Math.floor(current));
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { animateAmNumbers(); obs.disconnect(); }});
+    }, {threshold:0.25});
+    const am = document.querySelector('.account-matrix');
+    if(am) obs.observe(am);
+  }
+})();
+
+/* ===== 广告投放 - ROAS仪表盘动画 ===== */
+(function(){
+  function animateAdKpi() {
+    // KPI 数字滚动
+    document.querySelectorAll('.ad-kpi-value [data-target]').forEach(el => {
+      const raw = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals)||0;
+      const prefix = el.dataset.prefix||'';
+      const duration = 2200, start = performance.now();
+      function tick(now) {
+        const p = Math.min((now-start)/duration, 1);
+        const e = 1-Math.pow(2,-10*p);
+        let val = e*raw;
+        if(decimals>0) el.textContent = prefix+val.toFixed(decimals);
+        else el.textContent = prefix+Math.floor(val).toLocaleString();
+        if(p<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+
+    // 大数值KPI（直接在ad-kpi-value上）
+    document.querySelectorAll('.ad-kpi-value[data-target]:not([data-prefix])').forEach(el => {
+      if(el.querySelector('[data-target]')) return; // skip inner targets
+    });
+
+    // 绘制双线图
+    const svg = document.querySelector('.ad-dual-chart');
+    if(!svg) return;
+    const spendData = [30,45,38,55,48,62];
+    const revData   = [65,78,72,95,88,110];
+    const W=400,H=110,padT=8,padB=20,maxV=Math.max(...revData)*1.15;
+
+    function makePath(data){
+      let d=''; data.forEach((v,i)=>{const x=i/(data.length-1)*W,y=padT+(H-padT-padB)*(1-v/maxV); d+=(i===0?'M ':'L ')+x+','+y;});
+      return d;
+    }
+    function makeArea(d){return d+' L '+(W)+','+(H-padB)+' L 0,'+(H-padB)+' Z';}
+
+    const areaS=svg.querySelector('.ad-area-spend'), lineS=svg.querySelector('.ad-line-spend');
+    const areaR=svg.querySelector('.ad-area-rev'), lineR=svg.querySelector('.ad-line-rev');
+    if(areaS){areaS.setAttribute('d',makeArea(spendData));areaS.style.opacity=0;areaS.style.animation:'sdFadeIn 0.8s ease forwards 0.3s';}
+    if(lineS){lineS.setAttribute('d',makePath(spendData));lineS.style.strokeDasharray=lineS.getTotalLength();lineS.style.strokeDashoffset=lineS.getTotalLength();lineS.style.animation='sdDrawLine 1.5s ease forwards 0.5s';}
+    if(areaR){areaR.setAttribute('d',makeArea(revData));areaR.style.opacity=0;areaR.style.animation='sdFadeIn 0.8s ease forwards 0.6s';}
+    if(lineR){lineR.setAttribute('d',makePath(revData));lineR.style.strokeDasharray=lineR.getTotalLength();lineR.style.strokeDashoffset=lineR.getTotalLength();lineR.style.animation='sdDrawLine 1.5s ease forwards 0.8s';}
+
+    // 柱状图
+    const barsContainer=document.getElementById('adBars');
+    if(barsContainer){
+      const weeks=[{s:42,r:85},{s:58,r:112},{s:35,r:98},{s:67,r:135},{s:52,r:118},{s:75,r:156}];
+      weeks.forEach((w,i)=>{
+        const days=['W1','W2','W3','W4','W5','W6'];
+        barsContainer.innerHTML+=`
+          <div class="ad-bar-item">
+            <div class="ad-bar-val">$${w.r}K</div>
+            <div class="ad-bar-fill b-revenue" style="height:0%" data-h="${(w.r/160*100)}%"></div>
+            <div class="ad-bar-fill b-spend" style="height:0%" data-h="${(w.s/160*100)}%"></div>
+            <div class="ad-bar-day">${days[i]}</div>
+          </div>`;
+      });
+      setTimeout(()=>{barsContainer.querySelectorAll('.ad-bar-fill').forEach(b=>{b.style.height=b.dataset.h;});},800);
+    }
+
+    // Tab 切换
+    document.querySelectorAll('.ad-tab').forEach(tab=>{
+      tab.addEventListener('click',function(){
+        document.querySelectorAll('.ad-tab').forEach(t=>t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  }
+
+  if('IntersectionObserver' in window) {
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){animateAdKpi();obs.disconnect();}});
+    },{threshold:0.2});
+    const ad=document.querySelector('.ad-dashboard');if(ad)obs.observe(ad);
+  }
+})();
+
+/* ===== 直播运营 - 直播间动态效果 ===== */
+(function(){
+  const danmakuList=[
+    {u:'Sarah_M',m:'这个价格太划算了！'},
+    {u:'Mike_Tech',m:'主播讲解很专业 👍'},
+    {u:'Emily_L',m:'已下单，期待收到！'},
+    {u:'James_K',m:'第三个产品还有货吗？'},
+    {u:'Lisa_Fan',m:'直播间的灯光好好看'},
+    {u:'Tom_Buy',m:'买了两个！送朋友一个'},
+    {u:'Amy_Shop',m:'请问有优惠券吗？'},
+    {u:'David_99',m:'包装很精致的样子'},
+    {u:'Nina_Girl',m:'主播好漂亮哈哈哈'},
+    {u:'Chris_W',m:'已加购物车 🛒'},
+    {u:'Rachel_H',m:'什么时候再开播？'},
+    {u:'Kevin_Lee',m:'推荐给朋友了'},
+  ];
+
+  function spawnDanmaku(container){
+    if(!container)return;
+    let idx=0;
+    function addOne(){
+      const item=document.createElement('div');
+      item.className='danmaku-item';
+      const dm=danmakuList[idx%danmakuList.length];idx++;
+      item.innerHTML='<span class="dm-user">'+dm.u+'</span><span class="dm-msg">'+dm.m+'</span>';
+      container.appendChild(item);
+      setTimeout(()=>{if(item.parentNode)item.parentNode.removeChild(item);},3500);
+    }
+    // 初始弹幕
+    addOne();setTimeout(addOne,600);setTimeout(addOne,1200);
+    // 循环弹幕
+    setInterval(()=>{
+      if(document.visibilityState==='visible')addOne();
+    },2500);
+  }
+
+  // 观看人数跳动
+  function animateViewerCount(){
+    const el=document.getElementById('liveViewCount');
+    if(!el)return;
+    setInterval(()=>{
+      const base=5813;
+      const delta=Math.floor(Math.random()*21)-10;
+      el.textContent=(base+delta).toLocaleString();
+    },2000);
+  }
+
+  // GMV 跳动
+  function animateLiveGmv(){
+    const el=document.getElementById('liveGmv');
+    if(!el)return;
+    let gmv=5813.05;
+    setInterval(()=>{
+      gmv+=Math.random()*15+3;
+      el.textContent=gmv.toFixed(2);
+    },3000);
+  }
+
+  // 订单数跳动
+  function animateOrders(){
+    const el=document.getElementById('liveOrders');
+    if(!el)return;
+    let orders=211;
+    setInterval(()=>{
+      orders+=Math.floor(Math.random()*3);
+      el.textContent=orders;
+    },4000);
+  }
+
+  // 底部面板数字动画
+  function animateLiveMetrics(){
+    document.querySelectorAll('.live-metric-val[data-target]').forEach(el=>{
+      const raw=parseFloat(el.dataset.target);
+      const decimals=parseInt(el.dataset.decimals)||0;
+      const prefix=el.dataset.prefix||'';
+      const dur=2000,start=performance.now();
+      function tick(now){
+        const p=Math.min((now-start)/dur,1),e=1-Math.pow(2,-10*p),val=e*raw;
+        if(decimals>0)el.textContent=prefix+val.toFixed(decimals);
+        else el.textContent=(raw>=100?val.toFixed(1)+(prefix?'':'K'):Math.floor(val))+(prefix?'':(raw>=1000?'K':''));
+        if(p<1)requestAnimationFrame(tick);else{
+          if(raw>=1000&&!decimals&&raw<10000)el.textContent=prefix+(raw/1000).toFixed(1)+'K';
+          else if(!decimals)el.textContent=prefix+Math.floor(raw).toLocaleString()+(raw>=10000?'':'');
+          else el.textContent=prefix+raw.toFixed(decimals);
+        }
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  if('IntersectionObserver' in window) {
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          spawnDanmaku(document.getElementById('danmakuContainer'));
+          animateViewerCount();
+          animateLiveGmv();
+          animateOrders();
+          animateLiveMetrics();
+          obs.disconnect();
+        }
+      });
+    },{threshold:0.2});
+    const ls=document.querySelector('.live-studio');if(ls)obs.observe(ls);
   }
 })();
 </script>
