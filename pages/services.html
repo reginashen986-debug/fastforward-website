@@ -1014,23 +1014,22 @@
     });
   }
 
-  // IntersectionObserver 触发
+  // 页面加载后立即执行（延迟 300ms 确保DOM渲染完成）
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(runAll, 300));
+  } else {
+    setTimeout(runAll, 300);
+  }
+
+  // IntersectionObserver 作为辅助（滚动时再次可见也触发）
   if ('IntersectionObserver' in window) {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          runAll(); obs.disconnect();
-        }
+        if (entry.isIntersecting && !triggered) { runAll(); obs.disconnect(); }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05 });
     const dash = document.querySelector('.store-dashboard');
-    if(dash) obs.observe(dash);
-
-    // 兜底：1秒后如果还没触发，强制执行
-    setTimeout(() => { if (!triggered) runAll(); }, 1000);
-  } else {
-    // 不支持 IntersectionObserver，直接执行
-    setTimeout(runAll, 200);
+    if(dash) setTimeout(() => obs.observe(dash), 100);
   }
 })();
 
@@ -1042,6 +1041,13 @@
     vpTriggered = true;
     animateVP();
     typewriter();
+  }
+
+  // 页面加载后立即执行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(runVP, 400));
+  } else {
+    setTimeout(runVP, 400);
   }
 
   const tasks = [
@@ -1087,15 +1093,10 @@
 
   if ('IntersectionObserver' in window) {
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { runVP(); obs.disconnect(); }
-      });
-    }, { threshold: 0.1 });
+      entries.forEach(entry => { if (entry.isIntersecting && !vpTriggered) { runVP(); obs.disconnect(); }});
+    }, { threshold: 0.05 });
     const vp = document.querySelector('.vp-pipeline');
-    if (vp) obs.observe(vp);
-    setTimeout(() => { if (!vpTriggered) runVP(); }, 1000);
-  } else {
-    setTimeout(runVP, 200);
+    if(vp) setTimeout(() => obs.observe(vp), 100);
   }
 })();
 
@@ -1127,13 +1128,17 @@
   }
   if ('IntersectionObserver' in window) {
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { runAm(); obs.disconnect(); }});
-    }, {threshold:0.1});
+      entries.forEach(entry => { if (entry.isIntersecting && !amTriggered) { runAm(); obs.disconnect(); }});
+    }, {threshold:0.05});
     const am = document.querySelector('.account-matrix');
-    if(am) obs.observe(am);
-    setTimeout(() => { if (!amTriggered) runAm(); }, 1000);
+    if(am) setTimeout(() => obs.observe(am), 100);
+  }
+
+  // 页面加载后立即执行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(runAm, 500));
   } else {
-    setTimeout(runAm, 200);
+    setTimeout(runAm, 500);
   }
 })();
 
@@ -1228,12 +1233,16 @@
 
   if('IntersectionObserver' in window) {
     const obs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){runAd();obs.disconnect();}});
-    },{threshold:0.1});
-    const ad=document.querySelector('.ad-dashboard');if(ad)obs.observe(ad);
-    setTimeout(() => { if (!adTriggered) runAd(); }, 1000);
+      entries.forEach(e=>{if(e.isIntersecting && !adTriggered){runAd();obs.disconnect();}});
+    },{threshold:0.05});
+    const ad=document.querySelector('.ad-dashboard');if(ad) setTimeout(() => obs.observe(ad), 100);
+  }
+
+  // 页面加载后立即执行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(runAd, 600));
   } else {
-    setTimeout(runAd, 200);
+    setTimeout(runAd, 600);
   }
 })();
 
@@ -1341,16 +1350,20 @@
   if('IntersectionObserver' in window) {
     const obs=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
-        if(entry.isIntersecting){
+        if(entry.isIntersecting && !liveTriggered){
           runLive();
           obs.disconnect();
         }
       });
-    },{threshold:0.1});
-    const ls=document.querySelector('.live-studio');if(ls)obs.observe(ls);
-    setTimeout(() => { if (!liveTriggered) runLive(); }, 1000);
+    },{threshold:0.05});
+    const ls=document.querySelector('.live-studio');if(ls) setTimeout(() => obs.observe(ls), 100);
+  }
+
+  // 页面加载后立即执行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(runLive, 700));
   } else {
-    setTimeout(runLive, 200);
+    setTimeout(runLive, 700);
   }
 })();
 </script>
