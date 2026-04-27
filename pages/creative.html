@@ -110,10 +110,31 @@
       background: #111827;
       transition: opacity 0.3s ease;
     }
-    /* 鼠标悬停卡片时：显示原生播放条 + 轻微提亮 */
-    .vs-card:hover video {
+    /* 鼠标悬停/点击卡片时：显示原生播放条 + 轻微提亮 */
+    .vs-card:hover video,
+    .vs-card.audio-on video {
       opacity: 1;
     }
+    /* 隐藏controls中的全屏和画中画按钮 */
+    .vs-card video::-webkit-media-controls-fullscreen-button,
+    .vs-card video::-webkit-media-controls-toggle-closed-captions-button,
+    .vs-card video::-webkit-media-controls-picture-in-picture-button {
+      display: none !important;
+    }
+    /* 点击提示：卡片上叠加一个小图标引导用户点击 */
+    .vs-sound-hint {
+      position: absolute; top: 10px; right: 10px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: rgba(255,255,255,0.7);
+      pointer-events: none;
+      z-index: 3;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .vs-card:hover .vs-sound-hint { opacity: 0; transform: scale(0.8); }
+    .vs-card.audio-on .vs-sound-hint { display: none; }
 
     /* 内容方法论 */
     .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -231,30 +252,37 @@
         <div class="video-scroll-track auto-scroll" id="track-portrait">
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260415-181926.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">功能性饮料 · 高转化</span></div>
           </div>
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260422-121242.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(168,85,247,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">轻奢个护 · 明星主理人</span></div>
           </div>
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/0000.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">零成本达人 · 高转化</span></div>
           </div>
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体2.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">韩国爆款 · 高转化</span></div>
           </div>
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体1.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">爆款框架 · 投流优秀</span></div>
           </div>
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(236,72,153,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">女性保健品 · 全AI创作</span></div>
           </div>
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/Download (13).mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">爆品单品 · 日销3k</span></div>
           </div>
         </div>
@@ -268,14 +296,17 @@
         <div class="video-scroll-track auto-scroll" id="track-landscape">
           <div class="vs-card vs-landscape">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260406-215200.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">原创 MV · 产品卖点歌词</span></div>
           </div>
           <div class="vs-card vs-landscape">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.24-宅男逆袭.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span></div>
           </div>
           <div class="vs-card vs-landscape">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.23-监狱.mp4" autoplay muted loop playsinline controls preload="auto"></video>
+            <div class="vs-sound-hint">🔇</div>
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span></div>
           </div>
         </div>
@@ -283,7 +314,7 @@
     </div>
 
     <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.3);margin-top:24px;">
-      悬停暂停 · 悬停视频可听声音 · 真实案例内容展示
+      悬停暂停 · 点击视频开启/关闭声音 · 真实案例内容展示
     </p>
   </div>
 </section>
@@ -422,20 +453,29 @@
     initMarquee('track-portrait',  SPEED_PORTRAIT);
     initMarquee('track-landscape', SPEED_LANDSCAPE);
 
-    // 确保所有视频都在播放（兜底），并绑定悬停声音控制
+    // 确保所有视频都在播放（兜底），并绑定点击声音控制
     document.querySelectorAll('.vs-card video').forEach(function(v) {
       v.muted = true;
       v.play().catch(function(){});
     });
-    // 悬停卡片 → 取消该视频静音，离开 → 恢复静音
+    // 点击卡片 → 切换该视频声音开/关
     document.querySelectorAll('.vs-card').forEach(function(card) {
-      card.addEventListener('mouseenter', function() {
+      card.addEventListener('click', function(e) {
         var vid = card.querySelector('video');
-        if (vid) { vid.muted = false; }
-      });
-      card.addEventListener('mouseleave', function() {
-        var vid = card.querySelector('video');
-        if (vid) { vid.muted = true; }
+        if (!vid) return;
+        // 如果点击的是原生controls区域，不拦截
+        if (e.target.closest('video')) return;
+        if (card.classList.contains('audio-on')) {
+          // 关闭声音
+          vid.muted = true;
+          card.classList.remove('audio-on');
+        } else {
+          // 开启声音
+          vid.muted = false;
+          card.classList.add('audio-on');
+          // 确保视频在播放
+          if (vid.paused) vid.play().catch(function(){});
+        }
       });
     });
   });
