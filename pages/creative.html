@@ -110,77 +110,6 @@
       background: #111827;
     }
 
-    /* ====== 声音开启按钮 ====== */
-    .unmute-banner {
-      position: sticky;
-      top: 80px;
-      z-index: 20;
-      display: flex;
-      justify-content: center;
-      padding: 12px 0 8px;
-      pointer-events: none;
-    }
-    .unmute-btn {
-      pointer-events: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 24px;
-      border-radius: 100px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(10,15,30,0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-      animation: unmote-pulse 2s ease-in-out infinite;
-    }
-    .unmute-btn:hover {
-      background: rgba(0,102,255,0.25);
-      border-color: rgba(0,102,255,0.5);
-      transform: scale(1.05);
-    }
-    .unmute-btn .icon {
-      font-size: 20px;
-      line-height: 1;
-    }
-    .unmute-btn.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-10px);
-      transition: all 0.4s ease;
-    }
-    /* 脉冲动画 */
-    @keyframes unmote-pulse {
-      0%, 100% { box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
-      50% { box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 0 0 6px rgba(0,102,255,0.15); }
-    }
-    /* 开启声音后的简短提示 */
-    .unmute-toast {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      background: rgba(0,102,255,0.9);
-      color: #fff;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s ease;
-      z-index: 100;
-    }
-    .unmute-toast.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
     /* 内容方法论 */
     .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .method-card {
@@ -216,8 +145,6 @@
       .vs-landscape { width: 280px; }
       .method-grid { grid-template-columns: 1fr; }
       .data-cols { grid-template-columns: repeat(2, 1fr); }
-      .unmute-btn { font-size: 13px; padding: 9px 20px; }
-      .unmute-banner { top: 70px; }
     }
   </style>
 </head>
@@ -290,13 +217,6 @@
       <p class="section-subtitle fade-up" style="color:rgba(255,255,255,0.5);margin:0 auto;white-space:nowrap;" data-delay="100">
         原创不搬运，每条视频都是围绕产品卖点与本土化表达精心制作的内容资产
       </p>
-    </div>
-
-    <!-- 声音开启按钮 -->
-    <div class="unmute-banner" id="unmuteBanner">
-      <button class="unmute-btn" id="unmuteBtn" onclick="enableAudio()">
-        <span class="icon">🔊</span> 点击开启声音
-      </button>
     </div>
 
     <!-- 9:16 竖屏视频行 -->
@@ -433,33 +353,6 @@
   </div>
 </footer>
 <script src="assets/js/main.js"></script>
-<!-- 声音开启提示 -->
-<div class="unmute-toast" id="unmuteToast">🔊 声音已开启</div>
-<script>
-// ===== 开启声音 =====
-function enableAudio() {
-  // 标记全局声音已开启
-  window._audioEnabled = true;
-  // 取消所有视频静音
-  document.querySelectorAll('.vs-card video').forEach(function(v) {
-    v.muted = false;
-  });
-  // 隐藏按钮
-  var btn = document.getElementById('unmuteBtn');
-  if (btn) btn.classList.add('hidden');
-  // 显示 toast 提示
-  var toast = document.getElementById('unmuteToast');
-  if (toast) {
-    toast.classList.add('show');
-    setTimeout(function() { toast.classList.remove('show'); }, 1500);
-  }
-  // 一段时间后也隐藏 banner 容器
-  setTimeout(function() {
-    var banner = document.getElementById('unmuteBanner');
-    if (banner) banner.style.display = 'none';
-  }, 600);
-}
-</script>
 <script>
 // ===== 无缝视频走马灯 =====
 (function() {
@@ -522,9 +415,9 @@ function enableAudio() {
     initMarquee('track-portrait',  SPEED_PORTRAIT);
     initMarquee('track-landscape', SPEED_LANDSCAPE);
 
-    // 确保所有视频都在播放（兜底），并同步静音状态
+    // 确保所有视频都在播放（兜底）
     document.querySelectorAll('.vs-card video').forEach(function(v) {
-      v.muted = !window._audioEnabled;
+      v.muted = true;
       v.play().catch(function(){});
     });
   });
