@@ -450,6 +450,13 @@
     }
     .home-contact-card a:hover { color: #0052cc; }
 
+    /* 为什么选择我们 - 五列网格（桌面端） */
+    .why-us-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
     /* 响应式 */
     @media (max-width: 1024px) {
       .capability-grid { grid-template-columns: repeat(2, 1fr); }
@@ -990,7 +997,7 @@
       <span class="section-tag" style="color:var(--orange);background:rgba(255,107,0,0.1);border-color:rgba(255,107,0,0.2);">Why Us</span>
       <h2 class="section-title fade-up" style="color:var(--white);">为什么选择<span class="grad-text">向前海外</span></h2>
     </div>
-    <div class="why-us-grid" style="display:grid; grid-template-columns: repeat(5,1fr); gap: 20px;">
+    <div class="why-us-grid">
       <div class="card-dark" style="padding:28px 20px; border-radius:16px; text-align:center;" class="fade-up">
         <div style="font-size:36px;margin-bottom:16px;">🎯</div>
         <h3 style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;">原创内容为核心</h3>
