@@ -189,6 +189,33 @@
       aspect-ratio: 16/9;
     }
 
+    /* 自定义全屏按钮（解决安卓微信X5内核无全屏按钮问题） */
+    .vsb-fullscreen-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 20;
+      width: 36px;
+      height: 36px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s ease, background 0.2s ease;
+      pointer-events: none;
+    }
+    .vsb-fullscreen-btn svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.9); }
+    .video-showcase-box:hover .vsb-fullscreen-btn { opacity: 1; pointer-events: auto; }
+    .video-showcase-box .vsb-fullscreen-btn:active { background: rgba(0,0,0,0.75); }
+    /* 全屏时隐藏按钮 */
+    .video-showcase-box:fullscreen .vsb-fullscreen-btn,
+    .video-showcase-box:-webkit-full-screen .vsb-fullscreen-btn { display: none; }
+
     /* 框内视频层叠 + 循环切换 */
     .vsb-video-stack {
       position: relative;
@@ -654,26 +681,30 @@
             <span class="vsb-dot"></span>
           </span>
         </div>
+        <!-- 自定义全屏按钮 -->
+        <button class="vsb-fullscreen-btn" aria-label="全屏播放">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
         <div class="vsb-video-stack">
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260415-181926.mp4" poster="assets/videos/posters/20260415-181926.jpg" autoplay muted loop playsinline class="active" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260415-181926.mp4" poster="assets/videos/posters/20260415-181926.jpg" autoplay muted loop playsinline class="active" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇯🇵 日本市场","c":"rgba(0,102,255,0.85)"},{"t":"功能性饮料 · 高转化","c":"rgba(251,146,60,0.85)"}]'
                  data-title="产品功效演示" data-desc="🇯🇵 日本 · 功能性饮料 高转化素材"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260422-121242.mp4" poster="assets/videos/posters/20260422-121242.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260422-121242.mp4" poster="assets/videos/posters/20260422-121242.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇯🇵 日本市场","c":"rgba(0,102,255,0.85)"},{"t":"轻奢个护 · 明星主理人","c":"rgba(236,72,153,0.85)"}]'
                  data-title="产品使用演示" data-desc="🇯🇵 日本 · 轻奢级个护 明星主理人"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/0000.mp4" poster="assets/videos/posters/0000.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/0000.mp4" poster="assets/videos/posters/0000.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇧🇷 巴西市场","c":"rgba(0,102,255,0.85)"},{"t":"零成本达人 · 高转化","c":"rgba(34,197,94,0.85)"}]'
                  data-title="达人种草" data-desc="🇧🇷 巴西 · 高转化素材 零成本达人"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体2.mp4" poster="assets/videos/posters/媒体2.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体2.mp4" poster="assets/videos/posters/媒体2.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"韩国爆款 · 高转化","c":"rgba(251,146,60,0.85)"}]'
                  data-title="种草 Vlog" data-desc="🇺🇸 美国 · 韩国爆款 高转化素材"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体1.mp4" poster="assets/videos/posters/媒体1.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体1.mp4" poster="assets/videos/posters/媒体1.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇧🇷 巴西市场","c":"rgba(0,102,255,0.85)"},{"t":"爆款框架 · 投流优秀","c":"rgba(168,85,247,0.85)"}]'
                  data-title="口播带货" data-desc="🇧🇷 巴西 · 爆款框架 投流表现优秀"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" poster="assets/videos/posters/20251202_lyra8679_7579194920058113310_discount_tiktokshop_collagendrink_freeshipping_factory.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" poster="assets/videos/posters/20251202_lyra8679_7579194920058113310_discount_tiktokshop_collagendrink_freeshipping_factory.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"女性保健品 · 全AI创作","c":"rgba(34,197,94,0.85)"}]'
                  data-title="促销机制" data-desc="🇺🇸 美国 · 女性保健品 全AI创作"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/Download (13).mp4" poster="assets/videos/posters/Download_13.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/Download (13).mp4" poster="assets/videos/posters/Download_13.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"爆品单品 · 日销3k","c":"rgba(251,146,60,0.85)"}]'
                  data-title="产品实拍展示" data-desc="🇺🇸 美国 · 爆品单品 日销量3k"></video>
         </div>
@@ -696,14 +727,18 @@
             <span class="vsb-dot"></span>
           </span>
         </div>
+        <!-- 自定义全屏按钮 -->
+        <button class="vsb-fullscreen-btn" aria-label="全屏播放">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
         <div class="vsb-video-stack">
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260406-215200.mp4" poster="assets/videos/posters/20260406-215200.jpg" autoplay muted loop playsinline class="active" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260406-215200.mp4" poster="assets/videos/posters/20260406-215200.jpg" autoplay muted loop playsinline class="active" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"原创MV · 产品卖点歌词","c":"rgba(168,85,247,0.85)"}]'
                  data-title="品牌种草广告" data-desc="🇺🇸 美国 · 原创MV 产品卖点歌词"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.24-宅男逆袭.mp4" poster="assets/videos/posters/10.24-宅男逆袭.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.24-宅男逆袭.mp4" poster="assets/videos/posters/10.24-宅男逆袭.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"原创AI短剧 · 自然流爆款","c":"rgba(34,197,94,0.85)"}]'
                  data-title="短剧种草带货 · 宅男逆袭" data-desc="🇺🇸 美国 · 原创AI短剧 自然流爆款"></video>
-          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.23-监狱.mp4" poster="assets/videos/posters/10.23-监狱.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline
+          <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.23-监狱.mp4" poster="assets/videos/posters/10.23-监狱.jpg" muted loop playsinline x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"
                  data-tags='[{"t":"🇺🇸 美国市场","c":"rgba(0,102,255,0.85)"},{"t":"原创AI短剧 · 自然流爆款","c":"rgba(251,146,60,0.85)"}]'
                  data-title="短剧种草带货 · 监狱篇" data-desc="🇺🇸 美国 · 原创AI短剧 自然流爆款"></video>
         </div>
@@ -1217,6 +1252,69 @@ document.querySelectorAll('.video-showcase-box').forEach(function(box) {
   document.addEventListener('visibilitychange', function() {
     if (!document.hidden) setTimeout(tryPlayAll, 300);
   });
+})();
+
+// ===== 自定义全屏按钮 — 兼容 iOS Safari + 安卓微信 X5 内核 =====
+(function() {
+  var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+
+  // 获取当前 active 状态的 video
+  function getActiveVideo(box) {
+    return box.querySelector('.vsb-video-stack video.active');
+  }
+
+  // 标准浏览器全屏（Safari、Chrome、桌面端）
+  function requestFullscreen(el) {
+    if (el.requestFullscreen) {
+      el.requestFullscreen();
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.webkitEnterFullscreen) {
+      // iOS Safari: 直接调用 webkitEnterFullscreen（需要用户手势）
+      el.webkitEnterFullscreen();
+    }
+  }
+
+  // 安卓微信 X5 内核全屏
+  function requestX5Fullscreen(videoEl) {
+    if (typeof videoEl.webkitEnterFullscreen === 'function') {
+      videoEl.webkitEnterFullscreen();
+    }
+  }
+
+  // 统一全屏入口
+  function handleFullscreen(box) {
+    var video = getActiveVideo(box);
+    if (!video) return;
+
+    if (isWeChat) {
+      // 微信 X5 内核：尝试 X5 全屏；若 video 不支持，再尝试 box 全屏
+      if (typeof video.webkitEnterFullscreen === 'function') {
+        video.webkitEnterFullscreen();
+      } else {
+        requestFullscreen(box);
+      }
+    } else {
+      // iOS Safari / 其他浏览器：直接全屏 video（体验最佳）
+      if (typeof video.webkitEnterFullscreen === 'function') {
+        video.webkitEnterFullscreen();
+      } else {
+        requestFullscreen(video);
+      }
+    }
+  }
+
+  // 绑定全屏按钮点击
+  document.querySelectorAll('.vsb-fullscreen-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var box = btn.closest('.video-showcase-box');
+      handleFullscreen(box);
+    });
+  });
+
+  // 切换视频时，同步更新全屏按钮（按钮一直都在，只是视觉上跟随当前视频）
 })();
 </script>
 </body>
