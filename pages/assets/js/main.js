@@ -112,6 +112,21 @@ document.addEventListener('DOMContentLoaded', () => {
     video.play().catch(() => {});
   });
 
+  /* ---- 防视频下载：屏蔽右键 & 长按菜单 ---- */
+  document.querySelectorAll('video').forEach(video => {
+    // 屏蔽右键
+    video.addEventListener('contextmenu', e => e.preventDefault());
+    // 额外兜底：Android X5/微信长按（touchstart 500ms 后触发）
+    let longPressTimer;
+    video.addEventListener('touchstart', e => {
+      longPressTimer = setTimeout(() => {
+        video.dispatchEvent(new Event('contextmenu', { bubbles: true, cancelable: true }));
+      }, 500);
+    }, { passive: true });
+    video.addEventListener('touchend', () => clearTimeout(longPressTimer));
+    video.addEventListener('touchmove', () => clearTimeout(longPressTimer));
+  });
+
   /* ---- 简易 Swiper 轮播（无依赖版备用） ---- */
   document.querySelectorAll('.simple-carousel').forEach(carousel => {
     const track = carousel.querySelector('.carousel-track');

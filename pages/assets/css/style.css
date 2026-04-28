@@ -534,3 +534,23 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
   .section-pad { padding: 64px 0; }
 }
+
+/* ============================================================
+   防视频下载 — 屏蔽下载按钮 & 长按/右键菜单
+   ============================================================ */
+
+/* 隐藏 WebKit 浏览器（Chrome/Android Chrome/Safari）原生下载按钮 */
+video::-webkit-media-controls-download-button { display: none !important; }
+/* 隐藏控件容器溢出部分 */
+video::-webkit-media-controls-enclosure { overflow: hidden; }
+/* 隐藏下载覆盖层（某些 Android 浏览器兜底） */
+video::-webkit-media-controls-overlay-download-button { display: none !important; }
+
+/* 禁止 iOS/Android 长按弹出菜单 */
+video {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  pointer-events: auto;
+}
