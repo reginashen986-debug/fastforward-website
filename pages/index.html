@@ -458,6 +458,7 @@
       .video-showcase-grid { grid-template-columns: 1fr; gap: 20px; }
       .video-showcase-box.portrait { max-height: 440px; }
       .home-contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-us-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 640px) {
       .capability-grid { grid-template-columns: repeat(2, 1fr); }
@@ -465,6 +466,15 @@
       .hero-btns { flex-direction: column; align-items: center; }
       .video-showcase-box.portrait { max-height: 360px; }
       .home-contact-grid { grid-template-columns: 1fr; }
+      .why-us-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* 平板（768px）及以下：小屏幕单独处理 5 列模块 */
+    @media (max-width: 768px) {
+      .why-us-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* 更小手机（480px）及以下：单列 */
+    @media (max-width: 480px) {
+      .why-us-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -980,7 +990,7 @@
       <span class="section-tag" style="color:var(--orange);background:rgba(255,107,0,0.1);border-color:rgba(255,107,0,0.2);">Why Us</span>
       <h2 class="section-title fade-up" style="color:var(--white);">为什么选择<span class="grad-text">向前海外</span></h2>
     </div>
-    <div style="display:grid; grid-template-columns: repeat(5,1fr); gap: 20px;">
+    <div class="why-us-grid" style="display:grid; grid-template-columns: repeat(5,1fr); gap: 20px;">
       <div class="card-dark" style="padding:28px 20px; border-radius:16px; text-align:center;" class="fade-up">
         <div style="font-size:36px;margin-bottom:16px;">🎯</div>
         <h3 style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:8px;">原创内容为核心</h3>
