@@ -127,6 +127,35 @@
     .vs-btn:active {
       transform: scale(0.95);
     }
+    /* 播放按钮稍大一号 */
+    .vs-btn.vs-btn-play svg {
+      width: 15px; height: 15px;
+    }
+
+    /* 视频暂停时：卡片显示中央大播放图标提示 */
+    .vs-card.video-paused::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      /* 居中三角 */
+      background: rgba(0,0,0,0.25) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='5 3 19 12 5 21 5 3' fill='white'/%3E%3C/svg%3E") center/48px no-repeat;
+      border-radius: inherit;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 1;
+    }
+    .vs-card.video-playing::after { display: none; }
+
+    /* 移动端：叠加层始终可见 */
+    @media (hover: none) and (pointer: coarse) {
+      .vs-ctrl {
+        opacity: 1 !important;
+        pointer-events: auto;
+      }
+      /* 暂停状态也显示叠加层 */
+      .vs-card.video-paused .vs-ctrl { opacity: 1 !important; }
+    }
     /* 静音状态：显示静音图标，隐藏喇叭图标 */
     .vs-card.is-muted .icon-sound { display: none; }
     .vs-card.is-muted .icon-muted { display: block !important; }
@@ -304,6 +333,7 @@
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260415-181926.mp4" poster="assets/videos/posters/20260415-181926.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -312,6 +342,7 @@
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260422-121242.mp4" poster="assets/videos/posters/20260422-121242.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -320,6 +351,7 @@
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/0000.mp4" poster="assets/videos/posters/0000.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -328,6 +360,7 @@
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体2.mp4" poster="assets/videos/posters/媒体2.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -336,6 +369,7 @@
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体1.mp4" poster="assets/videos/posters/媒体1.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -344,6 +378,7 @@
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" poster="assets/videos/posters/20251202_lyra8679_7579194920058113310_discount_tiktokshop_collagendrink_freeshipping_factory.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -352,6 +387,7 @@
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/Download (13).mp4" poster="assets/videos/posters/Download_13.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -369,6 +405,7 @@
           <div class="vs-card vs-landscape">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260406-215200.mp4" poster="assets/videos/posters/20260406-215200.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -377,6 +414,7 @@
           <div class="vs-card vs-landscape">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.24-宅男逆袭.mp4" poster="assets/videos/posters/10.24-宅男逆袭.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -385,6 +423,7 @@
           <div class="vs-card vs-landscape">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.23-监狱.mp4" poster="assets/videos/posters/10.23-监狱.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
+  <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="vs-btn vs-btn-mute" title="静音" aria-label="静音"><svg class="icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
 </div>
@@ -561,12 +600,54 @@
     // 立即尝试播放所有视频
     playAllVideos();
 
-    // 点击卡片 → 切换该视频声音开/关
+    // 点击卡片 → 切换该视频声音开/关（点击播放按钮则播放/暂停视频）
     document.querySelectorAll('.vs-card').forEach(function(card) {
+      var vid = card.querySelector('video');
+      if (!vid) return;
+
+      // 播放/暂停按钮点击
+      var playBtn = card.querySelector('.vs-btn-play');
+      if (playBtn) {
+        playBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (vid.paused) {
+            tryPlayVideo(vid);
+          } else {
+            vid.pause();
+          }
+        });
+        // 视频播放/暂停时：更新图标（播放中→暂停图标，暂停→播放图标）
+        vid.addEventListener('play', function() {
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+        });
+        vid.addEventListener('pause', function() {
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+        });
+        // 初始化图标
+        if (!vid.paused) {
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+        }
+      }
+
+      // 监听视频播放/暂停状态，更新 video-paused / video-playing class
+      vid.addEventListener('play', function() {
+        card.classList.remove('video-paused');
+        card.classList.add('video-playing');
+      });
+      vid.addEventListener('pause', function() {
+        card.classList.remove('video-playing');
+        card.classList.add('video-paused');
+      });
+      // 初始化状态：视频可能已经暂停（autoplay 失败）
+      if (vid.paused) {
+        card.classList.add('video-paused');
+      } else {
+        card.classList.add('video-playing');
+      }
+
+      // 点击卡片非按钮区域 → 切换声音开/关
       card.addEventListener('click', function(e) {
-        var vid = card.querySelector('video');
-        if (!vid) return;
-        // 点击自定义控件按钮不拦截
+        // 已被 playBtn / fullscreenBtn / muteBtn 拦截，不再处理
         if (e.target.closest('.vs-btn')) return;
         if (card.classList.contains('audio-on')) {
           vid.muted = true;
