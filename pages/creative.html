@@ -600,91 +600,39 @@
     // 立即尝试播放所有视频
     playAllVideos();
 
-    // 点击卡片 → 切换该视频声音开/关（点击播放按钮则播放/暂停视频）
-    document.querySelectorAll('.vs-card').forEach(function(card) {
+    // ===== 事件委托：所有卡片的按钮和点击行为统一处理 =====
+    // （使用事件委托，这样 initMarquee 克隆的卡片也能正常工作）
+    document.addEventListener('click', function(e) {
+      var card = e.target.closest('.vs-card');
+      if (!card) return;
       var vid = card.querySelector('video');
       if (!vid) return;
 
-      // 播放/暂停按钮点击
-      var playBtn = card.querySelector('.vs-btn-play');
-      if (playBtn) {
-        playBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          if (vid.paused) {
-            tryPlayVideo(vid);
-          } else {
-            vid.pause();
-          }
-        });
-        // 视频播放/暂停时：更新图标（播放中→暂停图标，暂停→播放图标）
-        vid.addEventListener('play', function() {
-          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-        });
-        vid.addEventListener('pause', function() {
-          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-        });
-        // 初始化图标
-        if (!vid.paused) {
-          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-        }
-      }
-
-      // 监听视频播放/暂停状态，更新 video-paused / video-playing class
-      vid.addEventListener('play', function() {
-        card.classList.remove('video-paused');
-        card.classList.add('video-playing');
-      });
-      vid.addEventListener('pause', function() {
-        card.classList.remove('video-playing');
-        card.classList.add('video-paused');
-      });
-      // 初始化状态：视频可能已经暂停（autoplay 失败）
-      if (vid.paused) {
-        card.classList.add('video-paused');
-      } else {
-        card.classList.add('video-playing');
-      }
-
-      // 点击卡片非按钮区域 → 切换声音开/关
-      card.addEventListener('click', function(e) {
-        // 已被 playBtn / fullscreenBtn / muteBtn 拦截，不再处理
-        if (e.target.closest('.vs-btn')) return;
-        if (card.classList.contains('audio-on')) {
-          vid.muted = true;
-          card.classList.remove('audio-on');
-          card.classList.add('is-muted');
-        } else {
-          vid.muted = false;
-          card.classList.add('audio-on');
-          card.classList.remove('is-muted');
-          if (vid.paused) tryPlayVideo(vid);
-        }
-      });
-    });
-
-    // ===== 自定义全屏按钮 =====
-    document.querySelectorAll('.vs-btn-fullscreen').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
+      // 播放/暂停按钮
+      if (e.target.closest('.vs-btn-play')) {
         e.stopPropagation();
-        var card = btn.closest('.vs-card');
-        var vid = card ? card.querySelector('video') : null;
-        if (!vid) return;
-        // 全屏 API，优先对 video 全屏，回退到 card 全屏
+        if (vid.paused) {
+          tryPlayVideo(vid);
+        } else {
+          vid.pause();
+        }
+        return;
+      }
+
+      // 全屏按钮
+      if (e.target.closest('.vs-btn-fullscreen')) {
+        e.stopPropagation();
         var fsTarget = vid.requestFullscreen || vid.webkitRequestFullscreen ||
                        vid.mozRequestFullScreen || vid.msRequestFullscreen ||
                        (card.requestFullscreen || card.webkitRequestFullscreen ||
                         card.mozRequestFullScreen || card.msRequestFullscreen).bind(card);
         if (fsTarget) fsTarget.call(vid);
-      });
-    });
+        return;
+      }
 
-    // ===== 自定义静音按钮 =====
-    document.querySelectorAll('.vs-btn-mute').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
+      // 静音按钮
+      if (e.target.closest('.vs-btn-mute')) {
         e.stopPropagation();
-        var card = btn.closest('.vs-card');
-        var vid = card ? card.querySelector('video') : null;
-        if (!vid) return;
         vid.muted = !vid.muted;
         if (vid.muted) {
           card.classList.add('is-muted');
@@ -694,8 +642,70 @@
           card.classList.add('audio-on');
           if (vid.paused) tryPlayVideo(vid);
         }
-      });
+        return;
+      }
+
+      // 点击卡片其他区域 → 切换声音开/关
+      if (card.classList.contains('audio-on')) {
+        vid.muted = true;
+        card.classList.remove('audio-on');
+        card.classList.add('is-muted');
+      } else {
+        vid.muted = false;
+        card.classList.add('audio-on');
+        card.classList.remove('is-muted');
+        if (vid.paused) tryPlayVideo(vid);
+      }
     });
+
+    // ===== 视频状态同步：播放/暂停时更新图标和 class =====
+    // 对当前页面所有 vs-card 绑定一次（含克隆卡片在 initMarquee 之后动态追加，延时再跑一次）
+    function bindVideoStateListeners() {
+      document.querySelectorAll('.vs-card video').forEach(function(vid) {
+        var card = vid.closest('.vs-card');
+        var playBtn = card ? card.querySelector('.vs-btn-play') : null;
+        if (!card) return;
+
+        // 防止重复绑定
+        if (vid._stateBound) return;
+        vid._stateBound = true;
+
+        vid.addEventListener('play', function() {
+          if (playBtn) {
+            playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+          }
+          card.classList.remove('video-paused');
+          card.classList.add('video-playing');
+        });
+        vid.addEventListener('pause', function() {
+          if (playBtn) {
+            playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+          }
+          card.classList.remove('video-playing');
+          card.classList.add('video-paused');
+        });
+
+        // 初始化状态（autoplay 失败时视频是暂停的）
+        if (vid.paused) {
+          card.classList.add('video-paused');
+        } else {
+          card.classList.add('video-playing');
+          if (playBtn) {
+            playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+          }
+        }
+      });
+    }
+
+    // 立即执行一次（处理原始卡片）
+    bindVideoStateListeners();
+
+    // initMarquee 克隆卡片后，再次绑定（延迟到 DOM 更新后）
+    var origInitMarquee = initMarquee;
+    window.initMarquee = function(trackId, speed) {
+      origInitMarquee(trackId, speed);
+      setTimeout(bindVideoStateListeners, 0);
+    };
 
     // ===== 初始化：所有视频默认静音，显示静音图标 =====
     document.querySelectorAll('.vs-card').forEach(function(card) {
