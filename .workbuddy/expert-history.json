@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "sessions": {
+    "3772df3ec2724d8bb99f38358dace623": [
+      {
+        "expertId": "TripStarAgent",
+        "name": "路小鲜",
+        "profession": "美团生活助手",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/09-Operations/TripStarAgent/TripStarAgent.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/09-Operations/TripStarAgent/TripStarAgent_zh.md",
+        "usedAt": 1777373561406,
+        "industryId": "all"
+      }
+    ]
+  },
+  "lastUpdated": 1777376358486
+}
