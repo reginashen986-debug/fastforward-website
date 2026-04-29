@@ -539,66 +539,75 @@
     document.querySelectorAll('.vs-card video').forEach(tryPlayVideo);
   }
 
-  // ===== 无缝视频走马灯 =====
-  var SPEED_PORTRAIT  = 80;
-  var SPEED_LANDSCAPE = 60;
+    // ===== 无缝视频走马灯 =====
+    var SPEED_PORTRAIT  = 80;
+    var SPEED_LANDSCAPE = 60;
 
-  function initMarquee(trackId, speed) {
-    var track = document.getElementById(trackId);
-    if (!track) return;
+    function initMarquee(trackId, speed) {
+      try {
+      var track = document.getElementById(trackId);
+      if (!track) return;
 
-    var origChildren = Array.from(track.children);
-    origChildren.forEach(function(child) {
-      var clone = child.cloneNode(true);
-      var vids = clone.querySelectorAll('video');
-      vids.forEach(function(v) {
-        v.muted = true;
-        v.autoplay = true;
-        v.loop = true;
-        v.playsInline = true;
-        v.setAttribute('webkit-playsinline', '');
-        if (!v.hasAttribute('controlsList')) { v.setAttribute('controlsList', 'nodownload noremoteplayback'); }
-        // 安卓微信下标记 x5
-        if (isAndroid && isWeChat) v.classList.add('x5-video-player');
-        tryPlayVideo(v);
+      var origChildren = Array.from(track.children);
+      origChildren.forEach(function(child) {
+        var clone = child.cloneNode(true);
+        var vids = clone.querySelectorAll('video');
+        vids.forEach(function(v) {
+          v.muted = true;
+          v.autoplay = true;
+          v.loop = true;
+          v.playsInline = true;
+          v.setAttribute('webkit-playsinline', '');
+          if (!v.hasAttribute('controlsList')) { v.setAttribute('controlsList', 'nodownload noremoteplayback'); }
+          // 安卓微信下标记 x5
+          if (isAndroid && isWeChat) v.classList.add('x5-video-player');
+          tryPlayVideo(v);
+        });
+        track.appendChild(clone);
       });
-      track.appendChild(clone);
-    });
 
-    var offset = 0;
-    var paused = false;
-    var lastTime = null;
-    var halfWidth = 0;
+      var offset = 0;
+      var paused = false;
+      var lastTime = null;
+      var halfWidth = 0;
 
-    requestAnimationFrame(function() {
-      halfWidth = track.scrollWidth / 2;
+      requestAnimationFrame(function() {
+        halfWidth = track.scrollWidth / 2;
+        if (halfWidth === 0) return; // 视频未加载完，暂不启动
 
-      function tick(ts) {
-        if (!lastTime) lastTime = ts;
-        var dt = (ts - lastTime) / 1000;
-        lastTime = ts;
+        function tick(ts) {
+          if (!lastTime) lastTime = ts;
+          var dt = (ts - lastTime) / 1000;
+          lastTime = ts;
 
-        if (!paused) {
-          offset += speed * dt;
-          if (offset >= halfWidth) offset -= halfWidth;
-          track.style.transform = 'translateX(-' + offset + 'px)';
+          if (!paused) {
+            offset += speed * dt;
+            if (offset >= halfWidth) offset -= halfWidth;
+            track.style.transform = 'translateX(-' + offset + 'px)';
+          }
+          requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
+      });
+
+      track.parentElement.addEventListener('mouseenter', function() { paused = true; });
+      track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
+      } catch(e) { console.error('initMarquee error:', e); }
+    }
+
+  // 页面 DOM 就绪后立即初始化（不等 load，避免视频区域空白）
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initMarquee('track-portrait',  SPEED_PORTRAIT);
+      initMarquee('track-landscape', SPEED_LANDSCAPE);
+      setTimeout(playAllVideos, 200);
     });
-
-    track.parentElement.addEventListener('mouseenter', function() { paused = true; });
-    track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
-  }
-
-  // 页面加载后初始化
-  window.addEventListener('load', function() {
+  } else {
+    // DOM 已就绪（比如从缓存加载）
     initMarquee('track-portrait',  SPEED_PORTRAIT);
     initMarquee('track-landscape', SPEED_LANDSCAPE);
-
-    // 立即尝试播放所有视频
-    playAllVideos();
+    setTimeout(playAllVideos, 200);
+  }
 
     // ===== 事件委托：所有卡片的按钮和点击行为统一处理 =====
     // （使用事件委托，这样 initMarquee 克隆的卡片也能正常工作）
