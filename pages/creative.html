@@ -56,17 +56,20 @@
     .vs-portrait {
       width: 330px;
       aspect-ratio: 9/16;
+      min-height: 587px; /* aspect-ratio 兜底 */
     }
     /* 16:9 横屏卡片 */
     .vs-landscape {
       width: 570px;
       aspect-ratio: 16/9;
+      min-height: 321px; /* aspect-ratio 兜底 */
     }
 
     .vs-card video {
-      width: 100%; height: 100%;
+      width: 100%; height: calc(100% + 44px); /* 44px = 原生控件栏高度，推出overflow:hidden */
       object-fit: cover;
       display: block;
+      margin-bottom: -44px; /* 拉回，让视频画面填满卡片 */
     }
 
     .vs-overlay {
@@ -331,7 +334,7 @@
       <div class="vs-marquee-wrap">
         <div class="video-scroll-track auto-scroll" id="track-portrait">
           <div class="vs-card vs-portrait">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260415-181926.mp4" poster="assets/videos/posters/20260415-181926.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260415-181926.mp4" poster="assets/videos/posters/20260415-181926.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -340,7 +343,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">功能性饮料 · 高转化</span></div>
           </div>
           <div class="vs-card vs-portrait">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260422-121242.mp4" poster="assets/videos/posters/20260422-121242.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260422-121242.mp4" poster="assets/videos/posters/20260422-121242.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -349,7 +352,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(168,85,247,0.85);">🇯🇵 日本市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">轻奢个护 · 明星主理人</span></div>
           </div>
           <div class="vs-card vs-portrait">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/0000.mp4" poster="assets/videos/posters/0000.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/0000.mp4" poster="assets/videos/posters/0000.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -358,7 +361,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">零成本达人 · 高转化</span></div>
           </div>
           <div class="vs-card vs-portrait">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体2.mp4" poster="assets/videos/posters/媒体2.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体2.mp4" poster="assets/videos/posters/媒体2.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -367,7 +370,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">韩国爆款 · 高转化</span></div>
           </div>
           <div class="vs-card vs-portrait">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体1.mp4" poster="assets/videos/posters/媒体1.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/媒体1.mp4" poster="assets/videos/posters/媒体1.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -376,7 +379,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(34,197,94,0.85);">🇧🇷 巴西市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">爆款框架 · 投流优秀</span></div>
           </div>
           <div class="vs-card vs-portrait">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" poster="assets/videos/posters/20251202_lyra8679_7579194920058113310_discount_tiktokshop_collagendrink_freeshipping_factory.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20251202_lyra8679_7579194920058113310_discount tiktokshop collagendrink freeshipping factory.mp4" poster="assets/videos/posters/20251202_lyra8679_7579194920058113310_discount_tiktokshop_collagendrink_freeshipping_factory.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -385,7 +388,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(236,72,153,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">女性保健品 · 全AI创作</span></div>
           </div>
           <div class="vs-card vs-portrait">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/Download (13).mp4" poster="assets/videos/posters/Download_13.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/Download (13).mp4" poster="assets/videos/posters/Download_13.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -403,7 +406,7 @@
       <div class="vs-marquee-wrap">
         <div class="video-scroll-track auto-scroll" id="track-landscape">
           <div class="vs-card vs-landscape">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260406-215200.mp4" poster="assets/videos/posters/20260406-215200.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260406-215200.mp4" poster="assets/videos/posters/20260406-215200.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -412,7 +415,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(34,197,94,0.85);">原创 MV · 产品卖点歌词</span></div>
           </div>
           <div class="vs-card vs-landscape">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.24-宅男逆袭.mp4" poster="assets/videos/posters/10.24-宅男逆袭.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.24-宅男逆袭.mp4" poster="assets/videos/posters/10.24-宅男逆袭.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -421,7 +424,7 @@
             <div class="vs-tags"><span class="vs-tag" style="background:rgba(0,102,255,0.85);">🇺🇸 美国市场</span><span class="vs-tag" style="background:rgba(251,146,60,0.85);">原创AI短剧 · 自然流爆款</span></div>
           </div>
           <div class="vs-card vs-landscape">
-            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.23-监狱.mp4" poster="assets/videos/posters/10.23-监狱.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controlsList="nodownload noremoteplayback"></video>
+            <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/10.23-监狱.mp4" poster="assets/videos/posters/10.23-监狱.jpg" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
   <button class="vs-btn vs-btn-play" title="播放" aria-label="播放"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
   <button class="vs-btn vs-btn-fullscreen" title="全屏" aria-label="全屏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
@@ -545,54 +548,62 @@
 
     function initMarquee(trackId, speed) {
       try {
-      var track = document.getElementById(trackId);
-      if (!track) return;
+        var track = document.getElementById(trackId);
+        if (!track) { console.error('[initMarquee] track not found:', trackId); return; }
+        console.log('[initMarquee] init:', trackId, 'children:', track.children.length);
 
-      var origChildren = Array.from(track.children);
-      origChildren.forEach(function(child) {
-        var clone = child.cloneNode(true);
-        var vids = clone.querySelectorAll('video');
-        vids.forEach(function(v) {
-          v.muted = true;
-          v.autoplay = true;
-          v.loop = true;
-          v.playsInline = true;
-          v.setAttribute('webkit-playsinline', '');
-          if (!v.hasAttribute('controlsList')) { v.setAttribute('controlsList', 'nodownload noremoteplayback'); }
-          // 安卓微信下标记 x5
-          if (isAndroid && isWeChat) v.classList.add('x5-video-player');
-          tryPlayVideo(v);
+        var origChildren = Array.from(track.children);
+        origChildren.forEach(function(child) {
+          var clone = child.cloneNode(true);
+          var vids = clone.querySelectorAll('video');
+          vids.forEach(function(v) {
+            v.muted = true;
+            v.autoplay = true;
+            v.loop = true;
+            v.playsInline = true;
+            v.setAttribute('webkit-playsinline', '');
+            if (!v.hasAttribute('controlsList')) { v.setAttribute('controlsList', 'nodownload noremoteplayback'); }
+            if (isAndroid && isWeChat) v.classList.add('x5-video-player');
+            tryPlayVideo(v);
+          });
+          track.appendChild(clone);
         });
-        track.appendChild(clone);
-      });
+        console.log('[initMarquee] after clone, children:', track.children.length);
 
-      var offset = 0;
-      var paused = false;
-      var lastTime = null;
-      var halfWidth = 0;
+        var offset = 0;
+        var paused = false;
+        var lastTime = null;
 
-      requestAnimationFrame(function() {
-        halfWidth = track.scrollWidth / 2;
-        if (halfWidth === 0) return; // 视频未加载完，暂不启动
+        function startAnimation() {
+          var halfWidth = track.scrollWidth / 2;
+          console.log('[initMarquee]', trackId, 'scrollWidth:', track.scrollWidth, 'halfWidth:', halfWidth);
+          if (halfWidth === 0) {
+            // 视频未加载完，延迟重试
+            setTimeout(startAnimation, 300);
+            return;
+          }
 
-        function tick(ts) {
-          if (!lastTime) lastTime = ts;
-          var dt = (ts - lastTime) / 1000;
-          lastTime = ts;
+          function tick(ts) {
+            if (!lastTime) lastTime = ts;
+            var dt = (ts - lastTime) / 1000;
+            lastTime = ts;
 
-          if (!paused) {
-            offset += speed * dt;
-            if (offset >= halfWidth) offset -= halfWidth;
-            track.style.transform = 'translateX(-' + offset + 'px)';
+            if (!paused) {
+              offset += speed * dt;
+              if (offset >= halfWidth) offset -= halfWidth;
+              track.style.transform = 'translateX(' + (-offset) + 'px)';
+            }
+            requestAnimationFrame(tick);
           }
           requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
-      });
 
-      track.parentElement.addEventListener('mouseenter', function() { paused = true; });
-      track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
-      } catch(e) { console.error('initMarquee error:', e); }
+        // 立即尝试启动，失败会自动重试
+        startAnimation();
+
+        track.parentElement.addEventListener('mouseenter', function() { paused = true; });
+        track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
+      } catch(e) { console.error('[initMarquee] error:', trackId, e); }
     }
 
   // 页面 DOM 就绪后立即初始化（不等 load，避免视频区域空白）
