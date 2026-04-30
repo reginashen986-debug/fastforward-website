@@ -37,36 +37,51 @@
     }
     .video-scroll-track::-webkit-scrollbar { display: none; }
 
-    .vs-card {
+    /* 竖屏卡片：固定宽高，video 正常流式布局 */
+    .vs-portrait {
+      width: 330px;
+      height: 587px;
       flex-shrink: 0;
       border-radius: var(--radius-md);
       overflow: hidden;
-      background: #0A0F1E;
+      background: #111827;
       position: relative;
       cursor: pointer;
       scroll-snap-align: start;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      /* 确保有明确高度，卡片高度由 aspect-ratio 决定 */
-      aspect-ratio: 9/16;
     }
-
+    /* 横屏卡片 */
     .vs-landscape {
-      aspect-ratio: 16/9;
+      width: 570px;
+      height: 321px;
+      flex-shrink: 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #111827;
+      position: relative;
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .vs-card:hover {
+    /* 通用卡片 hover（竖屏） */
+    .vs-portrait:hover {
+      transform: scale(1.04);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.5);
+    }
+    /* 通用卡片 hover（横屏） */
+    .vs-landscape:hover {
       transform: scale(1.04);
       box-shadow: 0 20px 48px rgba(0,0,0,0.5);
     }
 
 
-
-    .vs-card video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+    .vs-card video,
+    .vs-portrait video,
+    .vs-landscape video {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
-      z-index: 0;
     }
 
     .vs-overlay {
