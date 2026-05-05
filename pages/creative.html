@@ -107,14 +107,9 @@
       line-height: 1.4;
     }
 
-    /* ====== 自定义视频控制叠加层（仅移动端显示） ====== */
+    /* ====== 自定义视频控制叠加层（全部隐藏） ====== */
     .vs-ctrl {
-      position: absolute;
-      top: 10px; right: 10px;
-      display: none; /* 默认隐藏（桌面端不显示） */
-      flex-direction: column; gap: 8px;
-      opacity: 1;
-      z-index: 5;
+      display: none !important;
     }
     .vs-btn {
       width: 34px; height: 34px;
@@ -158,16 +153,6 @@
     }
     .vs-card.video-playing::after { display: none; }
 
-    /* 移动端：叠加层恢复显示 */
-    @media (hover: none) and (pointer: coarse) {
-      .vs-ctrl {
-        display: flex !important;
-        opacity: 1 !important;
-        pointer-events: auto;
-      }
-      /* 暂停状态也显示叠加层 */
-      .vs-card.video-paused .vs-ctrl { display: flex !important; opacity: 1 !important; }
-    }
     /* 静音状态：显示静音图标，隐藏喇叭图标 */
     .vs-card.is-muted .icon-sound { display: none; }
     .vs-card.is-muted .icon-muted { display: block !important; }
@@ -558,8 +543,7 @@
     function initMarquee(trackId, speed) {
       try {
         var track = document.getElementById(trackId);
-        if (!track) { console.error('[initMarquee] track not found:', trackId); return; }
-        console.log('[initMarquee] init:', trackId, 'children:', track.children.length);
+        if (!track) return;
 
         var origChildren = Array.from(track.children);
         origChildren.forEach(function(child) {
@@ -577,24 +561,36 @@
           });
           track.appendChild(clone);
         });
-        console.log('[initMarquee] after clone, children:', track.children.length);
 
         var offset = 0;
         var paused = false;
         var lastTime = null;
+        var retries = 0;
+
+        function getHalfWidth() {
+          // 优先用 offsetWidth 之和（更可靠），gap 用 21px
+          var gap = 21;
+          var cards = track.children;
+          var n = cards.length;
+          if (n === 0) return 0;
+          var cardW = cards[0].offsetWidth;
+          if (cardW === 0) return 0;
+          // 原始卡片数量 = n/2，半段总宽 = 原始卡片数 * (cardW + gap)
+          return Math.round(n / 2) * (cardW + gap);
+        }
 
         function startAnimation() {
-          var halfWidth = track.scrollWidth / 2;
-          console.log('[initMarquee]', trackId, 'scrollWidth:', track.scrollWidth, 'halfWidth:', halfWidth);
+          var halfWidth = getHalfWidth();
           if (halfWidth === 0) {
-            // 视频未加载完，延迟重试
-            setTimeout(startAnimation, 300);
+            retries++;
+            if (retries < 30) setTimeout(startAnimation, 200);
             return;
           }
 
           function tick(ts) {
             if (!lastTime) lastTime = ts;
             var dt = (ts - lastTime) / 1000;
+            if (dt > 0.1) dt = 0.1; // 防止标签切换后跳帧
             lastTime = ts;
 
             if (!paused) {
@@ -607,12 +603,12 @@
           requestAnimationFrame(tick);
         }
 
-        // 立即尝试启动，失败会自动重试
-        startAnimation();
+        // 延迟一帧确保布局计算完成
+        setTimeout(startAnimation, 50);
 
         track.parentElement.addEventListener('mouseenter', function() { paused = true; });
         track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
-      } catch(e) { console.error('[initMarquee] error:', trackId, e); }
+      } catch(e) { /* silent */ }
     }
 
   // 页面 DOM 就绪后立即初始化（不等 load，避免视频区域空白）
