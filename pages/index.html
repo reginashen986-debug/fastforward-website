@@ -228,6 +228,7 @@
       width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0;
+      transition: opacity 0.8s ease-in-out;
       background-color: #111827;
       background-size: cover;
       background-position: center;
@@ -238,8 +239,6 @@
     .vsb-video-stack video::-webkit-media-controls-toggle-closed-captions-button,
     .vsb-video-stack video::-webkit-media-controls-picture-in-picture-button {
       display: none !important;
-    }
-      transition: opacity 0.8s ease-in-out;
     }
     .vsb-video-stack video.active {
       opacity: 1;
