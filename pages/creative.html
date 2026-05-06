@@ -32,10 +32,19 @@
       overflow-x: auto; scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none; padding-bottom: 8px;
-      mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
-      -webkit-mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
     }
     .video-scroll-track::-webkit-scrollbar { display: none; }
+
+    /* 走马灯模式：完全脱离 overflow-x 限制，用 transform 驱动 */
+    .video-scroll-track.auto-scroll {
+      display: flex;
+      gap: 21px;
+      overflow: visible !important;
+      scroll-snap-type: none !important;
+      width: max-content;
+      will-change: transform;
+      flex-shrink: 0;
+    }
 
     /* 竖屏卡片：固定宽高，video 正常流式布局 */
     .vs-portrait {
@@ -177,12 +186,6 @@
     /* 视频未播放时显示 poster，播放后正常 */
     @supports not (display: grid) {
       .vs-card video { object-fit: cover; }
-    }
-    .video-scroll-track.auto-scroll {
-      display: flex;
-      width: max-content;
-      will-change: transform;
-      overflow-x: visible;
     }
     /* 黑屏兜底：视频未加载时显示背景色而非黑色 */
     .vs-card video {
@@ -568,14 +571,16 @@
         var retries = 0;
 
         function getHalfWidth() {
-          // 优先用 offsetWidth 之和（更可靠），gap 用 21px
+          // auto-scroll 模式下 overflow:visible，scrollWidth 准确反映内容宽
+          var w = track.scrollWidth;
+          if (w > 0) return Math.round(w / 2);
+          // 回退：用卡片 offsetWidth 手动计算
           var gap = 21;
           var cards = track.children;
           var n = cards.length;
           if (n === 0) return 0;
           var cardW = cards[0].offsetWidth;
           if (cardW === 0) return 0;
-          // 原始卡片数量 = n/2，半段总宽 = 原始卡片数 * (cardW + gap)
           return Math.round(n / 2) * (cardW + gap);
         }
 
@@ -603,8 +608,8 @@
           requestAnimationFrame(tick);
         }
 
-        // 延迟一帧确保布局计算完成
-        setTimeout(startAnimation, 50);
+        // 延迟确保 flex/overflow 布局计算完成
+        setTimeout(startAnimation, 200);
 
         track.parentElement.addEventListener('mouseenter', function() { paused = true; });
         track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
