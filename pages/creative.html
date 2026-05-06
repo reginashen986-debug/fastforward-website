@@ -508,7 +508,21 @@
     <div class="footer-bottom"><span>© 2024 向前海外 FastForward. All rights reserved.</span></div>
   </div>
 </footer>
-<script src="assets/js/main.js"></script>
+<script>
+// ===== 全局错误兜底标记 =====
+(function() {
+  window.addEventListener('error', function(e) {
+    var el = document.getElementById('js-init-marker');
+    if (el) el.textContent = 'JS 错误: ' + (e.message || '未知错误');
+  });
+  var el = document.createElement('div');
+  el.style = 'position:fixed;top:0;left:0;z-index:99999;background:#4ade80;color:#000;padding:4px 12px;font-size:12px;font-family:monospace;pointer-events:none;';
+  el.id = 'js-init-marker';
+  el.textContent = 'JS 已加载，等待 marquee 初始化...';
+  document.body.appendChild(el);
+  window._jsLoaded = true;
+})();
+</script>
 <script>
 // ===== 微信/移动端视频播放兼容 =====
 (function() {
@@ -549,6 +563,10 @@
     function initMarquee(trackId, halfWidth) {
       var track = document.getElementById(trackId);
       if (!track) { console.warn('[Marquee] 未找到:', trackId); return; }
+      // 更新顶部标记
+      var marker = document.getElementById('js-init-marker');
+      if (marker) marker.textContent = 'Marquee 运行中: ' + trackId;
+
       console.log('[Marquee] 启动:', trackId, '| halfWidth=', halfWidth, 'px');
       // 可视化标记：在该行标题后面追加闪烁圆点，表示代码已执行
       var wrap = track.parentElement;
@@ -628,10 +646,19 @@
       setTimeout(playAllVideos, 400);
     }
 
+    function safeBoot() {
+      try {
+        bootMarquee();
+      } catch(e) {
+        var errEl = document.getElementById('js-init-marker');
+        if (errEl) errEl.textContent = 'Marquee 报错: ' + e.message;
+        else window.alert('Marquee 报错: ' + e.message);
+      }
+    }
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', bootMarquee);
+      document.addEventListener('DOMContentLoaded', safeBoot);
     } else {
-      bootMarquee();
+      safeBoot();
     }
 
     // ===== 事件委托：所有卡片的按钮和点击行为统一处理 =====
