@@ -7,7 +7,7 @@
 
 ## 近期修改记录（按时间倒序）
 
-- **2026-04-29**：creative.html 作品集页，10 个 video 标签移除 `controls` 属性，阻止微信 X5 内核渲染下载按钮；video 保留 autoplay muted loop playsinline 自动循环。about.html「五大差异化优势」手机端改回单列上下布局。
+- **2026-04-29**：creative.html 方案B — 10 个 video 移除 `controls`（彻底无下载按钮），每个 vs-card 插入自定义 `vs-ctrl` 叠加层（全屏按钮 + 静音按钮）；全屏使用 Fullscreen API，微信/移动端播放逻辑保留。
 - **2026-04-28**：首页视频防下载（controlsList + CSS + JS contextmenu 防护）
 - **2026-04-28**：首页 Block 7 五列溢出问题修复
 - **2026-04-25**：首页「为什么选择向前海外」5 个子模块手机端两列布局（最终稳定版：手机端单列，图标在上文字在下）
@@ -21,6 +21,9 @@
 - assets/js/main.js：全局 JS
 
 ## 技术要点
-- X5 内核防下载：video 元素**不能有 controls 属性**，否则 X5 会自行渲染包含下载按钮的控件层
-- 正确做法：无 controls，视频以 autoplay+muted+loop 自动循环播放（iOS Safari/Chrome 兼容性均无问题）
-- style.css 和 main.js 中仍有 controlsList 和 contextmenu 防护代码，保留（无害）
+- **X5 视频关键规律**：X5 必须有 `controls` 属性才识别为可播放视频；但 X5 会在 controls 上渲染包含下载按钮的原生控件层
+- **方案C（creative.html 当前方案）**：保留 `controls`，用 CSS `height: calc(100%+44px) + margin-bottom:-44px` 把原生控件栏（44px）推出卡片 `overflow:hidden` 范围外，视觉上完全不可见；自定义 `.vs-ctrl` 叠加层（播放/全屏/静音）正常工作
+  - 下载按钮跟随原生控件栏一起被裁剪出视图，彻底消失
+  - controlsList="nodownload noremoteplayback" 仍保留（WebKit 下双重保险）
+- 首页（index.html）：用 `controlsList="nodownload"` 保留 controls，WebKit 下有效；X5 下用 CSS shadow DOM 伪元素隐藏
+- style.css 和 main.js 中的 controlsList 和 contextmenu 防护代码保留（无害）
