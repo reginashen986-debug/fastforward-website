@@ -571,17 +571,16 @@
         var retries = 0;
 
         function getHalfWidth() {
-          // auto-scroll 模式下 overflow:visible，scrollWidth 准确反映内容宽
-          var w = track.scrollWidth;
-          if (w > 0) return Math.round(w / 2);
-          // 回退：用卡片 offsetWidth 手动计算
+          // 父容器 overflow:hidden 导致 scrollWidth 不可靠，用 offsetWidth 精确计算
           var gap = 21;
-          var cards = track.children;
-          var n = cards.length;
+          var allCards = track.children;
+          var n = allCards.length;
           if (n === 0) return 0;
-          var cardW = cards[0].offsetWidth;
+          var cardW = allCards[0].offsetWidth;
           if (cardW === 0) return 0;
-          return Math.round(n / 2) * (cardW + gap);
+          // 克隆后卡片数量是原始数量的 2 倍，halfWidth = 原始卡片段的总宽
+          var origCount = Math.round(n / 2);
+          return origCount * cardW + (origCount - 1) * gap;
         }
 
         function startAnimation() {
