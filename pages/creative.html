@@ -550,6 +550,24 @@
       var track = document.getElementById(trackId);
       if (!track) { console.warn('[Marquee] 未找到:', trackId); return; }
       console.log('[Marquee] 启动:', trackId, '| halfWidth=', halfWidth, 'px');
+      // 可视化标记：在该行标题后面追加闪烁圆点，表示代码已执行
+      var wrap = track.parentElement;
+      var label = wrap.previousElementSibling;
+      if (label && label.classList.contains('video-scroll-row-label')) {
+        var dot = document.createElement('span');
+        dot.textContent = ' ●';
+        dot.style.color = '#4ade80';
+        dot.style.fontSize = '10px';
+        dot.style.animation = 'none';
+        label.appendChild(dot);
+        // 闪烁动画：亮→暗→亮，往复3次后停止（表示初始化成功）
+        var blinks = 0;
+        var iv = setInterval(function() {
+          dot.style.opacity = dot.style.opacity === '0.3' ? '1' : '0.3';
+          blinks++;
+          if (blinks >= 6) { clearInterval(iv); dot.style.opacity = '1'; }
+        }, 200);
+      }
 
       // 克隆原始卡片追加（形成无缝）
       var orig = Array.from(track.children);
@@ -589,6 +607,13 @@
         }
         requestAnimationFrame(tick);
         console.log('[Marquee] 滚动循环已激活:', trackId);
+        // 滚动循环激活后，把小圆点变成常亮绿色
+        var wrap = track.parentElement;
+        var label = wrap ? wrap.previousElementSibling : null;
+        if (label) {
+          var dots = label.querySelectorAll('span[style*="4ade80"]');
+          dots.forEach(function(d) { d.style.color = '#4ade80'; d.style.opacity = '1'; });
+        }
       }
 
       // 悬停暂停
