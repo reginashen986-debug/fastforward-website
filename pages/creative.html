@@ -32,19 +32,10 @@
       overflow-x: auto; scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none; padding-bottom: 8px;
+      mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
+      -webkit-mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
     }
     .video-scroll-track::-webkit-scrollbar { display: none; }
-
-    /* 走马灯模式：完全脱离 overflow-x 限制，用 transform 驱动 */
-    .video-scroll-track.auto-scroll {
-      display: flex;
-      gap: 21px;
-      overflow: visible !important;
-      scroll-snap-type: none !important;
-      width: max-content;
-      will-change: transform;
-      flex-shrink: 0;
-    }
 
     /* 竖屏卡片：固定宽高，video 正常流式布局 */
     .vs-portrait {
@@ -116,9 +107,14 @@
       line-height: 1.4;
     }
 
-    /* ====== 自定义视频控制叠加层（全部隐藏） ====== */
+    /* ====== 自定义视频控制叠加层（仅移动端显示） ====== */
     .vs-ctrl {
-      display: none !important;
+      position: absolute;
+      top: 10px; right: 10px;
+      display: none; /* 默认隐藏（桌面端不显示） */
+      flex-direction: column; gap: 8px;
+      opacity: 1;
+      z-index: 5;
     }
     .vs-btn {
       width: 34px; height: 34px;
@@ -162,6 +158,16 @@
     }
     .vs-card.video-playing::after { display: none; }
 
+    /* 移动端：叠加层恢复显示 */
+    @media (hover: none) and (pointer: coarse) {
+      .vs-ctrl {
+        display: flex !important;
+        opacity: 1 !important;
+        pointer-events: auto;
+      }
+      /* 暂停状态也显示叠加层 */
+      .vs-card.video-paused .vs-ctrl { display: flex !important; opacity: 1 !important; }
+    }
     /* 静音状态：显示静音图标，隐藏喇叭图标 */
     .vs-card.is-muted .icon-sound { display: none; }
     .vs-card.is-muted .icon-muted { display: block !important; }
@@ -186,6 +192,12 @@
     /* 视频未播放时显示 poster，播放后正常 */
     @supports not (display: grid) {
       .vs-card video { object-fit: cover; }
+    }
+    .video-scroll-track.auto-scroll {
+      display: flex;
+      width: max-content;
+      will-change: transform;
+      overflow-x: visible;
     }
     /* 黑屏兜底：视频未加载时显示背景色而非黑色 */
     .vs-card video {
@@ -509,21 +521,6 @@
   </div>
 </footer>
 <script>
-// ===== 全局错误兜底标记 =====
-(function() {
-  window.addEventListener('error', function(e) {
-    var el = document.getElementById('js-init-marker');
-    if (el) el.textContent = 'JS 错误: ' + (e.message || '未知错误');
-  });
-  var el = document.createElement('div');
-  el.style = 'position:fixed;top:0;left:0;z-index:99999;background:#4ade80;color:#000;padding:4px 12px;font-size:12px;font-family:monospace;pointer-events:none;';
-  el.id = 'js-init-marker';
-  el.textContent = 'JS 已加载，等待 marquee 初始化...';
-  document.body.appendChild(el);
-  window._jsLoaded = true;
-})();
-</script>
-<script>
 // ===== 微信/移动端视频播放兼容 =====
 (function() {
   var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
@@ -553,113 +550,83 @@
     document.querySelectorAll('.vs-card video').forEach(tryPlayVideo);
   }
 
-    // ===== 无缝视频走马灯（终版：固定尺寸 + requestAnimationFrame） =====
-    // 竖屏: 7张×330px + 6gap×21px = 2436px  速度80px/s → 30.45s循环
-    // 横屏: 3张×570px + 2gap×21px = 1752px  速度60px/s → 29.2s循环
-    var HALF_PORTRAIT  = 2436;
-    var HALF_LANDSCAPE = 1752;
-    var SPEED_PX = 80; // 每秒移动像素
+    // ===== 无缝视频走马灯 =====
+    var SPEED_PORTRAIT  = 80;
+    var SPEED_LANDSCAPE = 60;
 
-    function initMarquee(trackId, halfWidth) {
-      var track = document.getElementById(trackId);
-      if (!track) { console.warn('[Marquee] 未找到:', trackId); return; }
-      // 更新顶部标记
-      var marker = document.getElementById('js-init-marker');
-      if (marker) marker.textContent = 'Marquee 运行中: ' + trackId;
+    function initMarquee(trackId, speed) {
+      try {
+        var track = document.getElementById(trackId);
+        if (!track) { console.error('[initMarquee] track not found:', trackId); return; }
+        console.log('[initMarquee] init:', trackId, 'children:', track.children.length);
 
-      console.log('[Marquee] 启动:', trackId, '| halfWidth=', halfWidth, 'px');
-      // 可视化标记：在该行标题后面追加闪烁圆点，表示代码已执行
-      var wrap = track.parentElement;
-      var label = wrap.previousElementSibling;
-      if (label && label.classList.contains('video-scroll-row-label')) {
-        var dot = document.createElement('span');
-        dot.textContent = ' ●';
-        dot.style.color = '#4ade80';
-        dot.style.fontSize = '10px';
-        dot.style.animation = 'none';
-        label.appendChild(dot);
-        // 闪烁动画：亮→暗→亮，往复3次后停止（表示初始化成功）
-        var blinks = 0;
-        var iv = setInterval(function() {
-          dot.style.opacity = dot.style.opacity === '0.3' ? '1' : '0.3';
-          blinks++;
-          if (blinks >= 6) { clearInterval(iv); dot.style.opacity = '1'; }
-        }, 200);
-      }
-
-      // 克隆原始卡片追加（形成无缝）
-      var orig = Array.from(track.children);
-      orig.forEach(function(child) {
-        var clone = child.cloneNode(true);
-        clone.querySelectorAll('video').forEach(function(v) {
-          v.muted = true; v.autoplay = true; v.loop = true; v.playsInline = true;
-          if (!v.hasAttribute('controlsList')) { v.setAttribute('controlsList', 'nodownload noremoteplayback'); }
-          tryPlayVideo(v);
+        var origChildren = Array.from(track.children);
+        origChildren.forEach(function(child) {
+          var clone = child.cloneNode(true);
+          var vids = clone.querySelectorAll('video');
+          vids.forEach(function(v) {
+            v.muted = true;
+            v.autoplay = true;
+            v.loop = true;
+            v.playsInline = true;
+            v.setAttribute('webkit-playsinline', '');
+            if (!v.hasAttribute('controlsList')) { v.setAttribute('controlsList', 'nodownload noremoteplayback'); }
+            if (isAndroid && isWeChat) v.classList.add('x5-video-player');
+            tryPlayVideo(v);
+          });
+          track.appendChild(clone);
         });
-        track.appendChild(clone);
-      });
+        console.log('[initMarquee] after clone, children:', track.children.length);
 
-      // JS 驱动滚动（等待两帧确保布局完成）
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          runLoop();
-        });
-      });
-
-      function runLoop() {
         var offset = 0;
         var paused = false;
-        var lastTs = 0;
+        var lastTime = null;
 
-        function tick(ts) {
-          if (!lastTs) lastTs = ts;
-          var dt = Math.min((ts - lastTs) / 1000, 0.15); // cap，防止跳帧
-          lastTs = ts;
+        function startAnimation() {
+          var halfWidth = track.scrollWidth / 2;
+          console.log('[initMarquee]', trackId, 'scrollWidth:', track.scrollWidth, 'halfWidth:', halfWidth);
+          if (halfWidth === 0) {
+            // 视频未加载完，延迟重试
+            setTimeout(startAnimation, 300);
+            return;
+          }
 
-          if (!paused) {
-            offset += SPEED_PX * dt;
-            if (offset >= halfWidth) offset -= halfWidth;
-            track.style.transform = 'translateX(' + (-offset) + 'px)';
+          function tick(ts) {
+            if (!lastTime) lastTime = ts;
+            var dt = (ts - lastTime) / 1000;
+            lastTime = ts;
+
+            if (!paused) {
+              offset += speed * dt;
+              if (offset >= halfWidth) offset -= halfWidth;
+              track.style.transform = 'translateX(' + (-offset) + 'px)';
+            }
+            requestAnimationFrame(tick);
           }
           requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
-        console.log('[Marquee] 滚动循环已激活:', trackId);
-        // 滚动循环激活后，把小圆点变成常亮绿色
-        var wrap = track.parentElement;
-        var label = wrap ? wrap.previousElementSibling : null;
-        if (label) {
-          var dots = label.querySelectorAll('span[style*="4ade80"]');
-          dots.forEach(function(d) { d.style.color = '#4ade80'; d.style.opacity = '1'; });
-        }
-      }
 
-      // 悬停暂停
-      var wrap = track.parentElement;
-      wrap.addEventListener('mouseenter', function() { paused = true; });
-      wrap.addEventListener('mouseleave', function() { paused = false; lastTs = 0; });
+        // 立即尝试启动，失败会自动重试
+        startAnimation();
+
+        track.parentElement.addEventListener('mouseenter', function() { paused = true; });
+        track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
+      } catch(e) { console.error('[initMarquee] error:', trackId, e); }
     }
 
-    function bootMarquee() {
-      initMarquee('track-portrait',  HALF_PORTRAIT);
-      initMarquee('track-landscape', HALF_LANDSCAPE);
-      setTimeout(playAllVideos, 400);
-    }
-
-    function safeBoot() {
-      try {
-        bootMarquee();
-      } catch(e) {
-        var errEl = document.getElementById('js-init-marker');
-        if (errEl) errEl.textContent = 'Marquee 报错: ' + e.message;
-        else window.alert('Marquee 报错: ' + e.message);
-      }
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', safeBoot);
-    } else {
-      safeBoot();
-    }
+  // 页面 DOM 就绪后立即初始化（不等 load，避免视频区域空白）
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initMarquee('track-portrait',  SPEED_PORTRAIT);
+      initMarquee('track-landscape', SPEED_LANDSCAPE);
+      setTimeout(playAllVideos, 200);
+    });
+  } else {
+    // DOM 已就绪（比如从缓存加载）
+    initMarquee('track-portrait',  SPEED_PORTRAIT);
+    initMarquee('track-landscape', SPEED_LANDSCAPE);
+    setTimeout(playAllVideos, 200);
+  }
 
     // ===== 事件委托：所有卡片的按钮和点击行为统一处理 =====
     // （使用事件委托，这样 initMarquee 克隆的卡片也能正常工作）
@@ -763,8 +730,8 @@
 
     // initMarquee 克隆卡片后，再次绑定（延迟到 DOM 更新后）
     var origInitMarquee = initMarquee;
-    window.initMarquee = function(trackId, halfWidth) {
-      origInitMarquee(trackId, halfWidth);
+    window.initMarquee = function(trackId, speed) {
+      origInitMarquee(trackId, speed);
       setTimeout(bindVideoStateListeners, 0);
     };
 
@@ -813,6 +780,7 @@
         });
       }
     }
+  });
 
   // 兜底：visibility change 时重新尝试播放
   document.addEventListener('visibilitychange', function() {
