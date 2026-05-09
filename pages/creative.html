@@ -201,6 +201,7 @@
       width: max-content;
       will-change: transform;
       overflow-x: visible;
+      scroll-snap-type: none;
     }
     /* 黑屏兜底：视频未加载时显示背景色而非黑色 */
     .vs-card video {
@@ -554,82 +555,87 @@
   }
 
     // ===== 无缝视频走马灯 =====
-    var SPEED_PORTRAIT  = 80;
-    var SPEED_LANDSCAPE = 60;
+    var SPEED_PORTRAIT  = 80;   // px/s
+    var SPEED_LANDSCAPE = 60;   // px/s
 
     function initMarquee(trackId, speed) {
       try {
         var track = document.getElementById(trackId);
-        if (!track) { console.error('[initMarquee] track not found:', trackId); return; }
-        console.log('[initMarquee] init:', trackId, 'children:', track.children.length);
+        if (!track) { console.error('[Marquee] track not found:', trackId); return; }
 
+        // 克隆一倍内容，实现无缝循环
         var origChildren = Array.from(track.children);
         origChildren.forEach(function(child) {
           var clone = child.cloneNode(true);
-          var vids = clone.querySelectorAll('video');
-          vids.forEach(function(v) {
+          clone.querySelectorAll('video').forEach(function(v) {
             v.muted = true;
             v.autoplay = true;
             v.loop = true;
             v.playsInline = true;
             v.setAttribute('webkit-playsinline', '');
-            if (!v.hasAttribute('controlsList')) { v.setAttribute('controlsList', 'nodownload noremoteplayback'); }
             if (isAndroid && isWeChat) v.classList.add('x5-video-player');
-            tryPlayVideo(v);
+            // 静音播放（克隆的视频也需要）
+            v.play().catch(function(){});
           });
           track.appendChild(clone);
         });
-        console.log('[initMarquee] after clone, children:', track.children.length);
 
-        var offset = 0;
-        var paused = false;
-        var lastTime = null;
-
-        function startAnimation() {
+        // 等待 DOM / 视频尺寸就绪后再启动动画
+        function startLoop() {
           var halfWidth = track.scrollWidth / 2;
-          console.log('[initMarquee]', trackId, 'scrollWidth:', track.scrollWidth, 'halfWidth:', halfWidth);
-          if (halfWidth === 0) {
-            // 视频未加载完，延迟重试
-            setTimeout(startAnimation, 300);
+          if (halfWidth < 10) {
+            // 内容尚未渲染完，稍后重试
+            setTimeout(startLoop, 300);
             return;
           }
 
-          function tick(ts) {
-            if (!lastTime) lastTime = ts;
-            var dt = (ts - lastTime) / 1000;
-            lastTime = ts;
+          // 视觉调试：在标题旁显示绿色圆点表示走马灯运行中
+          var label = track.closest('.video-scroll-row').querySelector('.video-scroll-row-label');
+          if (label && !document.getElementById('mq-debug-' + trackId)) {
+            var dot = document.createElement('span');
+            dot.id = 'mq-debug-' + trackId;
+            dot.style.cssText = 'display:inline-block;width:8px;height:8px;border-radius:50%;background:#00e676;margin-left:8px;vertical-align:middle;';
+            label.appendChild(dot);
+          }
 
-            if (!paused) {
+          var offset = 0;
+          var paused = false;
+          var lastTs = 0;
+
+          function tick(ts) {
+            if (lastTs && !paused) {
+              var dt = (ts - lastTs) / 1000;  // 秒
               offset += speed * dt;
               if (offset >= halfWidth) offset -= halfWidth;
               track.style.transform = 'translateX(' + (-offset) + 'px)';
             }
+            lastTs = ts;
             requestAnimationFrame(tick);
           }
           requestAnimationFrame(tick);
+
+          // 鼠标悬停暂停
+          track.closest('.vs-marquee-wrap').addEventListener('mouseenter', function() { paused = true; });
+          track.closest('.vs-marquee-wrap').addEventListener('mouseleave', function() { paused = false; });
         }
 
-        // 立即尝试启动，失败会自动重试
-        startAnimation();
-
-        track.parentElement.addEventListener('mouseenter', function() { paused = true; });
-        track.parentElement.addEventListener('mouseleave', function() { paused = false; lastTime = null; });
-      } catch(e) { console.error('[initMarquee] error:', trackId, e); }
+        // 延迟启动，确保视频/图片已渲染出宽度
+        setTimeout(startLoop, 500);
+      } catch(e) { console.error('[Marquee] error:', trackId, e); }
     }
 
-  // 页面 DOM 就绪后立即初始化（不等 load，避免视频区域空白）
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
+    // 初始化两个走马灯
+    function initAllMarquees() {
       initMarquee('track-portrait',  SPEED_PORTRAIT);
       initMarquee('track-landscape', SPEED_LANDSCAPE);
-      setTimeout(playAllVideos, 200);
-    });
-  } else {
-    // DOM 已就绪（比如从缓存加载）
-    initMarquee('track-portrait',  SPEED_PORTRAIT);
-    initMarquee('track-landscape', SPEED_LANDSCAPE);
-    setTimeout(playAllVideos, 200);
-  }
+      setTimeout(playAllVideos, 500);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllMarquees);
+    } else {
+      initAllMarquees();
+    }
 
     // ===== 事件委托：所有卡片的按钮和点击行为统一处理 =====
     // （使用事件委托，这样 initMarquee 克隆的卡片也能正常工作）
