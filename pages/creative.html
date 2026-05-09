@@ -590,7 +590,7 @@
     document.querySelectorAll('.vs-card video').forEach(tryPlayVideo);
   }
 
-  // ===== 左右箭头点击滚动 =====
+  // ===== 左右箭头点击滚动（支持循环） =====
   function initArrowButtons() {
     document.querySelectorAll('.scroll-arrow').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
@@ -601,11 +601,24 @@
         var card = track.querySelector('.vs-card');
         if (!card) return;
         var gap = 21;
-        var scrollAmount = card.offsetWidth + gap;
+        var step = card.offsetWidth + gap;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+
         if (btn.classList.contains('scroll-arrow-left')) {
-          scrollAmount = -scrollAmount;
+          // 向左：已到最左端 → 瞬间跳到最右端
+          if (track.scrollLeft <= 1) {
+            track.scrollLeft = maxScroll;
+            return;
+          }
+          track.scrollBy({ left: -step, behavior: 'smooth' });
+        } else {
+          // 向右：已到最右端 → 瞬间跳到最左端
+          if (track.scrollLeft >= maxScroll - 1) {
+            track.scrollLeft = 0;
+            return;
+          }
+          track.scrollBy({ left: step, behavior: 'smooth' });
         }
-        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       });
     });
   }
