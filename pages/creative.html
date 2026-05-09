@@ -197,12 +197,46 @@
       .vs-card video { object-fit: cover; }
     }
     .video-scroll-track.auto-scroll {
-      display: flex;
-      width: max-content;
-      will-change: transform;
-      overflow-x: visible;
-      scroll-snap-type: none;
+      width: auto;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
     }
+
+    /* 左右箭头按钮 */
+    .scroll-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .scroll-arrow:hover {
+      background: rgba(0,102,255,0.85);
+    }
+    .scroll-arrow:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    .scroll-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+    .scroll-arrow-left { left: 8px; }
+    .scroll-arrow-right { right: 8px; }
+
+    /* 视频行相对定位，供箭头绝对定位 */
+    .video-scroll-row { position: relative; }
     /* 黑屏兜底：视频未加载时显示背景色而非黑色 */
     .vs-card video {
       background: #111827;
@@ -345,7 +379,7 @@
     <div class="video-scroll-row fade-up" data-delay="0">
       <div class="video-scroll-row-label">📱 9:16 竖屏 · TikTok 原生格式</div>
       <div class="vs-marquee-wrap">
-        <div class="video-scroll-track auto-scroll" id="track-portrait">
+        <div class="video-scroll-track" id="track-portrait">
           <div class="vs-card vs-portrait">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260415-181926.mp4" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
@@ -411,13 +445,15 @@
           </div>
         </div>
       </div>
+      <button class="scroll-arrow scroll-arrow-left" aria-label="向左滑动"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="scroll-arrow scroll-arrow-right" aria-label="向右滑动"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
     </div>
 
     <!-- 16:9 横屏视频行 -->
     <div class="video-scroll-row fade-up" data-delay="100">
       <div class="video-scroll-row-label">🖥️ 16:9 横屏 · 广告 & 店铺素材</div>
       <div class="vs-marquee-wrap">
-        <div class="video-scroll-track auto-scroll" id="track-landscape">
+        <div class="video-scroll-track" id="track-landscape">
           <div class="vs-card vs-landscape">
             <video src="https://fastforward-videos-1407530608.cos-website.ap-guangzhou.myqcloud.com/20260406-215200.mp4" autoplay muted loop playsinline preload="auto" x5-video-player-type="h5" x5-video-player-fullscreen="" webkit-playsinline controls controlsList="nodownload noremoteplayback"></video>
             <div class="vs-ctrl">
@@ -447,10 +483,12 @@
           </div>
         </div>
       </div>
+      <button class="scroll-arrow scroll-arrow-left" aria-label="向左滑动"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="scroll-arrow scroll-arrow-right" aria-label="向右滑动"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
     </div>
 
     <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.3);margin-top:24px;">
-      悬停暂停 · 点击视频开启/关闭声音 · 真实案例内容展示
+点击左右箭头横向浏览 · 悬停暂停 · 点击视频开启/关闭声音 · 真实案例内容展示
     </p>
   </div>
 </section>
@@ -543,9 +581,7 @@
     video.muted = true;
     var p = video.play();
     if (p) {
-      p.catch(function() {
-        // 首次可能失败，等用户交互后重试
-      });
+      p.catch(function() {});
     }
   }
 
@@ -554,197 +590,126 @@
     document.querySelectorAll('.vs-card video').forEach(tryPlayVideo);
   }
 
-    // ===== 无缝视频走马灯 =====
-    var SPEED_PORTRAIT  = 80;   // px/s
-    var SPEED_LANDSCAPE = 60;   // px/s
-
-    function initMarquee(trackId, speed) {
-      try {
-        var track = document.getElementById(trackId);
-        if (!track) { console.error('[Marquee] track not found:', trackId); return; }
-
-        // 克隆一倍内容，实现无缝循环
-        var origChildren = Array.from(track.children);
-        origChildren.forEach(function(child) {
-          var clone = child.cloneNode(true);
-          clone.querySelectorAll('video').forEach(function(v) {
-            v.muted = true;
-            v.autoplay = true;
-            v.loop = true;
-            v.playsInline = true;
-            v.setAttribute('webkit-playsinline', '');
-            if (isAndroid && isWeChat) v.classList.add('x5-video-player');
-            // 静音播放（克隆的视频也需要）
-            v.play().catch(function(){});
-          });
-          track.appendChild(clone);
-        });
-
-        // 等待 DOM / 视频尺寸就绪后再启动动画
-        function startLoop() {
-          var halfWidth = track.scrollWidth / 2;
-          if (halfWidth < 10) {
-            // 内容尚未渲染完，稍后重试
-            setTimeout(startLoop, 300);
-            return;
-          }
-
-          // 视觉调试：在标题旁显示绿色圆点表示走马灯运行中
-          var label = track.closest('.video-scroll-row').querySelector('.video-scroll-row-label');
-          if (label && !document.getElementById('mq-debug-' + trackId)) {
-            var dot = document.createElement('span');
-            dot.id = 'mq-debug-' + trackId;
-            dot.style.cssText = 'display:inline-block;width:8px;height:8px;border-radius:50%;background:#00e676;margin-left:8px;vertical-align:middle;';
-            label.appendChild(dot);
-          }
-
-          var offset = 0;
-          var paused = false;
-          var lastTs = 0;
-
-          function tick(ts) {
-            if (lastTs && !paused) {
-              var dt = (ts - lastTs) / 1000;  // 秒
-              offset += speed * dt;
-              if (offset >= halfWidth) offset -= halfWidth;
-              track.style.transform = 'translateX(' + (-offset) + 'px)';
-            }
-            lastTs = ts;
-            requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-
-          // 鼠标悬停暂停
-          track.closest('.vs-marquee-wrap').addEventListener('mouseenter', function() { paused = true; });
-          track.closest('.vs-marquee-wrap').addEventListener('mouseleave', function() { paused = false; });
+  // ===== 左右箭头点击滚动 =====
+  function initArrowButtons() {
+    document.querySelectorAll('.scroll-arrow').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        var row = btn.closest('.video-scroll-row');
+        if (!row) return;
+        var track = row.querySelector('.video-scroll-track');
+        if (!track) return;
+        var card = track.querySelector('.vs-card');
+        if (!card) return;
+        var gap = 21;
+        var scrollAmount = card.offsetWidth + gap;
+        if (btn.classList.contains('scroll-arrow-left')) {
+          scrollAmount = -scrollAmount;
         }
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      });
+    });
+  }
 
-        // 延迟启动，确保视频/图片已渲染出宽度
-        setTimeout(startLoop, 500);
-      } catch(e) { console.error('[Marquee] error:', trackId, e); }
-    }
+  // ===== 事件委托：所有卡片的按钮和点击行为统一处理 =====
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.vs-card');
+    if (!card) return;
+    var vid = card.querySelector('video');
+    if (!vid) return;
 
-    // 初始化两个走马灯
-    function initAllMarquees() {
-      initMarquee('track-portrait',  SPEED_PORTRAIT);
-      initMarquee('track-landscape', SPEED_LANDSCAPE);
-      setTimeout(playAllVideos, 500);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initAllMarquees);
-    } else {
-      initAllMarquees();
-    }
-
-    // ===== 事件委托：所有卡片的按钮和点击行为统一处理 =====
-    // （使用事件委托，这样 initMarquee 克隆的卡片也能正常工作）
-    document.addEventListener('click', function(e) {
-      var card = e.target.closest('.vs-card');
-      if (!card) return;
-      var vid = card.querySelector('video');
-      if (!vid) return;
-
-      // 播放/暂停按钮
-      if (e.target.closest('.vs-btn-play')) {
-        e.stopPropagation();
-        if (vid.paused) {
-          tryPlayVideo(vid);
-        } else {
-          vid.pause();
-        }
-        return;
-      }
-
-      // 全屏按钮
-      if (e.target.closest('.vs-btn-fullscreen')) {
-        e.stopPropagation();
-        var fsTarget = vid.requestFullscreen || vid.webkitRequestFullscreen ||
-                       vid.mozRequestFullScreen || vid.msRequestFullscreen ||
-                       (card.requestFullscreen || card.webkitRequestFullscreen ||
-                        card.mozRequestFullScreen || card.msRequestFullscreen).bind(card);
-        if (fsTarget) fsTarget.call(vid);
-        return;
-      }
-
-      // 静音按钮
-      if (e.target.closest('.vs-btn-mute')) {
-        e.stopPropagation();
-        vid.muted = !vid.muted;
-        if (vid.muted) {
-          card.classList.add('is-muted');
-          card.classList.remove('audio-on');
-        } else {
-          card.classList.remove('is-muted');
-          card.classList.add('audio-on');
-          if (vid.paused) tryPlayVideo(vid);
-        }
-        return;
-      }
-
-      // 点击卡片其他区域 → 切换声音开/关
-      if (card.classList.contains('audio-on')) {
-        vid.muted = true;
-        card.classList.remove('audio-on');
-        card.classList.add('is-muted');
+    // 播放/暂停按钮
+    if (e.target.closest('.vs-btn-play')) {
+      e.stopPropagation();
+      if (vid.paused) {
+        tryPlayVideo(vid);
       } else {
-        vid.muted = false;
-        card.classList.add('audio-on');
+        vid.pause();
+      }
+      return;
+    }
+
+    // 全屏按钮
+    if (e.target.closest('.vs-btn-fullscreen')) {
+      e.stopPropagation();
+      var fsTarget = vid.requestFullscreen || vid.webkitRequestFullscreen ||
+                     vid.mozRequestFullScreen || vid.msRequestFullscreen ||
+                     (card.requestFullscreen || card.webkitRequestFullscreen ||
+                      card.mozRequestFullScreen || card.msRequestFullscreen).bind(card);
+      if (fsTarget) fsTarget.call(vid);
+      return;
+    }
+
+    // 静音按钮
+    if (e.target.closest('.vs-btn-mute')) {
+      e.stopPropagation();
+      vid.muted = !vid.muted;
+      if (vid.muted) {
+        card.classList.add('is-muted');
+        card.classList.remove('audio-on');
+      } else {
         card.classList.remove('is-muted');
+        card.classList.add('audio-on');
         if (vid.paused) tryPlayVideo(vid);
       }
-    });
-
-    // ===== 视频状态同步：播放/暂停时更新图标和 class =====
-    // 对当前页面所有 vs-card 绑定一次（含克隆卡片在 initMarquee 之后动态追加，延时再跑一次）
-    function bindVideoStateListeners() {
-      document.querySelectorAll('.vs-card video').forEach(function(vid) {
-        var card = vid.closest('.vs-card');
-        var playBtn = card ? card.querySelector('.vs-btn-play') : null;
-        if (!card) return;
-
-        // 防止重复绑定
-        if (vid._stateBound) return;
-        vid._stateBound = true;
-
-        vid.addEventListener('play', function() {
-          if (playBtn) {
-            playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-          }
-          card.classList.remove('video-paused');
-          card.classList.add('video-playing');
-        });
-        vid.addEventListener('pause', function() {
-          if (playBtn) {
-            playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-          }
-          card.classList.remove('video-playing');
-          card.classList.add('video-paused');
-        });
-
-        // 初始化状态（autoplay 失败时视频是暂停的）
-        if (vid.paused) {
-          card.classList.add('video-paused');
-        } else {
-          card.classList.add('video-playing');
-          if (playBtn) {
-            playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-          }
-        }
-      });
+      return;
     }
 
-    // 立即执行一次（处理原始卡片）
+    // 点击卡片其他区域 → 切换声音开/关
+    if (card.classList.contains('audio-on')) {
+      vid.muted = true;
+      card.classList.remove('audio-on');
+      card.classList.add('is-muted');
+    } else {
+      vid.muted = false;
+      card.classList.add('audio-on');
+      card.classList.remove('is-muted');
+      if (vid.paused) tryPlayVideo(vid);
+    }
+  });
+
+  // ===== 视频状态同步：播放/暂停时更新图标和 class =====
+  function bindVideoStateListeners() {
+    document.querySelectorAll('.vs-card video').forEach(function(vid) {
+      var card = vid.closest('.vs-card');
+      var playBtn = card ? card.querySelector('.vs-btn-play') : null;
+      if (!card) return;
+
+      if (vid._stateBound) return;
+      vid._stateBound = true;
+
+      vid.addEventListener('play', function() {
+        if (playBtn) {
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+        }
+        card.classList.remove('video-paused');
+        card.classList.add('video-playing');
+      });
+      vid.addEventListener('pause', function() {
+        if (playBtn) {
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+        }
+        card.classList.remove('video-playing');
+        card.classList.add('video-paused');
+      });
+
+      if (vid.paused) {
+        card.classList.add('video-paused');
+      } else {
+        card.classList.add('video-playing');
+        if (playBtn) {
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+        }
+      }
+    });
+  }
+
+  // ===== 初始化 =====
+  function init() {
+    initArrowButtons();
     bindVideoStateListeners();
+    playAllVideos();
 
-    // initMarquee 克隆卡片后，再次绑定（延迟到 DOM 更新后）
-    var origInitMarquee = initMarquee;
-    window.initMarquee = function(trackId, speed) {
-      origInitMarquee(trackId, speed);
-      setTimeout(bindVideoStateListeners, 0);
-    };
-
-    // ===== 初始化：所有视频默认静音，显示静音图标 =====
+    // 所有视频默认静音，显示静音图标
     document.querySelectorAll('.vs-card').forEach(function(card) {
       var vid = card.querySelector('video');
       if (vid) {
@@ -752,44 +717,46 @@
         card.classList.add('is-muted');
       }
     });
+  }
 
-    // ===== 微信 WebView 兼容：首次触摸触发全部视频播放 =====
-    if (isWechatWebView()) {
-      function onFirstTouch(e) {
-        if (touchStarted) return;
-        touchStarted = true;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
-        // 触摸任意位置，尝试播放所有视频
-        setTimeout(function() {
-          document.querySelectorAll('.vs-card video').forEach(function(v) {
-            tryPlayVideo(v);
-            // 如果还是没播起来，再试一次 unmuted
-            var p = v.play();
-            if (p) p.catch(function(){});
-          });
-        }, 100);
+  // ===== 微信 WebView 兼容：首次触摸触发全部视频播放 =====
+  if (isWechatWebView()) {
+    function onFirstTouch(e) {
+      if (touchStarted) return;
+      touchStarted = true;
 
-        // 移除监听器（只需要一次）
-        document.removeEventListener('touchstart', onFirstTouch, {passive: true});
-        document.removeEventListener('touchend', onFirstTouch, {passive: true});
-      }
-      document.addEventListener('touchstart', onFirstTouch, {passive: true});
-      document.addEventListener('touchend', onFirstTouch, {passive: true});
+      setTimeout(function() {
+        document.querySelectorAll('.vs-card video').forEach(function(v) {
+          tryPlayVideo(v);
+          var p = v.play();
+          if (p) p.catch(function(){});
+        });
+      }, 100);
 
-      // 也用 WeixinJSBridge ready 事件（微信专用）
-      if (typeof window.WeixinJSBridge !== 'undefined') {
+      document.removeEventListener('touchstart', onFirstTouch, {passive: true});
+      document.removeEventListener('touchend', onFirstTouch, {passive: true});
+    }
+    document.addEventListener('touchstart', onFirstTouch, {passive: true});
+    document.addEventListener('touchend', onFirstTouch, {passive: true});
+
+    if (typeof window.WeixinJSBridge !== 'undefined') {
+      window.WeixinJSBridge.invoke('getNetworkType', {}, function() {
+        playAllVideos();
+      });
+    } else {
+      document.addEventListener('WeixinJSBridgeReady', function() {
         window.WeixinJSBridge.invoke('getNetworkType', {}, function() {
           playAllVideos();
         });
-      } else {
-        document.addEventListener('WeixinJSBridgeReady', function() {
-          window.WeixinJSBridge.invoke('getNetworkType', {}, function() {
-            playAllVideos();
-          });
-        });
-      }
+      });
     }
-  });
+  }
 
   // 兜底：visibility change 时重新尝试播放
   document.addEventListener('visibilitychange', function() {
