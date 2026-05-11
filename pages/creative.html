@@ -296,6 +296,34 @@
     .data-col .num { font-size: 36px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
     .data-col .label { font-size: 12px; color: rgba(255,255,255,0.4); }
 
+    /* ===== 视频动态水印 ===== */
+    .vs-watermark {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      overflow: hidden;
+    }
+    .vs-watermark-inner {
+      position: absolute;
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 1px;
+      user-select: none;
+      animation: watermark-drift 8s linear infinite;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+      transform: translate(-50%, -50%) rotate(-20deg);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    @keyframes watermark-drift {
+      0%   { transform: translate(-50%, -50%) rotate(-20deg) translateX(0px); }
+      100% { transform: translate(-50%, -50%) rotate(-20deg) translateX(40px); }
+    }
+
     @media (max-width: 768px) {
       .vs-portrait { width: 160px; }
       .vs-landscape { width: 280px; }
@@ -535,6 +563,9 @@
     <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.3);margin-top:24px;">
 点击左右箭头横向浏览 · 悬停暂停 · 点击视频开启/关闭声音 · 真实案例内容展示
     </p>
+    <p style="text-align:center;font-size:11px;color:rgba(255,255,255,0.2);margin-top:8px;letter-spacing:2px;">
+未经授权禁止复制传播 &nbsp;|&nbsp; fastforward.net.cn
+    </p>
   </div>
 </section>
 
@@ -635,8 +666,7 @@
     document.querySelectorAll('.vs-card video').forEach(tryPlayVideo);
   }
 
-  // ===== 左右箭头点击滚动（支持循环） =====
-  function initArrowButtons() {
+  // ===== 视频动态水印 =====\n  function initWatermarks() {\n    document.querySelectorAll('.vs-card').forEach(function(card) {\n      if (card.querySelector('.vs-watermark')) return;\n      var wm = document.createElement('div');\n      wm.className = 'vs-watermark';\n      wm.innerHTML = '<div class="vs-watermark-inner">fastforward.net.cn</div>';\n      card.appendChild(wm);\n    });\n  }\n\n  // ===== 左右箭头点击滚动（支持循环） =====\n  function initArrowButtons() {
     document.querySelectorAll('.scroll-arrow').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         var row = btn.closest('.video-scroll-row');
@@ -764,6 +794,7 @@
   // ===== 初始化 =====
   function init() {
     initArrowButtons();
+    initWatermarks();
     bindVideoStateListeners();
     playAllVideos();
 
