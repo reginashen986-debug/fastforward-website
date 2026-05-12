@@ -309,7 +309,7 @@
       white-space: nowrap;
       font-size: 12px;
       font-weight: 600;
-      color: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.35);
       letter-spacing: 1px;
       user-select: none;
       animation: watermark-drift 8s linear infinite;
@@ -666,7 +666,18 @@
     document.querySelectorAll('.vs-card video').forEach(tryPlayVideo);
   }
 
-  // ===== 视频动态水印 =====\n  function initWatermarks() {\n    document.querySelectorAll('.vs-card').forEach(function(card) {\n      if (card.querySelector('.vs-watermark')) return;\n      var wm = document.createElement('div');\n      wm.className = 'vs-watermark';\n      wm.innerHTML = '<div class="vs-watermark-inner">fastforward.net.cn</div>';\n      card.appendChild(wm);\n    });\n  }\n\n  // ===== 左右箭头点击滚动（支持循环） =====\n  function initArrowButtons() {
+  // ===== 视频动态水印 =====
+  function initWatermarks() {
+    document.querySelectorAll('.vs-card').forEach(function(card) {
+      if (card.querySelector('.vs-watermark')) return;
+      var wm = document.createElement('div');
+      wm.className = 'vs-watermark';
+      wm.innerHTML = '<div class="vs-watermark-inner">fastforward.net.cn</div>';
+      card.appendChild(wm);
+    });
+  }
+
+  // ===== 左右箭头点击滚动（支持循环） =====\n  function initArrowButtons() {
     document.querySelectorAll('.scroll-arrow').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         var row = btn.closest('.video-scroll-row');
