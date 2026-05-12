@@ -677,7 +677,8 @@
     });
   }
 
-  // ===== 左右箭头点击滚动（支持循环） =====\n  function initArrowButtons() {
+  // ===== 左右箭头点击滚动（支持循环） =====
+  function initArrowButtons() {
     document.querySelectorAll('.scroll-arrow').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         var row = btn.closest('.video-scroll-row');
